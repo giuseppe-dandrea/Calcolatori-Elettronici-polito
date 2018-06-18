@@ -1,4 +1,5 @@
-# 01-Introduzione ai sistemi di elaborazione.txt<br/> 
+# 01-Introduzione ai sistemi di elaborazione.txt
+
 Un sistema di elaborazione dell'informazione può:
    - Ricevere informazioni dall'esterno
    - Eseguire operazioni di elaborazione
@@ -76,7 +77,8 @@ In ambito special-purpose si parla quasi sempre di microcontrollori.
 
 
 
-# 02-Processori.txt<br/> 
+# 02-Processori.txt
+
 Registri:
 PC - Program Counter, contiene l'indirizzo della prossima istruzione da eseguire
 IR - Istruction Registrer, contiene i byte dell'istruzione corrente.
@@ -87,7 +89,8 @@ sTRUTTURE A BORDO DEL PROCESSORE IN GRADO DI MEMORIZZARE UN CERTO NUMERO DI BYTE
 
 
 
-# 03-Introduzione ad assembler<br/> 
+# 03-Introduzione ad assembler
+
 Pseudo-istruzioni:
 	### Categorie:
 	- definizioni di variabili
@@ -158,7 +161,8 @@ In pratica viene tutto sommato, non bisogna vedere sta roba come una matrice, ma
 
 
 
-# 04-Segmentazione e indirizzi.txt<br/> 
+# 04-Segmentazione e indirizzi.txt
+
 Finora abbiamo memorizzato indirizzi di memoria nei registri, ma ciò è falso perchè sappiamo che i registri sono a 16 bit, mentre l'address bus dell'8086 è a 20 bit (max memory 1 MB). Per aggirare ciò si utilizzano:- Un segmento di dati (DS)- Un segmento di codice (CS)- Un segmento di stack (SS).
 
 Gli indirizzi iniziali di questi segmenti devono essere multipli di 16 e sappiamo che sul codice binario le ultime 4 cifre di un numero multiplo di 16 sono degli zeri.
@@ -167,7 +171,8 @@ Perciò il processore salva gli indirizzi di partenza dei segmenti,  e quando de
 
 
 
-# 04A-Input_Output di un vettore di caratteri.txt<br/> 
+# 04A-Input_Output di un vettore di caratteri.txt
+
 Input da tastiera di un carattere:
 MOV               AH,             1
 INT                 21H                                 ;SALVA IN AL IL CODICE ASCII DELLA LETTERA PREMUTA
@@ -179,7 +184,8 @@ INT                 21H                                 ;STAMPA IL CONTENUTO DI 
 
 
 
-# 05-Istruzioni-trasferimento-dati<br/> 
+# 05-Istruzioni-trasferimento-dati
+
 MOV:
 combinazioni non ammesse:- i due operandi sono due celle di memoria- i due operandi hanno dimensioni diverse (al, cx)
 ### 
@@ -207,7 +213,8 @@ Lo stack serve a 3 scopi:- Memorizzare variabili temporanee- bho..
 
 
 
-# 05A-Istruzioni-aritmetiche<br/> 
+# 05A-Istruzioni-aritmetiche
+
 ADD:
 add dest, src
 sub dest, src
@@ -227,7 +234,8 @@ Se ho due numeri senza segno controllo il CF, se i numeri hanno il segno uso l'O
 
 
 
-# 06-Istruzioni-Aritmetiche<br/> 
+# 06-Istruzioni-Aritmetiche
+
 ADD e SUB
 Addizione e sottrazione, queste modificano il valore di tutti i flag (AF, PF, CF, SF, OF, ZF)
 ZF - Zero flag
@@ -350,7 +358,8 @@ MOV AX, BX
 
 
 
-# 07-Istruzioni-di-controllo del flusso<br/> 
+# 07-Istruzioni-di-controllo del flusso
+
 Costrutto JUMP: JMP
 
 ### Costrutto switch:
@@ -427,7 +436,8 @@ CLI - Forza IF a 0
 
 
 
-# 08-Istruzioni-manipolazione-bit<br/> 
+# 08-Istruzioni-manipolazione-bit
+
 ISTRUZIONI LOGICHE:
 
 AND dest, sorg
@@ -487,7 +497,8 @@ per RCL invece CF e' come se fosse posto alla sinistra della parola da ruotare.
 
 
 
-# 08A-Procedure<br/> 
+# 08A-Procedure
+
 Le procedure sono l'equivalente assembly delle funzioni.
 ### 
 ### DEFINIZIONE DI UNA PROCEDURA:
@@ -544,7 +555,8 @@ L'unico modo per memorizzare delle variabili locali e' salvarle nello stack (met
 
 
 
-# 09-Progetto-di-circuiti-logici<br/> 
+# 09-Progetto-di-circuiti-logici
+
 PROGETTO:
 Siano dati un sistema da realizzare di cui e' noto il comportamento e una serie di commponenti,
 l'attivita' di progetto consiste nell'individuare una connessione di componenti tale per cui il comportamento
@@ -604,7 +616,8 @@ costituisce direttamente l'insieme delle specifiche per il livello inferiore.
 
 
 
-# 10-Sistemi-combinatori-e-sequenziali<br/> 
+# 10-Sistemi-combinatori-e-sequenziali
+
 Un sistema puo essere:
 COMBINATORIO: Se i valori delle sue uscite dipendono esclusivamente dai valori applicati sui suoi ingressi in 
 quell'istante (es. sommatore)
@@ -637,7 +650,8 @@ corrente dell'ingresso. (Rappresentabile con l'uscita associata all'arco.)
 
 
 
-# 11-Progettazione<br/> 
+# 11-Progettazione
+
 Varie fasi di progettazione per livelli (in ordine crescente):
 
 
@@ -708,7 +722,8 @@ FANOUT: Numero di porte logiche pilotate dall'uscita di un'altra porta logica.
 
 
 
-# 12-Progettazione-circuiti-combinatori<br/> 
+# 12-Progettazione-circuiti-combinatori
+
 PROGETTO DI CIRCUITI COMBINATORI
 
 Partendo dalla tavola di verita: (vedere esempio slide 60 progetto1) -Per ogni 1 in uscita si associa una 
@@ -779,7 +794,8 @@ NB. Questo solo se tutte le porte hanno lo stesso ritardo, senno' il calcolo del
 
 
 
-# 13-Progettazione-circuiti-sequenziali<br/> 
+# 13-Progettazione-circuiti-sequenziali
+
 Nei circuiti sequenziali sono presenti alcuni moduli che sfruttando i ritardi delle porte riescono a 
 memorizzare informazioni.
 
@@ -831,7 +847,8 @@ Importante, vedere sul quadernino di JustEat (Risushitato) perche servivano i gr
 
 
 
-# 13-X-Progettazione-sequenziali-flusso-lavoro<br/> 
+# 13-X-Progettazione-sequenziali-flusso-lavoro
+
 FLUSSO DI LAVORO:
 1-Si parte dal diagramma degli stati o da una rappresentazione equivalente
 2-Controlla se ci sono degli stati equivalenti che possono essere eliminati
@@ -841,7 +858,8 @@ FLUSSO DI LAVORO:
 
 
 
-# 14-Modello-Huffman-circuiti-sincroni<br/> 
+# 14-Modello-Huffman-circuiti-sincroni
+
 MODELLO DI HUFFMAN
 
 Composto da:- N flip-flop per memorizzare gli stati della macchina (N minimo numero in grado di descrivere tutti gli stati della macchina.- Rete combinatoria- Segnale di clock verso i flip flop che dice al circuito quando cambiare stato. 
@@ -857,7 +875,8 @@ Si creano quindi un circuito per ogni uscita che vengono poi assemblati a formar
 
 
 
-# 15-Progettazione-livello-Registri-MPX-DEC-ENC<br/> 
+# 15-Progettazione-livello-Registri-MPX-DEC-ENC
+
 LIVELLO REGISTRI o RT (Register Transfer)
 a differenza del livello delle porte logiche, l'unita' elementare di dato non e' piu il singolo bit, ma la parola (insieme di bit).
 
@@ -912,7 +931,8 @@ Ps. Possiamo trovare anche un segnale di ENABLE che svolge la stessa funzione de
 
 
 
-# 16-Progettazione-liv-Registri-Moduli-Aritmetici<br/> 
+# 16-Progettazione-liv-Registri-Moduli-Aritmetici
+
 SOMMATORI
 3 tipi:- SERIALI- COMBINATORI- COMBINATORI MODULARI
 
@@ -982,7 +1002,8 @@ Possiamo collegare comparatori in serie per confrontare numeri a piu di 4 bit co
 
 
 
-# 17-Registri<br/> 
+# 17-Registri
+
 REGISTRO A m BIT
 Riceve in in ingresso m bit di dato che salvera' internamente, e che poi mandera' in uscita.
 ### Ha altri due segnali:
@@ -1022,7 +1043,8 @@ Questo ha un costo piu' elevato del ripple counter, ma ha il vantaggio di non es
 
 
 
-# 18-Memorie<br/> 
+# 18-Memorie
+
 MEMORIE
 Oggetti che permettono di memorizzare un certo numero di parole su un certo numero di bit
 
@@ -1066,7 +1088,8 @@ La limitazione di questa configurazione e' che per un numero di parole molto ele
 
 
 
-# 19-Bus<br/> 
+# 19-Bus
+
 BUS
 Indica una connessione che dal punto di vista fisico possono corrispondere a connessioni molto diverse.
 Generalmente sono strutture di connessione caratterizzate da un certo parallelismo (n linee di interconnessione); a queste strutture sono collegati diversi moduli che operano in lettura e scrittura, possono cioe' leggere e scrivere da e sul bus.
@@ -1093,7 +1116,8 @@ E' uno scatolotto che connette i vari moduli al bus (slide 74) e puo' ricevere 3
 
 
 
-# 20-FPGA<br/> 
+# 20-FPGA
+
 Field Programmable Gate Array
 Sono circuiti a cui noi diciamo che tipo di circuito implementare capaci di configurarsi in modo da emulare il circuito desiderato.
  E' il contrario di ASIC (Application Specific Integrated Circuit), circuito implementato sotto specifiche che non possono piu' essere cambiate.
@@ -1108,7 +1132,8 @@ NB. Puo implementare sia un circuito combinatorio che sequenziale.
 
 
 
-# 21-Processore-Unita-di-elaborazione<br/> 
+# 21-Processore-Unita-di-elaborazione
+
 2 parti fondamentali (hardware):- Unita di controllo- Unita di elaborazione
 
 Un processore esegue istruzioni... accede alla memoria, fa il fetch, sposta l'istruzione nell IR (instruction register), la decodifica e sa che operazione eseguire.
@@ -1280,7 +1305,8 @@ if (x == 1)
 
 
 
-# 22-Processore-Unita-di-Controllo<br/> 
+# 22-Processore-Unita-di-Controllo
+
 Le specifiche dell''unita' di controllo includono l'instruction set che devono essere implementate dai progettisti in termini di microistruzioni da mandare all'unita di elaborazione.
 
 Puo essere progettata in 2 modi:-  HARDWIRED: Progetto e costruisco un circuito sequenziale che implementa le specifiche.-  MICROPROGRAMMATA: I segnali in uscita dell'UC sono tutti salvati in una memoria ROM, non abbiamo bisogno quindi di una logica combinatoria che calcoli volta per volta i segnali, ma ci basta sapere lo stato in cui ci troviamo per accedere alla memoria a quell'indirizzo per conoscere i segnali in uscita di quello stato.
@@ -1326,7 +1352,8 @@ Caratteristiche:-  Per la maggior parte microprogrammata ma in parte anche cabla
 
 
 
-# 23-Memorie-livello-processore<br/> 
+# 23-Memorie-livello-processore
+
 La velocita' con cui aumenta nel tempo la velocita' delle CPU e' molto maggiore della velocita' con cui aumenta la velocita' delle memorie nel tempo, e questo e' un problema perche si genera un collo di bottiglia.
 La velocita' dei processori raddoppia tendenzialmente ogni anno e mezzo, la velocita' delle memorie invece ogni 10 anni, con conseguente aumento di differenza tra velocita' di processori e memorie.
 
@@ -1379,7 +1406,8 @@ CLASSIFICAZIONE DELLE TECNOLOGIE DI MEMORIA:- COSTO: costo in dollari/bit o doll
 
 
 
-# 24-Memorie-Accesso-Casuale-RAM<br/> 
+# 24-Memorie-Accesso-Casuale-RAM
+
 SEGNALI DI CONTROLLO
 ### Sono fondamentali da due punti di vista:- Permettono di sapere il tipo di operazione (lettura scrittura)- Permettono la sincronizzazione con l'esterno (manca il segnale di clock):
 - SOLUZIONE SINCRONA: Chi mi fornisce la memoria mi dice quali sono i tempi da rispettare nello scambio di informazioni con l'esterno, e cosi il programmatore deve organizzare la lettura dei dati considerando l'attesa. (Non sono necessari ulteriori segnali) (Il difetto fondamentale e' che la memoria dopo quel tempo deve aver risposto, per forza, qualsiasi cosa accada. Ricordare il caso del refreshing che rende il tempo di accesso poco stabile, e in questo caso bisogna adattare il tempo di attesa al massimo, il che e' uno spreco perche' nel 90% dei casi non abbiamo bisogno di aspettare anche il tempo del refreshing)
@@ -1511,7 +1539,8 @@ Abbiamo anche un altro segnale BHE, che dice al processore se accedere a 8 bit o
 
 
 
-# 25-Memorie-CACHE<br/> 
+# 25-Memorie-CACHE
+
 Livello di memoria intermedio tra i registri e la memoria principale.
 
 Il processore sfrutta il principio di localita' dei riferimenti. (Tende a ripetere l'accesso sui singoli blocchi su cui sta lavorando)
@@ -1586,7 +1615,8 @@ In caso di miss il processore puo' comportarsi in due modi:- Accede alla memoria
 
 
 
-# 26-Memorie-ad-accesso-Seriale<br/> 
+# 26-Memorie-ad-accesso-Seriale
+
 MEMORIE AD ACCESSO SERIALE
 Memoria secondaria non volatile, offline, basso costo ed elevato tempo di accesso.
 
@@ -1667,7 +1697,8 @@ NB. LTO (Linear Tape-Open) anche noto come Ultrium e' lo standard dominante nel 
 
 
 
-# 27-Gestione-Dispositivi-Input-Output<br/> 
+# 27-Gestione-Dispositivi-Input-Output
+
 DISPOSITIVI DI INPUT/OUTPUT
 Moduli in grado di fornire/ricevere informazioni dal sistema (anche bidirezionali).
 Prevedono quindi un flusso di bit o byte in entrata o in uscita e possono essere flussi molto diversi a seconda del dispositivo.
@@ -1789,7 +1820,8 @@ NB. Di default quando l'8086 fa partire una procedura di servizio (ISR) mette au
 
 
 
-# 27-Gestione-Dispositivi-Input-Output.save<br/> 
+# 27-Gestione-Dispositivi-Input-Output.save
+
 DISPOSITIVI DI INPUT/OUTPUT
 Moduli in grado di fornire/ricevere informazioni dal sistema (anche bidirezionali).
 Prevedono quindi un flusso di bit o byte in entrata o in uscita e possono essere flussi molto diversi a seconda del dispositivo.
@@ -1873,7 +1905,8 @@ Questo meccanismo e' molto flessibile, infatti per aggiungere una nuova periferi
 
 
 
-# 28-8255-Interfaccia-parallela-programmabile<br/> 
+# 28-8255-Interfaccia-parallela-programmabile
+
 INTERFACCE PARALLELE E SERIALI
 -  PARALLELE: hanno un interfaccia su un numero di bit piu' alto delle seriali. Questo comporta un maggior costo per la creazione dell'interfaccia ma una maggiore velocita' nel trasferimento dei dati.
 -  SERIALI; hanno un interfaccia su 1-2 bit e quindi hanno un costo minore per quanto riguarda i collegamenti ma una minore velocita' di trasmissione.
