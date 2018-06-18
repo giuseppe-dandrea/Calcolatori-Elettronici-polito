@@ -6,16 +6,19 @@ Un sistema di elaborazione dell'informazione può:<br/>
 <br/> 
 Spesso sono sistemi a microprocessore (è quindi capace di eseguire del software), (negli altri casi sono tanto semplici che non c'è bisogno di scomodare un processore).<br/> 
 <br/> 
+<br/> 
 ### Vantaggi:<br/> 
    - Velocità<br/> 
    - Dimensione<br/> 
    - Affidabilità<br/> 
    - Costo<br/> 
 <br/> 
+<br/> 
 ### Un sistema a processore utilizza 3 idee chiave:<br/> 
    - Tecniche per RAPPRESENTARE informazioni in maniera da poterle immagazzinare, trasmettere e modificare.<br/> 
    - Capacità di definire una sequenza di operazioni (ALGORITMO) necessaria a risolvere un problema.<br/> 
    - Techiche per MEMORIZZARE dati e AUTOMATIZZARE operazioni.<br/> 
+<br/> 
 <br/> 
 ### Ere dei calcolatori:<br/> 
    - Era meccanica (~ - 1945)<br/> 
@@ -33,7 +36,8 @@ Spesso sono sistemi a microprocessore (è quindi capace di eseguire del software
        - ENIAC (1943-1946) costruito con tubi a vuoto, primo calcolatore a non avere parti in movimento.<br/> 
        - EDVAC (1951) doveva esssere un evoluzione dell'ENIAC e progettato dallo stesso gruppo (rappresentazione binaria) (Non fu mai costruito) (von Neumann crea quella che è l'architettura basi dei sistemi di elaborazione moderni (Cpu-Memoria-Bus-Periferici) )<br/> 
            - Questa architettura differisce dall'architettura Harvard perchè in quella erano presenti due memorie distinte per dati e codice<br/> 
-       ### - Generazioni:<br/> 
+       <br/> 
+### - Generazioni:<br/> 
            - Prima: utilizzava i tubi a vuoto, potvano essere usate da un solo utente alla volta ed erano utilizzate prettamente per scopi militari, a volte gestionali.<br/> 
            - Seconda: utilizza i transistor (molto più piccoli, veloci e affidabili dei tubi a vuoto), vengono introdotti i primi linguaggi di alto livello e i primi sistemi operativi.<br/> 
            - Terza (1965): i circuiti integrati sostituiscono i transistor (implementavano più transistor su una piastra di silicio puro).<br/> 
@@ -41,14 +45,16 @@ Spesso sono sistemi a microprocessore (è quindi capace di eseguire del software
    - Era VLSI (1975 - ~) (Era dei circuidi ad alta densità di integrazione) (Very Large Scale Integration)<br/> 
        - Si riescono a condensare decine di migliaia di transistor in un unico chip così i dispositivi diventano più economici, meno ingombranti e più veloci.<br/> 
 <br/> 
+<br/> 
 ### Legge di Moore:<br/> 
     Il numero  di transistor integrati su un singolo circuito raddoppia ogni 18/24 mesi.<br/> 
-<br/> 
-   ###  (Negli ultimi anni inizia ad esserci qualche dubbio.)<br/> 
+   <br/> 
+###  (Negli ultimi anni inizia ad esserci qualche dubbio.)<br/> 
 <br/> 
 Questo gran numero di transistor disponibili permette di realizzare i SoC (System on a Chip) che integrano a bordo di un unico circuito uno o più processori, memoria, periferici e logica special-purpose.<br/> 
 <br/> 
 Nel 1971 Intel produce il primo microprocessore (Intel 4004): il primo processore integrato su un solo IC (chip).<br/> 
+<br/> 
 <br/> 
 ### CISC vs RISC vs SUPERSCALARI vs MULTICORE:<br/> 
     I processori fino agli anni 80 erano tutti di tipo CiSC (Complex Instruction Set Computer), caratterizzati da un set di istruzioni (istruzioni eseguibili dal processore definite dal produttore) relativamente ampio (>100).<br/> 
@@ -63,19 +69,23 @@ Nel 1971 Intel produce il primo microprocessore (Intel 4004): il primo processor
 ### FAMIGLIE E COMPATIBILITA'<br/> 
 Il progettista del processore include all'interno della memoria una ISA (Instruction Set Architecture), cioè un set di istruzioni a cui il processore deve rispondere. Se quindi due processori hanno lo stesso ISA appartengono alla stessa "famiglia" e il software che può essere eseguito su uno, può essere eseguito anche sull'altro.<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### MICROCONTROLLORI (MCU):<br/> 
 Se in sistemi di elaborazione general-purpose sono importanti le prestazioni quanto il costo e il consumo, per SE special-purpose molto spesso le prestazioni non sono importanti. (esempio processore per lettore di carte magnetiche per aprire una porta, o la centralina della macchina per girare i finestrini).<br/> 
+<br/> 
 ### Da qui nasce l'idea di microcontrollori, dispositivi integrati su un unico IC composti da:<br/> 
    - processore (adatto alla situazione, ancora oggi ci sono MCU con cpu a 4/8 bit)<br/> 
    - Memoria<br/> 
    - periferiche I/O<br/> 
 In ambito special-purpose si parla quasi sempre di microcontrollori.<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### REALIZZAZIONE DI SISTEMI SPECIAL-PURPOSE:<br/> 
    - SOLUZIONE SW: si acquista una scheda esistente equipaggiata di CPU/MCU e si scrive il programma per far eseguire ciò che ci serve.<br/> 
-   ### - SOLUZIONE HW: ASIC (Application Specific IC):<br/> 
+   <br/> 
+### - SOLUZIONE HW: ASIC (Application Specific IC):<br/> 
        - SE progettato e realizzato specificatamente per un applicazione. (Viene chiamato SoC nel caso contenga uno o più processori)<br/> 
 
 
@@ -93,10 +103,12 @@ sTRUTTURE A BORDO DEL PROCESSORE IN GRADO DI MEMORIZZARE UN CERTO NUMERO DI BYTE
 
 # 03-Introduzione ad assembler<br/> 
 Pseudo-istruzioni:<br/> 
-	### Categorie:<br/> 
+	<br/> 
+### Categorie:<br/> 
 	- definizioni di variabili<br/> 
 	- definizioni di costanti<br/> 
 	- gestione dei segmenti (.data .code .stack)<br/> 
+<br/> 
 <br/> 
 ### <br/> 
 ### COSTANTI:<br/> 
@@ -113,6 +125,7 @@ screen EQU column\*row<br/>
 <br/> 
 DIRETTIVA MODEL<br/> 
 .MODEL small - Dice all'assemblatore che il programma avra' un solo segmento di ogni tipo.<br/> 
+<br/> 
 ### Ne esistono ovviamente altri del tipo:<br/> 
 tiny - 1 solo segmento per dati codice e stack<br/> 
 small<br/> 
@@ -181,6 +194,7 @@ MOV               AH,             1<br/>
 INT                 21H                                 ;SALVA IN AL IL CODICE ASCII DELLA LETTERA PREMUTA<br/> 
 <br/> 
 <br/> 
+<br/> 
 ### Output di un carattere:<br/> 
 MOV               AH,           2<br/> 
 INT                 21H                                 ;STAMPA IL CONTENUTO DI DL (DA INIZIALIZZARE PRIMA)<br/> 
@@ -191,15 +205,18 @@ INT                 21H                                 ;STAMPA IL CONTENUTO DI 
 MOV:<br/> 
 combinazioni non ammesse:- i due operandi sono due celle di memoria- i due operandi hanno dimensioni diverse (al, cx)<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### XCHG:<br/> 
 XCHG operando1, operando2<br/> 
 scambia i contenuti dei due operandi<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### LEA:<br/> 
 LEA dest, src			===		mov dest, offset src<br/> 
 carica nella destinazione l'offset (l'indirizzo) della sorgente <br/> 
+<br/> 
 <br/> 
 <br/> 
 ### STACK (PUSH, POP):<br/> 
@@ -231,6 +248,7 @@ NB. Add e sub modificano il valore di tutti i flag (AF, PF, CF, SF, OF, ZF)<br/>
 (se i due operandi sono senza segno). (se invece i due numeri hanno il segno il fatto che ci sia il carry non ci dice che il numero non e' rappresentabile).<br/> 
 	OF (overflow flag), se abbiamo due numeri con segno e questi danno un risultato non rappresentabile sui bit di partenza allora l'OF viene messo a 1.<br/> 
 	PF (parity flag), dice se il numero di uni nel risultato e' pari o dispari.<br/> 
+<br/> 
 <br/> 
 ### In breve:<br/> 
 Se ho due numeri senza segno controllo il CF, se i numeri hanno il segno uso l'OF.<br/> 
@@ -342,12 +360,14 @@ MOV CX, LUNG<br/>
 MOV SI, 0<br/> 
 <br/> 
 <br/> 
+<br/> 
 ### ciclo:<br/> 
 CMP VETT[SI], 0<br/> 
 JNG continua<br/> 
 INC COUNT<br/> 
 <br/> 
 ADD BX, VETT[SI]<br/> 
+<br/> 
 ### continua:<br/> 
 ADD SI, 2<br/> 
 DEC CX<br/> 
@@ -364,18 +384,23 @@ MOV AX, BX<br/>
 # 07-Istruzioni-di-controllo del flusso<br/> 
 Costrutto JUMP: JMP<br/> 
 <br/> 
+<br/> 
 ### Costrutto switch:<br/> 
 <br/> 
 ### C:<br/> 
 switch(var) {<br/> 
-	### case '1':<br/> 
+	<br/> 
+### case '1':<br/> 
 		break;<br/> 
-	### case '2':<br/> 
+	<br/> 
+### case '2':<br/> 
 		break;<br/> 
-	### case '3':<br/> 
+	<br/> 
+### case '3':<br/> 
 		break;<br/> 
 <br/> 
 ### }<br/> 
+<br/> 
 <br/> 
 ### ASSEMBLER:<br/> 
 .DATA<br/> 
@@ -393,13 +418,18 @@ MOV BX, VAR<br/>
 SHL BX, 1     ; SHiftLeft sposta i bit a sinistra, equivale a BX\*=2<br/> 
 JMP TAB[BX]<br/> 
 <br/> 
+<br/> 
 ### lab_1:<br/> 
 	JMP continue<br/> 
+<br/> 
 ### lab_2:<br/> 
 	JMP continue<br/> 
+<br/> 
 ### lab_3:<br/> 
 	JMP continue<br/> 
+<br/> 
 ### continue:<br/> 
+<br/> 
 <br/> 
 <br/> 
 ### ISTRUZIONE LOOP:<br/> 
@@ -408,18 +438,22 @@ esecuzioni. Decrementa di 1 CX ad ogni iterazione.<br/>
 <br/> 
 es. <br/> 
 MOV CX, N<br/> 
+<br/> 
 ### BEGIN:<br/> 
 	DEC CX<br/> 
 	JNZ BEGIN<br/> 
 <br/> 
+<br/> 
 ### is equal to:<br/> 
 <br/> 
 MV CX, N<br/> 
+<br/> 
 ### BEGIN:<br/> 
 	LOOP BEGIN<br/> 
 <br/> 
 LE istruzioni LOOPE e LOOPNE oltre a controllare il valore del registro CX <br/> 
 controllano anche il valore del flag ZF.<br/> 
+<br/> 
 <br/> 
 ### Oltre alle condizioni su CX valgono le seguenti:<br/> 
 LOOPE salta all'etichetta solo se ZF e' uguale a 1<br/> 
@@ -480,6 +514,7 @@ Esegue l operazione logica AND bit a bit tra dest e sorg senza modificare il con
 <br/> 
 <br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### ISTRUZIONI DI SCORRIMENTO:<br/> 
 <br/> 
@@ -507,6 +542,7 @@ per RCL invece CF e' come se fosse posto alla sinistra della parola da ruotare.<
 # 08A-Procedure<br/> 
 Le procedure sono l'equivalente assembly delle funzioni.<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### DEFINIZIONE DI UNA PROCEDURA:<br/> 
 <br/> 
@@ -533,6 +569,7 @@ che:- Salva nello stack l'indirizzo di ritorno- Trasferisce il controllo alla pr
 Una procedura di tipo NEAR e' richiamabile solo all'interno dello stesso segmento di codice.<br/> 
 Una procedura di tipo FAR e' richiamabile da provedure appartenenti a segmenti di codice diversi.<br/> 
 Di default, se non specifichiamo, la procedura viene assunta NEAR dall'assemblatore.<br/> 
+<br/> 
 <br/> 
 ### NB. E' buona regola fare in modo che ogni procedura:<br/> 
 - Esegua come prima operazione il salvataggio nello stack di tutti i registri che vengono da essa modificati<br/> 
@@ -573,6 +610,7 @@ Siano dati un sistema da realizzare di cui e' noto il comportamento e una serie 
 l'attivita' di progetto consiste nell'individuare una connessione di componenti tale per cui il comportamento<br/> 
 sia quello desiderato e le specifiche (anche il costo) siano soddisfatte.<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### SPECIFICHE:<br/> 
 velocita'<br/> 
@@ -597,6 +635,7 @@ errori.<br/>
 <br/> 
 <br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### PROGETTO GERARCHICO:<br/> 
 Realizzato in maniera top-down (nella pratica si combina con altre tecniche bottom-up):<br/> 
@@ -604,6 +643,7 @@ Realizzato in maniera top-down (nella pratica si combina con altre tecniche bott
 - ogni componente deve essere il piu' indipendente possibile<br/> 
 - spesso si conosce il funzionamento e le caratteristiche di un modulo senza pero' conoscerne i dettagli <br/> 
 dell'implementazione (black-box)<br/> 
+<br/> 
 <br/> 
 <br/> 
 ### <br/> 
@@ -648,6 +688,7 @@ implementata dalle uscite.<br/>
 <br/> 
 Es. Codificatore (esempio slide 21 progetto1), e' un sistema che permette di codificare in uscita, l'entrata <br/> 
 in quel momento a 1.<br/> 
+<br/> 
 <br/> 
 ### SISTEMA SEQUENZIALE:<br/> 
 La storia passata del sistema viene di solito codificata dalla VARIABILE DI STATO Y del sistema.<br/> 
@@ -725,6 +766,7 @@ Insiemi COMPLETI:- {NAND}- {NOR}- {AND, NOT}- {OR, NOT}- {AND, OR, NOT}<br/>
 Ps. Nella pratica sono frequenti i circuiti che implementano solo porte NAND (o NOR)<br/> 
 <br/> 
 <br/> 
+<br/> 
 ### Circuiti combinatori ben formati:<br/> 
 Si dicono CCBF (Circuiti Combinatori Ben Formati) i circuiti che soddisfano le seguenti regole:- Una singola linea o una singola porta e' una ccbf- La giustapposizione di 2 ccbf (metterne 2 e non collegarli) e' un ccbf- Se C1 e C2 sono ccbf, il circuito ottenuto connettendo un insieme di linee di uscita di C1 ad un insieme di <br/> 
 linee di ingresso di C2 e' un ccbf- Se xi e xj sono due linee di ingresso ad un ccbf (ci sono 2 ccbf, xi e' relativo ad uno e xj all'altro), il <br/> 
@@ -773,6 +815,7 @@ gruppo AND compaiono tutti i termini in ingresso -MAXTERM: Quando all'interno di
 i termini in ingresso -CUBO: Quando all'interno di un gruppo AND NON compaiono tutti i termini in ingresso<br/> 
 <br/> 
 <br/> 
+<br/> 
 ### MAPPE DI KARNAUGH (Metodo per la costruzione del circuito combinatorio minimo) Utilizzabile per funzioni con:<br/> 
 	1 sola uscita<br/> 
 	fino a 4 ingressi<br/> 
@@ -818,8 +861,8 @@ memorizzare informazioni.<br/>
 Questi sono i flip-flop SR (Set, Reset), composti da due ingressi S ed R che possono assumere diversi valori:-  S=1, R=0 => 1-  S=0, R=1 => 0-  S=0, R=0 => Mantiene in uscita il valore precedente (puo' quindi memorizzare un valore in uscita e continuare ad emetterlo)-  S=1, R=1 => Limite del componente, questa e' una configurazione vietata perche' il flip-flop avrebbe in questo caso un comportamento non deterministico che varia a seconda dei ritardi associati alle singole porte che compongono il flip-flop<br/> 
 <br/> 
 Il comportamento del flip-flop, essendo un componente sequenziale e non combinatorio (per la presenza del ciclo nel circuito), puo' essere descritto attraverso la TAVOLA DEGLI STATI (sulle righe il valore precedente, sulle colonne le entrate)<br/> 
-<br/> 
-				### SR<br/> 
+				<br/> 
+### SR<br/> 
 		00		01		10<br/> 
 <br/> 
 ### Y	0 |	 0		 0		 1<br/> 
@@ -838,11 +881,11 @@ Risolve il problema della configurazione vietata utilizzando un solo ingresso D 
 <br/> 
 ### CLOCK=1<br/> 
 			D<br/> 
-<br/> 
-		### 0		1<br/> 
+		<br/> 
+### 0		1<br/> 
 Y	0 | 0		1		Se il clock e' a 1 quindi viene memorizzato il valore di D<br/> 
-<br/> 
-	### 1 |	0		1<br/> 
+	<br/> 
+### 1 |	0		1<br/> 
 <br/> 
 <br/> 
 Se il clock e' uguale a 0 invece il valore di D viene ignorato e in uscita continua ad esserci il valore precedente<br/> 
@@ -858,12 +901,14 @@ FLIP FLOP SR con Clock, Preset e Clear asincroni<br/>
 Preset e Clear mettono rispettivamente in uscita il valore 1 e 0 a prescindere dal valore di Clock. <br/> 
 <br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### RITARDO LOGICA COMBINATORIA:<br/> 
 Importante, vedere sul quadernino di JustEat (Risushitato) perche servivano i grafici dei tempi e della frequenza.<br/> 
-### Bisogna che la frequenza di clock f dei flipflop sia determinata in modo che il tempo T=1/f fra due fronti di clock successivi rispetti la seguente disuguaglianza:<br/> 
 <br/> 
-		### T > ∆ + δ<br/> 
+### Bisogna che la frequenza di clock f dei flipflop sia determinata in modo che il tempo T=1/f fra due fronti di clock successivi rispetti la seguente disuguaglianza:<br/> 
+		<br/> 
+### T > ∆ + δ<br/> 
 <br/> 
 ∆ - Massimo ritardo della logica combinatoria<br/> 
 δ - Ritardo dei flip flop<br/> 
@@ -1000,6 +1045,7 @@ Aggiunge una logica al Ripple Carry Adder per calcolare a priori tutti i carry d
 <br/> 
 Questa logica calcola secondo le formule nella slide 32-33 i carry per tutti i bit della somma utilizzando soltanto il carry in ingresso e g e p, che sono semplicemente l'and e l'or tra due addendi corrispondenti.<br/> 
 <br/> 
+<br/> 
 ### utilizza questa formula ripetuta per tutti i bit dell'operazione:<br/> 
 c(i)=g(i)+p(i)c(i-1)<br/> 
 (Guardare slide 33 per l'esempio a 4 bit)<br/> 
@@ -1036,6 +1082,7 @@ Possiamo collegare comparatori in serie per confrontare numeri a piu di 4 bit co
 # 17-Registri<br/> 
 REGISTRO A m BIT<br/> 
 Riceve in in ingresso m bit di dato che salvera' internamente, e che poi mandera' in uscita.<br/> 
+<br/> 
 ### Ha altri due segnali:<br/> 
 LOAD: memorizza internamente cio' che riceve in  ingresso<br/> 
 CLEAR: azzera il contenuto del registro<br/> 
@@ -1112,8 +1159,10 @@ Mettiamo quindi un decoder con parallelismo 20-18=2bit che mappera' il modulo da
 ### RAM STRUTTURA INTERNA (slide 79)<br/> 
 Una ram da 2^k parola da n bit sara' composta da:-  2^k registri-  Un decoder in ingresso-  Un multiplexer in uscita<br/> 
 <br/> 
+<br/> 
 ### Scrittura:<br/> 
 I segnali di indirizzo vanno agli ingressi del decoder le cui uscite alimentano il segnale di load dei vari registri. Quando quindi il decoder attiva il relativo registro, quest'ultimo sara' attivato per caricare i dati in ingresso.<br/> 
+<br/> 
 <br/> 
 ### Lettura:<br/> 
 In lettura attivo il multiplexer che riceve in ingresso gli n bit di dato di uscita di ogni registro. Il multiplexer sara' pilotato dallo stesso segnale di indirizzo del decoder che ha attivato la parola da leggere e attiva l'uscita su n bit del multiplexer relativa alla parola attivata.<br/> 
@@ -1180,6 +1229,7 @@ L'unita di elaborazione e' la parte che contiene i registri, il bus interno che 
 Es slide n.6: (ci fa vedere le operazioni necessarie ad eseguire questa add internamente all'unita di elaborazione)<br/> 
 ADD R1, R2, R3				==			R1+R2->R3<br/> 
 <br/> 
+<br/> 
 ### operazione [segnale]:<br/> 
 R1 -> BUS [R1out]<br/> 
 BUS -> Y [Yin]<br/> 
@@ -1196,6 +1246,7 @@ Queste sopra sono dette microistruzioni (istruzioni elementari) e ad ogni colpo 
 TRASFERIMENTO Ri -> Rj (tra registri)<br/> 
 Attivare Riout<br/> 
 Attivare Rjin<br/> 
+<br/> 
 <br/> 
 ### <br/> 
 ### IMPORTANTE:<br/> 
@@ -1402,6 +1453,7 @@ Caratteristiche:-  Per la maggior parte microprogrammata ma in parte anche cabla
 La velocita' con cui aumenta nel tempo la velocita' delle CPU e' molto maggiore della velocita' con cui aumenta la velocita' delle memorie nel tempo, e questo e' un problema perche si genera un collo di bottiglia.<br/> 
 La velocita' dei processori raddoppia tendenzialmente ogni anno e mezzo, la velocita' delle memorie invece ogni 10 anni, con conseguente aumento di differenza tra velocita' di processori e memorie.<br/> 
 <br/> 
+<br/> 
 ### Una soluzione a questo problema puo' essere avere piu' livelli di memoria:<br/> 
 Ad esempio uno piu piccolo e veloce e uno piu lento e grande e mettere su un meccanismo che passa i dati dalla lenta alla veloce a seconda dei dati che mi servono per accederci piu velocemente e sfruttare quindi la memoria piu' veloce per migliorare i tempi di esecuzione.<br/> 
 <br/> 
@@ -1421,21 +1473,25 @@ SLIDE 10 GERARCHIA DELLE MEMORIE:- MEMORIA INTERNA		^- MEMORIA PRINCIPALE		|Velo
 <br/> 
 <br/> 
 CLASSIFICAZIONE DELLE TECNOLOGIE DI MEMORIA:- COSTO: costo in dollari/bit o dollari/MB<br/> 
+<br/> 
 ### <br/> 
 ### - VELOCITA:<br/> 
 - Tempo di accesso (latenza): E' il tempo che intercorre tra la richiesta di un'azione e la sua esecuzione (inversamente proporzionale al costo)<br/> 
 - Tempo di ciclo: E' il tempo che intercorre tra una richiesta e il momento in cui la memoria e' pronta per accettare una nuova richiesta. (Tra l'operazione e una nuova richiesta una memoria potrebbe dover gestire operazioni interne) Puo' essere superiore al tempo di accesso, in altri casi puo' coincidere.<br/> 
 - Tempo di trasferimento: Se dobbiamo accedere a un blocco di memoria, dobbiamo attendere il tempo di accesso per ottenere la prima parte del blocco, mentre dovremo aspettare il tempo di trasferimento per accedere alle altre porzioni del blocco, che e' minore del tempo di accesso.<br/> 
+<br/> 
 ### <br/> 
 ### - MODI DI ACCESSO:<br/> 
 - SEQUENZIALE: Le informazioni possono essere lette/scritte solo in un ordine prefissato. E' il caso dei nastri o dei dischi magnetici. Il tempo di accesso dipende dalla posizione dell'informazione nel nastro.<br/> 
 - DIRETTO: E' il caso dei dischi magnetici che vedremo quando faremo i dischi magnetici.<br/> 
 - CASUALE: Quello della memoria RAM, ogni parola e' associata ad un indirizzo e per accedere alla memoria bisogna specificare un indirizzo e la memoria ci accede utilizzando una ricerca sequenziale. Il tempo di accesso e' uguale per tutte le locazioni di memoria.<br/> 
 - ASSOCIATIVO: Ci sono alcune memorie ("varianti delle RAM") che sono composte da parole come le RAM, ma la ricerca non avviene tramite l'indirizzo ma tramite la ricerca di un valore (la memoria e' divisa in una prima parte e una seconda parte collegate) nella prima parte che corrisponde a un'informazione nella seconda parte che sara' quella di cui avevamo bisogno. (Content Addressable Memory)CAM (Tipo dizionario in python)<br/> 
+<br/> 
 ### <br/> 
 ### - ALTERABILITA':<br/> 
 - ROM: Read Only Memory, puo' essere soltanto letta. Il contenuto viene deciso nella fase di progetto.<br/> 
 - PROM: Non l'ha nominato<br/> 
+<br/> 
 ### <br/> 
 ### - DUREVOLEZZA DEL CONTENUTO:<br/> 
 - Destructive Readout: alcune memorie (es. le ram dinamiche) nelle operazioni di lettura cancellano il valore. In questi casi e' necessario che il dato venga riscritto subito dopo la lettura. Questo causa un tempo di ciclo maggiore del tempo di accesso<br/> 
@@ -1443,10 +1499,12 @@ CLASSIFICAZIONE DELLE TECNOLOGIE DI MEMORIA:- COSTO: costo in dollari/bit o doll
 - VOLATILE: Perde il suo contenuto quando perde l'alimentazione.<br/> 
 <br/> 
 ### - AFFIDABILITA': <br/> 
+<br/> 
 ### Possono capitare due  tipi di guasti:<br/> 
 - GUASTI DI PROGETTO: Dovuti a bug del software o hardware.<br/> 
 - GUASTI TRANSITORI: Uno o piu bit cambiano valore ad un certo istante, ma la memoria continua a funzionare correttamente. Es. a causa di radiazioni, particelle alfa e co<br/> 
 - GUASTI PERMAMENTI: Qualcosa nella memoria smette definitivamente di funzionare. <br/> 
+<br/> 
 ### Misurata attraverso tre parametri:<br/> 
 - PARTI PER MILIONE: Numero di pezzi fallati ogni milione. (o anche miliardo)<br/> 
 - MEAN TIME TO FAILURE (MTTF): Tempo medio prima di avere un guasto.<br/> 
@@ -1460,6 +1518,7 @@ CLASSIFICAZIONE DELLE TECNOLOGIE DI MEMORIA:- COSTO: costo in dollari/bit o doll
 
 # 24-Memorie-Accesso-Casuale-RAM<br/> 
 SEGNALI DI CONTROLLO<br/> 
+<br/> 
 ### Sono fondamentali da due punti di vista:- Permettono di sapere il tipo di operazione (lettura scrittura)- Permettono la sincronizzazione con l'esterno (manca il segnale di clock):<br/> 
 - SOLUZIONE SINCRONA: Chi mi fornisce la memoria mi dice quali sono i tempi da rispettare nello scambio di informazioni con l'esterno, e cosi il programmatore deve organizzare la lettura dei dati considerando l'attesa. (Non sono necessari ulteriori segnali) (Il difetto fondamentale e' che la memoria dopo quel tempo deve aver risposto, per forza, qualsiasi cosa accada. Ricordare il caso del refreshing che rende il tempo di accesso poco stabile, e in questo caso bisogna adattare il tempo di attesa al massimo, il che e' uno spreco perche' nel 90% dei casi non abbiamo bisogno di aspettare anche il tempo del refreshing)<br/> 
 - SOLUZIONE ASINCRONA: Ha un segnale di controllo che avvisa quando i dati sono presenti sul Dbus. (Molto piu conveniente ad esempio quando c'e' il ciclo di refreshing) (Sconveniente perche' la memoria deve produrre l'MFC (il segnale di completamento) e l'utente deve gestirlo)<br/> 
@@ -1547,6 +1606,7 @@ Sono in grado di eseguire un numero LIMITATO di cicli di scrittura.<br/>
 <br/> 
 <br/> 
 RAM<br/> 
+<br/> 
 ### 2 tipi:- STATICHE (SRAM):<br/> 
 - La singola cella corrisponde a un flip flop.- DINAMICHE (DRAM):<br/> 
 - La singola cella corrisponde a un condensatore(gratis) e a un transistor<br/> 
@@ -1570,6 +1630,7 @@ La probabilita' di incappare in un rinfresco e' dello 0,64% (slide 38 per altri 
 La DRAM e' quindi piu' lenta, piu' economica e piu' densa della SRAM. <br/> 
 <br/> 
 La DRAM e' pero' poco affidabile perche' avendo piccoli condensatori, basta poco per scaricarli e generare un guasto transitorio. E l'affidabilita' diminuisce con il diminuire della dimensione dei condensatori.<br/> 
+<br/> 
 ### Per ovviare a questo problema si usano i cosiddetti CODICI DI PROTEZIONE:<br/> 
 	<br/> 
 - CODICE DI PARITA': Per ogni parola si aggiunge agli m bit di dato un ulteriore bit di parita' che gli utenti non vedono. Ogni volta che scrivo nella generica parola c'e' un circuitino che legge la parola a cui sto accedendo e ne calcola e memorizza il bit di parita' (secondo una certa logica. Es, se la somma dei bit a 1 e' pari, il bit di parita' viene messo a 0). Quando leggo invece, la parola e il bit di parita' vengono letti, ricalcolo la parita' e confronto il nuovo valore con quello memorizzato. Se sono uguali il dato e' integro, altrimenti c'e' stato un errore. In questo modo, anche se non aumenta l'affidabilita' ho modo di sapere se ho dati sporchi. (Se cambiano due bit non me ne accorgo, o se cambia valore il bit di parita' ottengo un errore che invece non ho).<br/> 
@@ -1612,6 +1673,7 @@ Quindi quando accedo in memoria, mi conviene portare l'intero blocco sulla cache
 Una chiamata a memoria viene gestita in questo modo: la chiamata viene intercettata dalla cache che controlla se il dato e' presente in cache e nel caso effettua l'operazione, altrimenti bisogna accedere alla memoria.<br/> 
 Si misura la probabilita' di trovare un dato in cache con un parametro h che ha un valore massimo di 1. Questo valore h non tende al rapporto della capacita' della cache / capacita' della memoria, ma tende a 0,9 solo grazie al principio di localita' dei riferimenti (slide 3).<br/> 
 <br/> 
+<br/> 
 ### Il tempo medio di accesso in memoria per la CPU e' dato da:<br/> 
 - h: hit ratio della cache<br/> 
 - C: tempo di accesso alla cache<br/> 
@@ -1623,6 +1685,7 @@ Si misura la probabilita' di trovare un dato in cache con un parametro h che ha 
 ### STRUTTURA CACHE<br/> 
 Una cache contiene al suo interno un certo numero di linee e ogni linea contiene un blocco di memoria e gli e' associato un campo TAG che indica il blocco di memoria presente nella linea in quel momento.<br/> 
 Contiene anche la logica per:- intercettare gli indirizzi del processore- cercare al suo interno l'eventuale blocco a cui il processore vuole fare l'accesso- eventualmente caricare da memoria il blocco.<br/> 
+<br/> 
 <br/> 
 ### Esiti della ricerca del blocco di memoria:<br/> 
 HIT: Se il dato e' presente in cache<br/> 
@@ -1653,6 +1716,7 @@ Per risolvere questo problema utilizziamo il set associative mapping.<br/>
 Le linee della cache sono organizzate in S insiemi composti da W linee. Ogni blocco i e' associato all'insieme k=i mod S e puo' essere messo in una qualunque delle W linee dell'insieme k. Valori comuni di W sono 2 o 4.<br/> 
 Se S=N (Con N dimensione della cache) abbiamo il direct mapping. Se S=1 si ha l'associative mapping.<br/> 
 <br/> 
+<br/> 
 ### In caso di miss si sovrascrive una determinata riga a seconda dei casi. Viene scelto tra:<br/> 
 LRU (Least Recently Used): viene sovrascritto quello che non viene utilizzato da piu' tempo.<br/> 
 FIFO (First-In First-Out): e' piu' economico ma non viene usato.<br/> 
@@ -1662,6 +1726,7 @@ random: semplice ed efficiente. (muah) <br/>
 Ps. Ogni linea contiene anche un bit di validita' che ci dice se ci e' stato gia' scritto sopra o contiene valori non inizializzati.<br/> 
 <br/> 
 SLIDE 26-ecc VEDERE WRITE-BACK E WRITE THROUGH<br/> 
+<br/> 
 <br/> 
 <br/> 
 ### <br/> 
@@ -1692,6 +1757,7 @@ Memoria secondaria non volatile, offline, basso costo ed elevato tempo di access
 <br/> 
 ### MEMORIE A DISCO MAGNETICO (HARD DISK)<br/> 
 -  Hard disk di tipo Winchester (disegno slide 16)<br/> 
+<br/> 
 <br/> 
 ### <br/> 
 ### TEMPO DI ACCESSO:<br/> 
@@ -1728,6 +1794,7 @@ Una tecnica di codifica molto semplice e' quella detta codifica di Fase o MANCHE
 <br/> 
 ### UNITA' A STATO SOLIDO<br/> 
 NON SONO AD ACCESSO SERIALE<br/> 
+<br/> 
 ### Non hanno parti in movimento e rispetto agli HDD tradizionali:<br/> 
 -  Sono piu' resistenti agli shock fisici<br/> 
 -  Minore tempo di accesso (accesso casuale)<br/> 
@@ -1742,10 +1809,12 @@ Per realizzarle la tecnologia piu' utilizzata e': Multi-level cell (MLC) NAND Fl
 <br/> 
 <br/> 
 ### MEMORIE OFFLINE<br/> 
+<br/> 
 ### Servono per memorizzare grandi moli di dati digitali (es filmati) e in questi casi il tempo di accesso non e' un problema; In questi casi i parametri importanti sono:<br/> 
 -  Il costo (anche di manutenzione)<br/> 
 -  La durata<br/> 
 -  L'ingombro<br/> 
+<br/> 
 ### Per queste applicazioni si usano:<br/> 
 -  Nastri magnetici<br/> 
 -  Cartucce<br/> 
@@ -1758,6 +1827,7 @@ NB. LTO (Linear Tape-Open) anche noto come Ultrium e' lo standard dominante nel 
 <br/> 
 <br/> 
 ### MEMORIE OTTICHE (CD DVD)<br/> 
+<br/> 
 ### Sono diffuse sotto forma di dischi ottici e hanno le seguenti caratteristiche:<br/> 
 -  Capacita' intorno ai Gbyte<br/> 
 -  Elevati tempi di accesso (1s)<br/> 
@@ -1781,6 +1851,7 @@ Prevedono quindi un flusso di bit o byte in entrata o in uscita e possono essere
 <br/> 
 I dispositivi vengono collegati al bus mediante un interfaccia che prevede sempre uno o piu' registri accessibili dal processore su cui puo' scrivere o leggere come farebbe su una cella di memoria.<br/> 
 L'interfaccia e' quindi una struttura hardware caratterizzata da questi registri che hanno un indirizzo e che si comportano da tramite tra il processore e la periferica.<br/> 
+<br/> 
 <br/> 
 ### Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:<br/> 
 <br/> 
@@ -1813,6 +1884,7 @@ In tutto cio' c'e' un problema di sincronizzazione dei dati tra la cpu e i perif
 Per risolvere si introduce un nuovo registro detto di STATO che include dei bit che dicono alla CPU se ad esempio e' disponibile un nuovo dato o se il registro della periferica e' pronto per la scrittura o cose del genere.<br/> 
 <br/> 
 In alcuni casi ci puo' essere un terzo registro detto di CONTROLLO in cui la cpu va a scrivere alcuni bit che danno informazioni alla periferica. (Esempio della stampante e bit che dicono alla stampante in che qualita' stampare o se stampare in bianco e nero o a colori).<br/> 
+<br/> 
 <br/> 
 <br/> 
 <br/> 
@@ -1843,6 +1915,7 @@ Se questo metodo dal lato della periferica e' abbastanza semplice da implementar
 <br/> 
 (Vedere schema slide 18)<br/> 
 La cpu riceve quindi un segnale di interrupt (detto INT) ricevuto da un nuovo dispotivo detto Controllore dell'Interrupt. <br/> 
+<br/> 
 ### Questo segnale viene gestito in diversi modi:<br/> 
 -  Polling<br/> 
 -  Interrupt Vettorizzato<br/> 
@@ -1857,13 +1930,13 @@ Esiste un solo segnale per le richieste di interrupt e quando la cpu lo riceve s
 ### INTERRUPT VETTORIZZATO<br/> 
 L'Interrupt Controller manda alla CPU il segnale di Interrupt, la cpu risponde con un segnale detto di Interrupt Acknowledge all'interrupt controller che quando lo riceve mette sul bus un codice corrispondente alla periferica che ha mandato il segnale di Interrupt. La cpu legge quel codice dal bus ed esegue l'operazione che doveva eseguire sul registro di quella periferica.<br/> 
 <br/> 
-<br/> 
-	### ISR (Interrupt Service Routine)<br/> 
+	<br/> 
+### ISR (Interrupt Service Routine)<br/> 
 	Possiamo vederli come i driver che installiamo per le periferiche: sono i pezzi di codice che la cpu esegue per comunicare con quella periferica.<br/> 
 	A differenza delle normali procedure usa IRET per terminare perche oltre a ripristinare il PC (program counter) come la ret, ripristina anche il registro dei flag (PSW)<br/> 
 <br/> 
-<br/> 
-	### IVT (Interrupt Vector Table)<br/> 
+	<br/> 
+### IVT (Interrupt Vector Table)<br/> 
 	E' una tabella in cui ad ogni periferica viene associata l'ISR corrispondente. Il codice che l'interrupt controller mette sul bus e' l'indice della periferica nell'IVT. (Spesso e' messa all'inizio della memoria) <br/> 
 <br/> 
 Questo meccanismo e' molto flessibile, infatti per aggiungere una nuova periferica basta aggiungere una nuova ISR e aggiungere un indice all'IVT.<br/> 
@@ -1889,6 +1962,7 @@ L'ordine di priorita' puo' essere modificato in run-time, puo' essere ad esempio
 <br/> 
 ### GESTIONE DELLE INTERRUZIONE DELLE INTERRUPT SERVICE ROUTINE<br/> 
 Es. Se mentre si sta servendo una periferica, un'altra periferica manda il segnale di interrupt.<br/> 
+<br/> 
 ### Due strade:<br/> 
 -  Le ISR non sono interrompibili, e quindi la seconda periferica dovra' aspettare. Se pero' e' sfortunata potrebbe aspettare molto tempo, e questo molte volte non e' possibile (Es. ricordare esempio braccio meccanico fiat).<br/> 
 -  Le ISR sono interrompibili solo da periferiche a priorita' piu' alta. Qusto metodo e' migliore ma ovviamente piu' complicato da implementare e da gestire.<br/> 
@@ -1900,6 +1974,7 @@ Questo problema e' misurato da un parametro LATENZA DI INTERRUPT, che e' il temp
 <br/> 
 ### INTERRUZIONE DEGLI INTERRUPT<br/> 
 Nell'8086, come in molti altri processori, nel PSW insieme agli altri flag c'e' l'Interrupt Flag (IF) che se messo a 0 dice alla CPU di ignorare QUALSIASI richiesta di interrupt.<br/> 
+<br/> 
 <br/> 
 ### Istruzioni 8086:<br/> 
 STI - Mette IF a 1<br/> 
@@ -1916,6 +1991,7 @@ Prevedono quindi un flusso di bit o byte in entrata o in uscita e possono essere
 <br/> 
 I dispositivi vengono collegati al bus mediante un interfaccia che prevede sempre uno o piu' registri accessibili dal processore su cui puo' scrivere o leggere come farebbe su una cella di memoria.<br/> 
 L'interfaccia e' quindi una struttura hardware caratterizzata da questi registri che hanno un indirizzo e che si comportano da tramite tra il processore e la periferica.<br/> 
+<br/> 
 <br/> 
 ### Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:<br/> 
 <br/> 
@@ -1951,6 +2027,7 @@ In alcuni casi ci puo' essere un terzo registro detto di CONTROLLO in cui la cpu
 <br/> 
 <br/> 
 <br/> 
+<br/> 
 ### per gestire la sincronizzazione:<br/> 
 <br/> 
 ### I/O PROGRAMMATO<br/> 
@@ -1975,6 +2052,7 @@ Se questo metodo dal lato della periferica e' abbastanza semplice da implementar
 <br/> 
 (Vedere schema slide 18)<br/> 
 La cpu riceve quindi un segnale di interrupt (detto INT) ricevuto da un nuovo dispotivo detto Controllore dell'Interrupt. <br/> 
+<br/> 
 ### Questo segnale viene gestito in diversi modi:<br/> 
 -  Polling<br/> 
 -  Interrupt Vettorizzato<br/> 
@@ -1989,13 +2067,13 @@ Esiste un solo segnale per le richieste di interrupt e quando la cpu lo riceve s
 ### INTERRUPT VETTORIZZATO<br/> 
 L'Interrupt Controller manda alla CPU il segnale di Interrupt, la cpu risponde con un segnale detto di Interrupt Acknowledge all'interrupt controller che quando lo riceve mette sul bus un codice corrispondente alla periferica che ha mandato il segnale di Interrupt. La cpu legge quel codice dal bus ed esegue l'operazione che doveva eseguire sul registro di quella periferica.<br/> 
 <br/> 
-<br/> 
-	### ISR (Interrupt Service Routine)<br/> 
+	<br/> 
+### ISR (Interrupt Service Routine)<br/> 
 	Possiamo vederli come i driver che installiamo per le periferiche: sono i pezzi di codice che la cpu esegue per comunicare con quella periferica.<br/> 
 	A differenza delle normali procedure usa IRET per terminare perche oltre a ripristinare il PC (program counter) come la ret, ripristina anche il registro dei flag (PSW)<br/> 
 <br/> 
-<br/> 
-	### IVT (Interrupt Vector Table)<br/> 
+	<br/> 
+### IVT (Interrupt Vector Table)<br/> 
 	E' una tabella in cui ad ogni periferica viene associata l'ISR corrispondente. Il codice che l'interrupt controller mette sul bus e' l'indice della periferica nell'IVT.<br/> 
 <br/> 
 Questo meccanismo e' molto flessibile, infatti per aggiungere una nuova periferica basta aggiungere una nuova ISR e aggiungere un indice all'IVT.<br/> 
@@ -2017,6 +2095,7 @@ Vengono usate per moli significative di dati (non possiamo aspettare che vengano
 Messa sul mercato prima dell'8086 e corrispondeva ad un dispositivo che andava inserito sulla scheda madre. Nel tempo il processore e' diventato sempre piu' potente e l'interfaccia parallela e' andata a finire direttamente nel chipset della CPU.<br/> 
 <br/> 
 L'8255 puo' gestire fino a 3 periferiche, quindi 3 canali che posso programmare come Input/output.<br/> 
+<br/> 
 ### Contiene:<br/> 
 -  3 registri di dato associati alle 3 periferiche che lui e' in grado di gestire.<br/> 
 -  1 registro di controllo dove la cpu puo' scrivere se le periferiche sono di input o output.<br/> 
@@ -2026,9 +2105,11 @@ L'8255 puo' gestire fino a 3 periferiche, quindi 3 canali che posso programmare 
 <br/> 
 (Nell'esempio di un sistema composto da 8086, Memoria, 8255 e altre periferiche, il tutto mappato in isolated IO, oltre a questi componenti avremo anche una logica combinatoria che quando IO/M viene attivato capisce a quale periferica si riferisce l'indirizzo ricevuto e attiva il CS corrispondente alla periferica. E' quindi una logica combinatoria che rimanda alla periferica desiderata.)<br/> 
 <br/> 
+<br/> 
 ### Funzionamento:<br/> 
 L'8255 puo' anche essere configurato per decidere il modo di funzionamento (polling 0 o interrupt 1 o modo 2).<br/> 
 Possiamo utilizzare il polling per le periferiche di input solo se siamo sicuri che la cpu riesca a leggere il dato messo sul registro prima che ne riceva uno nuovo (quindi solo per periferiche "lente" tipo sensore) altrimenti nasce un problema di sincronizzazione e il dato viene perso.<br/> 
+<br/> 
 <br/> 
 ### Il modo interrupt funziona in questo modo:<br/> 
 <br/> 
@@ -2040,12 +2121,14 @@ Possiamo utilizzare il polling per le periferiche di input solo se siamo sicuri 
 -  Non appena la CPU avra' letto il dato tramite la procedura di servizio, l'8255 informa la periferica che e' pronta a ricevere un nuovo dato annullando il segnale IBF.<br/> 
 -  E il ciclo puo' ricominciare...<br/> 
 <br/> 
+<br/> 
 ### <br/> 
 ### OUTPUT:<br/> 
 -  La cpu scrive sul registro di dato dell'8255 che manda un segnale di OUTPUT BUFFER FULL (OBF) alla periferica.<br/> 
 -  La periferica legge il registro di dato e manda un segnale di ACKNOWLEDGE per informare la periferica che l'ha ricevuto e che lo sta elaborando.<br/> 
 -  Quando la periferica e' pronta per ricevere un nuovo dato, disattiva il segnale di ACKNOWLEDGE e l'8255 manda un segnale di interrupt alla CPU per farle scrivere sul registro di dato<br/> 
 -  E il ciclo puo' ricominciare...<br/> 
+<br/> 
 <br/> 
 <br/> 
 ### <br/> 
@@ -2058,12 +2141,14 @@ I segnali utilizzati in interrupt (STB, IBF / OBG, ACK e anche l'Interrupt) non 
 Utilizzata per le periferiche sia di Input che di Output e avra' quindi bisogno di 4 segnali aggiuntivi (STB, IBF, OBG, ACK), quindi anche in questo modo potremo collegare al massimo 2 periferiche e non 3. (E' possibile collegare solo la periferica 1 in modo 2 perche avra' bisogno in totale di 5 segnali aggiuntivi (anche l'interrupt oltre quelli di prima), quindi non abbiamo abbastanza segnali per collegare anche la seconda periferica in modo 2.)<br/> 
 <br/> 
 PROGRAMMAZIONE 8255 (Vedere slide 15 per capire i bit del registro di controllo)<br/> 
+<br/> 
 ### Possibili modi per le varie porte:<br/> 
 <br/> 
 ### -  A: 0/1/2<br/> 
 -  B: 0/1<br/> 
 <br/> 
 ### -  C: 0<br/> 
+<br/> 
 <br/> 
 ### Possibili programmazioni:<br/> 
 <br/> 
