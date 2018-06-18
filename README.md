@@ -2404,22 +2404,6 @@ Il tempo  richiesto puo' essere cosi scomposto:
 - Il tempo per l'accesso a tale operando
 - Il tempo per l'esecuzione
 
-{
-	name: nome del primo padre,
-	sons: [
-		{name: nome del primo figlio,
-		sons: [
-			{name: altro figlio,
-			sons: [{...altri figli ancora...}]
-			}
-			]
-		},
-		{name: un'altro figlio,
-		sons: [{..altri figli...}]
-		}
-	]
-}
-
 
 
 # ARCHITETTURE A PIPELINE
