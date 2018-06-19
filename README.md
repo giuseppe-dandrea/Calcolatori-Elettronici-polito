@@ -326,7 +326,15 @@ Table of Contents
                * [Software](#software-1)
                   * [Ottimizzazione](#ottimizzazione)
          * [Salti condizionati](#salti-condizionati)
-      * [RISC - Reduced Instruction Set Computer](#risc---reduced-instruction-set-computer)
+      * [RISC - Reduced Instruction Set Computer (CPI ~ 1)](#risc---reduced-instruction-set-computer-cpi--1)
+         * [Caratteristiche](#caratteristiche)
+      * [PROCESSORI SUPERSCALARI (CPI &lt; 1)](#processori-superscalari-cpi--1)
+         * [Struttura](#struttura)
+         * [Problemi](#problemi-1)
+            * [Completamento non in ordine](#completamento-non-in-ordine)
+         * [Numero di stadi della pipeline](#numero-di-stadi-della-pipeline)
+      * [PROCESSORI MULTITHREAD](#processori-multithread)
+         * [PROCESSORI MULTICORE](#processori-multicore)
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
@@ -2848,16 +2856,50 @@ se il salto poi deve essere eseguito ci sara' un numero di istruzioni da saltare
 
 
 
-## RISC - Reduced Instruction Set Computer
+## RISC - Reduced Instruction Set Computer (CPI ~ 1)
 Caratterizzati da:
 - Elevata semplicita'
 - Numero ridotto di istruzioni che abbiano lo stesso formato e la stessa dimensione
 - Elevato numero di registri
 - Architettura a *pipeline*
 
+### Caratteristiche
+- 1 istruzione = 1 ciclo di clock; cioe' ad ogni ciclo di clock termina un'istruzione, non che ogni istruzione richiede un ciclo di clock per essere eseguita
+- Istruzioni semplici e regolari
+- Le istruzioni RISC hanno la complessita' delle microistruzioni CISC, quindi l'**unita' di controllo** puo' essere realizzata con la tecnica cablata anziche' microprogrammata. (Il che massimizza la velocita')
+- Ha due sole istruzioni (*LOAD & STORE*) che accedono in memoria, quindi tutte le altre istruzioni hanno operandi nei registri, il che le rende piu' veloci. (Niente decodifica degli indirizzi e tempo di accesso della memoria)
+- I registri sostituiscono lo stack, quindi diminuiscono gli accessi in memoria
+- Dal punto di vista delle dimensioni del codice, il codice generato per un RISC ha dimensioni comparabili (forse poco maggiore) a quelle di un CISC perche si il RISC ha piu istruzioni, ma sono piu' corte.
+- Nei RISC la latenza di interrupt e' in genere minore grazie alle istruzioni piu' semplici, e sono quindi piu' indicati per applicativi real-time.
 
 
+## PROCESSORI SUPERSCALARI (CPI < 1)
+Processori che in un singolo colpo di clock riescono a completare piu' di un'istruzione.
+Sfruttano l'idea di eseguire piu' operazioni in parallelo, ad esempio mettendo due pipeline parallele, idealmente si completerebbero due istruzioni per colpo di clock (idealmente...).
+
+### Struttura
+- *Unita' di __FETCH__* in grado di caricare molte (2.. 4 bho) istruzioni per colpo di clock
+- *Coda delle istruzioni*
+- *Unita' di __DISPATCH__* in grado di capire il tipo di istruzione e mandarla all'unita' di _OPERATE_ opportuna
+- *Diverse unita' di __OPERATE__* in grado di lavorare in parallelo
+
+![alt-text](imgs/powerpc.png)
+
+### Problemi
+
+#### Completamento non in ordine
+Ovviamente con diverse unita' che lavorano in parallelo, un'istruzione piu' semplice arrivata dopo una piu' complessa potrebbe essere completata prima anche se veniva prima nell'ordine.
+
+Per risolvere questo problema si introduce la **Coda di completamento** che ha il compito di prendere tutte le istruzioni che escono dalle unita' funzionali e di farle attendere per il completamento finche non vengono completate le precedenti.
+
+### Numero di stadi della pipeline
+Teoricamente se aumenta il numero di stadi aumentano le prestazioni del processore, ma aumentando il numero di stadi aumenta anche la probabilita' di stalli. Si e' arrivati quindi al rapporto ottimale durante gli anni 2000.
+
+Il passo successivo e' consistito nell'andare a sfruttare altri livelli di parallelismo. Cioe' l'unita' di dispatch ha il compito di cercare le istruzioni piu' indipendenti tra loro da far eseguire in parallelo.
+
+## PROCESSORI MULTITHREAD
+Il passo seguente poi sono stati i processori multithread, possiamo immaginre ogni thread come una porzione di programma indipendente,, questi thread quindi possono essere eseguiti in parallelo, aumentando il livello di parallelismo e quindi di prestazioni del processore.
 
 
-
-
+### PROCESSORI MULTICORE
+Si e' pensato di integrare all'interno di un unico chip diversi processori di complessita' non troppo elevata che se riescono a lavorare bene in parallelo ottengono un aumento delle prestazioni con bassi consumi.
