@@ -1085,60 +1085,62 @@ L'unico modo per memorizzare delle variabili locali e' salvarle nello stack (met
 
 # 09-Progetto-di-circuiti-logici
 
-PROGETTO:
-Siano dati un sistema da realizzare di cui e' noto il comportamento e una serie di commponenti,
-l'attivita' di progetto consiste nell'individuare una connessione di componenti tale per cui il comportamento
-sia quello desiderato e le specifiche (anche il costo) siano soddisfatte.
-### 
-### SPECIFICHE:
-velocita'
-consumo di potenza
-affidabilita'
-durata
-costo
-ecc.
+## Progetto
+Siano dati un sistema da realizzare di cui e' noto il comportamento e una serie di componenti: l'attivita' di progetto consiste nell'individuare una connessione di componenti tale per cui il comportamento sia quello desiderato e le specifiche siano soddisfatte.
+
+### Specifiche
+- *Velocita'*
+- *Consumo di potenza*
+- *Affidabilita'*
+- *Durata*
+- *Costo*
+
+## Ciclo di vita di un prodotto
+Quattro fasi:
+- **SPECIFICA**: si passa  dall'idea a stilare un documento che descriva il comportamento e i vincoli del sistema
+- **PROGETTO**: si passa dalle specifiche ad un modello utilizzabile da  chi produce il sistema
+- **PRODUZIONE**: si passa dal modello al prodotto
+- **OPERATIVITA'**: il prodotto e' operativo.
+
+NB. e' importante notare che prima di passare alla fase successiva e' fondamentale verificare la correttezza di quanto sviluppato fino ad allora, perche piu' si va avanti e piu' cresce il costo per riparare eventuali errori.
 
 
-### CICLO DI VITA DI UN PRODOTTO: (4 fasi)
-
-SPECIFICA: si passa  dall'idea a stilare un documento che descriva il comportamento e i vincoli del sistema
-PROGETTO: si passa dalle specifiche ad un modello utilizzabile da  chi produce il sistema
-PRODUZIONE: si passa dal modello al prodotto
-OPERATIVITA': il prodotto e' operativo.
-
-NB. e' importante notare che prima di passare alla fase successiva e' fondamentale verificare la correttezza 
-di quanto sviluppato fino ad allora, perche piu' si va avanti e piu' cresce il costo per riparare eventuali 
-errori.
-
-
-### 
-### PROGETTO GERARCHICO:
+## Progetto Gerarchico
 Realizzato in maniera top-down (nella pratica si combina con altre tecniche bottom-up):
-- i componenti corrispondono ad entita' fisiche (circuiti integrati ecc.) o moduli predefiniti (es appartenenti ad una libreria)
+- i componenti corrispondono ad entita' fisiche (circuiti integrati ecc.) o moduli predefiniti (es. appartenenti ad una libreria)
 - ogni componente deve essere il piu' indipendente possibile
-- spesso si conosce il funzionamento e le caratteristiche di un modulo senza pero' conoscerne i dettagli 
-dell'implementazione (black-box)
+- spesso si conosce il funzionamento e le caratteristiche di un modulo senza pero' conoscerne i dettagli dell'implementazione (black-box)
 
-### 
-### LIVELLO DI PROGETTO:
-Il livello del progetto e' definito dal tipo di componenti utilizzati in ciascuna fase; un componente ad un 
-certo livello corrisponde ad un insieme di componenti al livello inferiore.
+ 
+## Livello di Progetto
+Il livello del progetto e' definito dal tipo di componenti utilizzati in ciascuna fase. 
 
-Livelli:- elettrico- transistor (o switch)- porte logiche (o gate)- registri (o register transfer RT)- sistema
+Un componente ad un certo livello corrisponde ad un insieme di componenti al livello inferiore.
 
-Livello		Componenti				Unità di dato	Unità di tempo
-Sistema | CPU, processori di IO | Blocchi di parole | 10-3÷103s
-				memorie
+Livelli:
+- *Elettrico*
+- *Transistor* (o *switch*)
+- *Porte logiche* (o *gate*)
+- *Registri* (o *Register Transfer RT*)
+- *Sistema*
 
-Registri | Registri, reti combinatorie | Parole |     10-9÷10-6s
-			Reti sequenziali semplici
+    Livello		Componenti				Unità di dato	Unità di tempo
+    Sistema | CPU, Processori, IO   | Blocchi di parole | 10-3÷103s
+    				memorie
 
-Porte logiche | Porte logiche          |   Bit  |     10-10÷10-8s
-				Flip flop
+    Registri | Registri, reti combinatorie | Parole |     10-9÷10-6s
+    			Reti sequenziali semplici
+
+    Porte logiche | Porte logiche          |   Bit  |     10-10÷10-8s
+    				Flip flop
 
 
 
-Il progetto di sistema avviene iterando ai vari livelli le stesse operazioni:- definizione delle specifiche (tramite opportuno formalismo)- Sintesi (manuale o automatica)- Verifica (attraverso simulazione o altro)
+Il progetto di sistema avviene iterando ai vari livelli le stesse operazioni:
+- *Definizione delle specifiche* (tramite opportuno formalismo)
+- *Sintesi* (manuale o automatica)
+- *Verifica* (attraverso simulazione o altro)
+
 Ps. Se si segue l'approccio top-down, in genere il risultato di un progetto a un certo livello spesso 
 costituisce direttamente l'insieme delle specifiche per il livello inferiore.
 
