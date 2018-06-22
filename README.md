@@ -506,14 +506,18 @@ Questo e' possibile perche i vari **CS/DS/SS (_Code, Data, Stack_)** iniziano se
 
 ### Direct Addressing
 Indirizzamente diretto, ad esempio:
+
     MOV AX, TABLE
+
 Il processore prima controlla che table sia una variabile preventivamente dichiarata, poi ne legge l'indirizzo (offset) su 16 bit e lo somma al valore del **DS (_Data Segment_)** per ottenere l'indirizzo dove andare a leggere il contenuto.
 
 L'assemblatore mette quindi dentro l'istruzione che utilizza come operando un **Direct Addressing** l'offset della variabile.
 
 In casi come:
+
     MOV AX, TABLE + 2
     MOV AX, TABLE[2] 
+
 L'assemblatore somma all'offset della variabile il valore 2.
 
 
