@@ -839,15 +839,15 @@ Il salto viene eseguito solo se una determinata condizione e' verificata, in gen
 
     CMP AX, 15
 
-## JE/JNE
+### JE/JNE
 - **JE** Salta solo se i due operandi sono uguali
 - **JNE** Salta solo se i due operandi NON sono uguali
 
-## JZ/JNZ
+### JZ/JNZ
 - **JZ** Salta solo se lo **ZF (Zero Flag)** e' attivato
 - **JNZ** Salta solo se lo **ZF** e' disattivato
 
-## JL/JB - JG/JA
+### JL/JB - JG/JA
 - **JL/JB** Salta solo se il primo numero e' minore del secondo (nella CMP)
     - **JL** Per numeri con segno
     - **JB** Per numeri senza segno
@@ -859,7 +859,7 @@ Riassumendo:
 - **Jump Less/Greater** Per numeri con segno
 - **Jump Above/Below** Per numeri senza segno
 
-## JC e JO
+### JC e JO
 Hanno anche le varianti **JNC** e **JNO**
 Si usano per testare il valore del flag di carry o di overflow   
 
@@ -909,61 +909,69 @@ Interrupt Flag:
 
 
 # 08-Istruzioni-manipolazione-bit
+## Istruzioni Logiche
+### AND
 
-ISTRUZIONI LOGICHE:
+    AND dest, sorg
 
-AND dest, sorg
 Esegue l operazione AND bit a bit tra destinazione e sorgente.
 
-Es.
-Si puo utilizzare per trasformare un numero da codice ascii a numero binario.
+Es. Si puo utilizzare per trasformare un numero da codice ascii a numero binario.
 
-MOV AL, ASCII
-AND AL, 0FH     ;Mascheramento dei 4 bit alti
-MOV NUM, AL
+    MOV AL, ASCII
+    AND AL, 0FH     ;Mascheramento dei 4 bit alti
+    MOV NUM, AL
 
+### OR
 
-OR dest, sorg
+    OR dest, sorg
+
 Esegue OR bit a bit
 
-Es.
-Si puo utilizzare per trasformare un numero binario in codice ascii
+Es. Si puo utilizzare per trasformare un numero binario in codice ascii
 
-MOV AL, NUM
-OR AL, 30H
-MOV ASCII, AL
+    MOV AL, NUM
+    OR AL, 30H
+    MOV ASCII, AL
 
+### XOR
 
-XOR dest, sorg
+    XOR dest, sorg
 
-NOT operando
-Esegue l operazione logica di complementazione bit a bit del contenuto di 
-operando
+### NOT
 
+    NOT operando
 
-TEST dest, sorg
+Esegue l operazione logica di complementazione bit a bit del contenuto di operando
+
+### TEST
+
+    TEST dest, sorg
+
 Esegue l operazione logica AND bit a bit tra dest e sorg senza modificare il contenuto dei due operandi ma aggiornando il flag ZF
 
 
-### 
-### ISTRUZIONI DI SCORRIMENTO:
+## Istruzioni di Scorrimento
 
-SHIFT: L'ultimo bit nella direzione dello scorrimento e' posto a 0 o a un valore uguale a quello del bit di segno
-ROTAZIONE: l'ultimo bit nella direzione della rotazione viene copiato al posto del primo bit.
+- **SHIFT**: L'ultimo bit nella direzione dello scorrimento e' posto a 0 o a un valore uguale a quello del bit di segno
+- **ROTAZIONE**: l'ultimo bit nella direzione della rotazione viene copiato al posto del primo bit.
 
-OPCODE operando, contatore
+    OPCODE operando, contatore
+
 NB. contatore puo essere 1 o il registro CL, ma a partire dall 80816 e' possibile utilizzare anche qualsiasi valore immediato.
 
-SHR - SHL (shift left o shift right, i bit vuoti vengono riempiti con 0, l'ultimo bit in uscita viene copiato nel flag CF; corrispondono rispettivamente a una divisione 
-e a una moltiplicazione per 2^n nel caso di numeri interi senza segno.
+### Shift
+**SHR - SHL** (shift left o shift right, i bit vuoti vengono riempiti con 0, l'ultimo bit in uscita viene copiato nel flag CF; corrispondono rispettivamente a una divisione e a una moltiplicazione per 2^n nel caso di numeri interi senza segno.
 
-SAR - SAL: SAL = SHL; SAR invece si comporta come SHR ma i bit vuoti a sinistra sono riempiti di bit pari al valore del bit piu significativo. SAR permette di eseguire una 
-divisione di un numero intero con segno per una potenza di 2.
-Come prim l'ultimo bit in uscita viene copiato nel flag CF.
+**SAR - SAL**: SAL = SHL; SAR invece si comporta come SHR ma i bit vuoti a sinistra sono riempiti di bit pari al valore del bit piu significativo. 
 
-ROR - ROL: Rotazione a destra o sinistra. Per ROR in CF e' copiato il bit meno significativo mentre in ROL in CF e' copiato il bit piu' significativo.
+SAR permette di eseguire una divisione di un numero intero con segno per una potenza di 2.
+Come prima l'ultimo bit in uscita viene copiato nel flag CF.
 
-RCR - RCL: Rotazione a destra o sinistra ma per RCR e' come se CF fosse un bit in piu posto alla destra della parola da ruotare, 
+### Rotazione
+**ROR - ROL**: Rotazione a destra o sinistra. Per ROR in CF e' copiato il bit meno significativo mentre in ROL in CF e' copiato il bit piu' significativo.
+
+**RCR - RCL**: Rotazione a destra o sinistra ma per RCR e' come se CF fosse un bit in piu posto alla destra della parola da ruotare, 
 per RCL invece CF e' come se fosse posto alla sinistra della parola da ruotare.
 
 
