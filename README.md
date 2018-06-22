@@ -1029,14 +1029,14 @@ es.
 
 ## Passaggio di Parametri
 3 modi:
-- VARIABILI GLOBALI: estremamente semplice, non c'e' passaggio di parametri ma lavora direttamente sulle variabili globali. Sconsigliato perche' rende la procedura poco riutilizzabile.
-- REGISTRI: I parametri in ingresso e uscita possono essere letti e scritti utilizzando i registri general purpose, e' estremamente semplice ed e' utilizzabile solo quando i dati su cui operare sono pochi.
-- STACK: E' piu complesso da implementare a causa della regola di buona norma di prima e del fatto che nello stack c'e' l'indirizzo di ritorno.
+- **VARIABILI GLOBALI**: estremamente semplice, non c'e' passaggio di parametri ma lavora direttamente sulle variabili globali. Sconsigliato perche' rende la procedura poco riutilizzabile.
+- **REGISTRI**: I parametri in ingresso e uscita possono essere letti e scritti utilizzando i registri general purpose, e' estremamente semplice ed e' utilizzabile solo quando i dati su cui operare sono pochi.
+- **STACK**: E' piu complesso da implementare a causa della regola di buona norma di prima e del fatto che nello stack c'e' l'indirizzo di ritorno.
 
 ### Stack
-Con lo stack si usa il registro BP (Base Pointer) che puo' contenere un puntatore all'interno dello stack.
-Appena entriamo nella procedura facciamo una push di BP e salviamo il valore di SP (Stack Pointer) in BP in modo da poter utilizzare BP+2, BP+4 ecc, per accedere al primo parametro, secondo ecc... Vedere slide 33 per 
-maggiore chiarezza.
+Con lo stack si usa il registro **BP (_Base Pointer_)** che puo' contenere un puntatore all'interno dello stack.
+
+Appena entriamo nella procedura facciamo una push di **BP** e salviamo il valore di **SP (_Stack Pointer_)** in **BP** in modo da poter utilizzare _BP+2_, _BP+4_ ecc, per accedere al primo parametro, secondo ecc... 
 
 Per avere un valore di ritorno, riserviamo uno slot nello stack **prima ancora di salvare i parametri in ingresso** con SUB SP, 2 e andiamo a salvare poi il parametro di ritorno utilizzando sempre il BP (es. MOV [BP+8], AX).
 
