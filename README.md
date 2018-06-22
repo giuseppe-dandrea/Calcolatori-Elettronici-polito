@@ -1391,10 +1391,11 @@ Preset e Clear mettono rispettivamente in uscita il valore 1 e 0 a prescindere d
 Importante, vedere sul quadernino di JustEat (Risushitato) perche servivano i grafici dei tempi e della frequenza.
 
 Bisogna che la frequenza di clock *f* dei flipflop sia determinata in modo che il tempo *T=1/f* fra due fronti di clock successivi rispetti la seguente disuguaglianza:
+
 `T > ∆ + δ`
 
-**∆** - Massimo ritardo della logica combinatoria
-**δ** - Ritardo dei flip flop
+- **∆** - Massimo ritardo della logica combinatoria
+- **δ** - Ritardo dei flip flop
 
 
 
