@@ -1387,7 +1387,7 @@ E' composto da due flip-flop di tipo D con clock. Il clock che entra nel primo f
 Preset e Clear mettono rispettivamente in uscita il valore 1 e 0 a prescindere dal valore di Clock. 
 
 
-### RITARDO LOGICA COMBINATORIA:
+## Ritardo Logica Combinatoria
 Importante, vedere sul quadernino di JustEat (Risushitato) perche servivano i grafici dei tempi e della frequenza.
 
 Bisogna che la frequenza di clock *f* dei flipflop sia determinata in modo che il tempo *T=1/f* fra due fronti di clock successivi rispetti la seguente disuguaglianza:
@@ -1398,28 +1398,29 @@ Bisogna che la frequenza di clock *f* dei flipflop sia determinata in modo che i
 - **δ** - Ritardo dei flip flop (Spesso trascurabile rispetto a quello della logica combinatoria)
 
 
-
-
-
-# 13-X-Progettazione-sequenziali-flusso-lavoro
-
-FLUSSO DI LAVORO:
-1-Si parte dal diagramma degli stati o da una rappresentazione equivalente
-2-Controlla se ci sono degli stati equivalenti che possono essere eliminati
-3-Conta il numero N degli stati e a questo punto so che occorreranno lg2(N)... N=4 => 2 FF
-4-Si codificano gli stati (Si associa il nome dello stato a una combinazione di bit dei FF)
-5-Ho a questo punto la tavola di verita' della rete combinatoria, quindi posso passare al circuito minimo che implementa il blocco combinatorio. (Con le mappe di Karnaugh)
+## Flusso di Lavoro
+1. Si parte dal diagramma degli stati o da una rappresentazione equivalente
+2. Controlla se ci sono degli stati equivalenti che possono essere eliminati
+3. Conta il numero *N* degli stati e a questo punto so che occorreranno *log<sub>2</sub>(N)* flip flop (es. *N=4 => 2 FF*)
+4. Si codificano gli stati (Si associa il nome dello stato a una combinazione di bit dei FF)
+5. Ho a questo punto la tavola di verita' della rete combinatoria, quindi posso passare al circuito minimo che implementa il blocco combinatorio. (Con le mappe di Karnaugh)
 
 
 
 # 14-Modello-Huffman-circuiti-sincroni
 
-MODELLO DI HUFFMAN
+## Modello di Huffman
+Composto da:
+- *N* flip-flop per memorizzare gli stati della macchina (*N* minimo numero in grado di descrivere tutti gli stati della macchina)
+- Rete combinatoria
+- Segnale di clock verso i flip flop che dice al circuito quando cambiare stato. 
 
-Composto da:- N flip-flop per memorizzare gli stati della macchina (N minimo numero in grado di descrivere tutti gli stati della macchina.- Rete combinatoria- Segnale di clock verso i flip flop che dice al circuito quando cambiare stato. 
-
-
-PROGETTAZIONE DI CIRCUITI SEQUENZIALI SINCRONI:- Costruzione della tavola degli stati- Minimizzazione (eliminazione degli stati equivalenti)- Assegnazione degli stati- Costruzione della tavola della verita' della rete combinatoria- Sintesi della rete combinatoria
+## Progettazione Circuiti Sequenziali Sincroni
+- Costruzione della tavola degli stati
+- Minimizzazione (eliminazione degli stati equivalenti)
+- Assegnazione degli stati
+- Costruzione della tavola della verita' della rete combinatoria
+- Sintesi della rete combinatoria
 
 
 Utilizziamo la mappa di Karnaugh per costruire i circuiti con le porte logiche per ogni uscita del circuito (per uscita si intende sia l'uscita in se, sia le uscite verso i flip flop che determinano lo stato successivo).
@@ -1427,29 +1428,35 @@ Si creano quindi un circuito per ogni uscita che vengono poi assemblati a formar
 
 
 
+# 15-Progettazione-livello-Registri
 
-
-# 15-Progettazione-livello-Registri-MPX-DEC-ENC
-
-LIVELLO REGISTRI o RT (Register Transfer)
-a differenza del livello delle porte logiche, l'unita' elementare di dato non e' piu il singolo bit, ma la parola (insieme di bit).
-
+## Livello Registri o RT (Register Transfer)
+A differenza del livello delle porte logiche, l'unita' elementare di dato non e' piu il singolo bit, ma la parola (insieme di bit).
 
 I componenti che possiamo utilizzare a livello register sono: (equivalente delle porte and or ecc)
+- COMPONENTI COMBINATORI
+    - Porte logiche operanti su parole
+    - *Multiplexer*
+    - *Decodificatori* e *codificatori*
+    - *Moduli aritmetici* (*ALU*, *sommatori*, ecc..)
+- COMPONENTI SEQUENZIALI
+    - *Registri*
+    - *Contatori*
+    - *FPGA*
+    - *Bus*
+    - *Memorie*
 
-COMPONENTI COMBINATORI:- Porte logiche operanti su parole- Multiplexer- Decodificatori e codificatori- Moduli aritmetici (ALU, sommatori, ecc..)
 
-COMPONENTI SEQUENZIALI:- Registri- Contatori- FPGA- Bus- Memorie
-
-
-
-### PORTE LOGICHE OPERANTI SU PAROLE
+## Componenti combinatori
+### Porte logiche operanti su parole
 Opera bit a bit sulle parole passate in ingresso restituendo una parola delle dimensioni di quelle in ingresso e ad ogni bit viene associato il risultato dell operazione tra i bit corrispondenti degli ingressi.
 
-
-### MULTIPLEXER
-Ha un certo numero k di parole in ingresso composte ognuna da m bit e in uscita abbiamo un segnale Z su m bit che corrispondera ad uno dei segnali X in ingresso... Quale dei k segnali viene deciso dal segnale S (a p bit) (VEDERE DISEGNO QUADERNO)
+### Multiplexer
+Ha un certo numero *k* di parole in ingresso composte ognuna da *m* bit e in uscita abbiamo un segnale *Z* su *m* bit che corrispondera ad uno dei segnali X in ingresso. 
+Quale dei *k* segnali viene deciso dal segnale *S* (a *p* bit) (VEDERE DISEGNO QUADERNO)
 k = 2^p
+
+In pratica quindi avendo gli ingressi *0, 1, 2, 3*, il segnale *S* sara' su *2 bit* e rappresentera' un numero tra *0 e 3*. In uscita sara' mandato il segnale corrispondente al numero in *S*.
 
 Ps. In genere il numero di ingressi e' una potenza di due.
 
@@ -1463,8 +1470,8 @@ In genere implementando un circuito combinatorio con i multiplexer non si ottien
 
 
 
-DECODIFICATORI
-E' un modulo con n ingressi e k uscite con n e k legati da: k=2^n
+##* Decoder
+E' un modulo con *n* ingressi e *k* uscite con n e k legati da: ***k=2^n***
 Questo prende i bit in ingresso e li vede come un numero e attiva la linea di uscita corrispondente a quel numero. 
 In alcuni casi esiste un segnale di ENABLE che serve per abilitare il decodificatore... Cioe' se il segnale di enable e' 0, in uscita non c'e' alcun segnale, se invece enable e' 1, il decoder opera come dovrebbe.
 
@@ -1473,13 +1480,13 @@ NB. Come sopra possiamo collegare diversi decoder in cascata (VL 25 43:00, lucid
 
 
 
-### CODIFICATORE (ENCODER)
+## Encoder
 E' un modulo con n ingressi e k uscite, legati da n=2^k.
 Presuppone che in ingresso ci sia sempre soltanto una linea attiva, e manda in uscita l'indice della linea attiva.
 
-NB.Il presupposto che in ingresso ci debba essere soltanto una linea attiva e' molto pesante, percio' si introducono i codificatori prioritari (priority encoder) che assegnano una determinata priorita' agli ingressi, e nel caso sia attivo piu di un ingresso in uscita appare il codice della linea attiva con priorita' maggiore.
+NB.Il presupposto che in ingresso ci debba essere soltanto una linea attiva e' molto pesante, percio' si introducono i **codificatori prioritari (_priority encoder_)** che assegnano una determinata priorita' agli ingressi, e nel caso sia attivo piu di un ingresso in uscita appare il codice della linea attiva con priorita' maggiore.
 
-Nei priority encoder c'e' pero' ancora un'altra fonte di ambiguita': nel caso in cui non ci sia alcuna linea attiva l'encoder si ritroverebbe comunque a mandare 00 in uscita che corrisponde all'ingresso 0 attivo. Si introduce allora un'altra uscita: INPUT ACTIVE, che viene attivato quando c'e' almeno una linea in ingresso attiva.
+Nei priority encoder c'e' pero' ancora un'altra fonte di ambiguita': nel caso in cui non ci sia alcuna linea attiva l'encoder si ritroverebbe comunque a mandare 00 in uscita che corrisponde all'ingresso 0 attivo. Si introduce allora un'altra uscita: **INPUT ACTIVE**, che viene attivato quando c'e' almeno una linea in ingresso attiva.
 
 Ps. Possiamo trovare anche un segnale di ENABLE che svolge la stessa funzione dell'enable nel decoder.
 
@@ -1487,69 +1494,77 @@ Ps. Possiamo trovare anche un segnale di ENABLE che svolge la stessa funzione de
 
 # 16-Progettazione-liv-Registri-Moduli-Aritmetici
 
-SOMMATORI
-3 tipi:- SERIALI- COMBINATORI- COMBINATORI MODULARI
+## Sommatori
+3 tipi:
+- *SERIALI*
+- *COMBINATORI*
+- *COMBINATORI MODULARI*
 
 
-### /\*\*\*\*\*\*\*/
-FULL-ADDER
-E' quello che nel resto del file verra' indicato come sommatore elementare o modulo per la somma bit a bit, ha 2 ingressi da sommare, carry in, carry out e uscita.
+### Full-Adder
+E' quello che nel resto del file verra' indicato come **sommatore elementare** o modulo per la somma bit a bit, ha:
+- 2 ingressi da sommare
+- carry in
+- carry out 
+- uscita
+
 Puo' essere implementato mediante una porta XOR per l'uscita (XOR in aritmetica binaria corrisponde alla somma).
-Z = X XOR Y XOR Cin
-Cout = XY + XCin + YCin
 
-### /\*\*\*\*\*\*/
+    Z = X XOR Y XOR Cin
+    Cout = XY + XCin + YCin
 
-SOMMATORE SERIALE
+
+### Sommatore Seriale
 Implementato tramite un modulo per la somma bit a bit (2 ingressi da sommare, carry in, carry out e uscita) e un flip flop che memorizza il carry di un bit e lo riporta sul bit successivo durante il successivo periodo di clock.
 
 Questa soluzione e' quella che richiede il minimo costo in termini di porte logiche che sono indipendenti dal numero di cifre, ma rappresenta la soluzione con il massimo tempo di risposta (n periodi di clock)
 
 
 
-SOMMATORE COMBINATORIO (RIPPLE CARRY ADDER)
+### Sommatore Combinatorio - Ripple Carry Adder
 Implementato tramite n sommatori bit a bit, con n numero massimo di bit degli addendi. (I sommatori vengono collegati in serie mediante il carry out... Il carry out del bit meno significativo e' collegato al carry in del bit successivo)
 
-Costa di piu in termini di materiali rispetto al sommatore seriale, ma e' molto piu veloce nell'eseguire l'operazione. Ha anche un altro svantaggio, infatti ogni sommatore deve aspettare il risultato del carry del precedente per poter eseguire l'operazione, percio' chiamando ∆ il ritardo associato ad un singolo sommatore, per sommare due numeri ad n bit otterremo un ritardo di n∆, che per n alti potrebbe diventare elevato, e questo ne limita l'applicabilita'.
+Costa di piu in termini di materiali rispetto al sommatore seriale, ma e' molto piu veloce nell'eseguire l'operazione. Ha anche un altro svantaggio, infatti ogni sommatore deve aspettare il risultato del carry del precedente per poter eseguire l'operazione, percio' chiamando *∆* il ritardo associato ad un singolo sommatore, per sommare due numeri ad *n* bit otterremo un ritardo di *n∆*, che per *n* alti potrebbe diventare elevato, e questo ne limita l'applicabilita'.
 
 
 
-### SOMMATORE COMBINATORIO (AD-HOC)
-Implementato ad-hoc tramite circuito combinatorio costruendone la tavola di verita', utilizzando 2 ingressi a parallelismo n, un carry in, un carry out e un uscita sempre a parallelismo n. 
+### Sommatore Combinatorio Ad Hoc
+Implementato ad-hoc tramite circuito combinatorio costruendone la tavola di verita', utilizzando 2 ingressi a parallelismo *n*, un carry in, un carry out e un uscita sempre a parallelismo *n*. 
 
 Questo tipo di circuito avra' un costo e soprattutto un ritardo sicuramente minore del ripple carry adder. Deve essere pero' progettato con porte logiche, aumentando quindi i tempi/costi di progettazione rispetto all' RCA.
 
 
 
-### CARRY-LOOKAHEAD (VEDERE SLIDE 32)
+### Carry-Lookahead (VEDERE SLIDE 32)
 Aggiunge una logica al Ripple Carry Adder per calcolare a priori tutti i carry dell'operazione ed evitare la propagazione dei carry che richiede tempo. 
 
-Questa logica calcola secondo le formule nella slide 32-33 i carry per tutti i bit della somma utilizzando soltanto il carry in ingresso e g e p, che sono semplicemente l'and e l'or tra due addendi corrispondenti.
+Questa logica calcola secondo le formule nella slide 32-33 i carry per tutti i bit della somma utilizzando soltanto il carry in ingresso e *g* e *p*, che sono semplicemente l'*and* e l'*or* tra due addendi corrispondenti.
 
-### utilizza questa formula ripetuta per tutti i bit dell'operazione:
-c(i)=g(i)+p(i)c(i-1)
+Utilizza questa formula ripetuta per tutti i bit dell'operazione:
+
+***c(i)=g(i)+p(i)c(i-1)***
+
 (Guardare slide 33 per l'esempio a 4 bit)
 
 Il fattore positivo e' che sono molto efficienti e hanno un ritardo minimo e soprattutto che non dipende dal numero di bit degli addendi; il rovescio della medaglia e' che al crescere dei bit degli addendi la logica diventa molto grande. (VEDERE ULTIMI 10 MIN DELLA VL 26)
 
-NB. Detto d il ritardo introdotto da un circuito a 2 livelli, il ritardo di un sommatore carry lookahead e' 3d.
+NB. Detto *d* il ritardo introdotto da un circuito a 2 livelli, il ritardo di un sommatore carry lookahead e' *3d*.
 
 
-### SOLUZIONI MISTE
+### Soluzioni Miste
 Possiamo avere anche soluzioni miste, ad esempio per sommare due numeri su 12 bit potremmo avere 3 lookahead adder su 4 bit collegati in cascata a mo di ripple carry adder; in questo modo avremo un dispositivo piu veloce di un RCA e meno costoso di un lookahead adder.
 Sono molto utilizzate.
 
 
-
 ### ALU
-Unita' aritmetico logiche combinatorie che integrano in un unico blocco che integra le principali soluzioni aritmetiche e logiche (in genere somma, sottrazione, negazione, and, or, not, exor). Hanno due operandi in ingresso, un ingresso di controllo che indica alla alu quale operazione eseguire, un uscita per il risultato e in genere anche un carry in e un carry out.
+Unita' aritmetico logiche combinatorie che integrano in un unico blocco che integra le principali soluzioni aritmetiche e logiche (in genere *somma, sottrazione, negazione, and, or, not, xor*). 
+
+Hanno due operandi in ingresso, un ingresso di controllo che indica alla alu quale operazione eseguire, un uscita per il risultato e in genere anche un carry in e un carry out.
 
 
-
-
-### COMPARATORE
+### Comparatore
 Modulo che confronta due valori numerici e ne restituisce il risultato.
-Ha in genere due ingressi per i valori numerici (a 4 bit?), 3 uscite per il confronto (x<y, x==y, x>y) e puo' avere un segnale di Enable (disattiva tutte le uscite a prescindere dagli ingressi).
+Ha in genere due ingressi per i valori numerici (a 4 bit?), 3 uscite per il confronto (***x<y, x==y, x>y***) e puo' avere un segnale di Enable (disattiva tutte le uscite a prescindere dagli ingressi).
 
 Possiamo collegare comparatori in serie per confrontare numeri a piu di 4 bit collegandoli in serie sfruttando l'eventuale segnale di uguaglianza del gruppo di cifre piu significative per abilitare (enable) il comparatore del gruppo di cifre successive. (Le altre uscite sono tutte collegate ad una porta or). (vedere slide 44 per il disegno, vl 27 19:00)
 
