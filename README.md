@@ -1124,7 +1124,7 @@ Livelli:
 - *Registri* (o *Register Transfer RT*)
 - *Sistema*
 
-
+```
     Livello		Componenti				Unità di dato	Unità di tempo
     Sistema | CPU, Processori, IO   | Blocchi di parole | 10-3÷103s
     			     memorie
@@ -1134,7 +1134,7 @@ Livelli:
 
     Porte logiche | Porte logiche          |   Bit  |     10-10÷10-8s
     			     Flip flop
-
+```
 
 
 Il progetto di sistema avviene iterando ai vari livelli le stesse operazioni:
