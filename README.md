@@ -525,7 +525,7 @@ Puo' essere implementato solo con i registri indice:
 - BX
 - SI
 - DI
-- BP (Si usa per accedere allo stack)
+- BP (E' un registro che puo contenere un puntatore allo stack)
 
 Es.
 
@@ -980,56 +980,104 @@ per RCL invece CF e' come se fosse posto alla sinistra della parola da ruotare.
 # 08A-Procedure
 
 Le procedure sono l'equivalente assembly delle funzioni.
-### 
-### DEFINIZIONE DI UNA PROCEDURA:
 
-label PROC tipo
-	...	
-	...	
-	...
-	RET				;return control
-label ENDP
+## Definizione di una procedura
+
+    label PROC tipo
+    	...	
+    	...	
+    	...
+    	RET				;return control
+    label ENDP
 
 Il campo label corrisponde al nome della procedura.
 Il tipo puo' essere NEAR o FAR.
 
 
-### CHIAMATA DELLA PROCEDURA
+## Chiamata della procedura
 
-CALL target
+    CALL target
 
-che:- Salva nello stack l'indirizzo di ritorno- Trasferisce il controllo alla prima funzione della procedura- Una volta finite le istruzioni della procedura ritorna il controllo alla prima istruzione dopo la CALL.
+che:
+- Salva nello stack l'indirizzo di ritorno
+- Trasferisce il controllo alla prima funzione della procedura
+- Una volta finite le istruzioni della procedura ritorna il controllo alla prima istruzione dopo la CALL.
 
-### NEAR VS FAR
-Una procedura di tipo NEAR e' richiamabile solo all'interno dello stesso segmento di codice.
-Una procedura di tipo FAR e' richiamabile da provedure appartenenti a segmenti di codice diversi.
-Di default, se non specifichiamo, la procedura viene assunta NEAR dall'assemblatore.
+## Near VS Far
+- Una procedura di tipo **NEAR** e' richiamabile solo all'interno dello stesso segmento di codice.
+- Una procedura di tipo **FAR** e' richiamabile da procedure appartenenti a segmenti di codice diversi.
+Di default, se non specifichiamo, la procedura viene assunta **NEAR** dall'assemblatore.
 
-### NB. E' buona regola fare in modo che ogni procedura:
+
+## Salvataggio dei registri
+E' buona regola fare in modo che ogni procedura:
 - Esegua come prima operazione il salvataggio nello stack di tutti i registri che vengono da essa modificati
 - Al termine ripristini i valori originari dei registri.
 Questo perche' cosi chi usa la procedura non deve preoccuparsi di perdere valori che aveva salvato in precedenza nei registri e non ha bisogno di sapere quali registri utilizza la procedura.
+
 es.
-### XXX PROC
-	PUSH AX
-	PUSH DX
-	...
-	POP DX
-	POP AX
-	RET
-XXX ENDP
+
+    XXX PROC
+    	PUSH AX
+    	PUSH DX
+    	...
+    	POP DX
+    	POP AX
+    	RET
+    XXX ENDP
 
 
-### PASSAGGIO DI PARAMETRI
-3 modi:- VARIABILI GLOBALI: estremamente semplice, non c'e' passaggio di parametri ma lavora direttamente sulle variabili globali. Sconsigliato perche' rende la procedura poco riutilizzabile.- REGISTRI: I parametri in ingresso e uscita possono essere letti e scritti utilizzando i registri general purpose, e' estremamente semplice ed e' utilizzabile solo quando i dati su cui operare sono pochi.
-- STACK: E' piu complesso da implementare a causa della regola di buona norma di prima e del fatto che nello stack c'e' l'indirizzo di ritorno. 
-In quest ultimo caso si usa il registro BP (Base Pointer) che contiene un puntatore all'interno dello stack.
+## Passaggio di Parametri
+3 modi:
+- VARIABILI GLOBALI: estremamente semplice, non c'e' passaggio di parametri ma lavora direttamente sulle variabili globali. Sconsigliato perche' rende la procedura poco riutilizzabile.
+- REGISTRI: I parametri in ingresso e uscita possono essere letti e scritti utilizzando i registri general purpose, e' estremamente semplice ed e' utilizzabile solo quando i dati su cui operare sono pochi.
+- STACK: E' piu complesso da implementare a causa della regola di buona norma di prima e del fatto che nello stack c'e' l'indirizzo di ritorno.
+
+### Stack
+Con lo stack si usa il registro BP (Base Pointer) che puo' contenere un puntatore all'interno dello stack.
 Appena entriamo nella procedura facciamo una push di BP e salviamo il valore di SP (Stack Pointer) in BP in modo da poter utilizzare BP+2, BP+4 ecc, per accedere al primo parametro, secondo ecc... Vedere slide 33 per 
 maggiore chiarezza.
-Per avere un valore di ritorno, riserviamo uno slot nello stack prima ancora di salvare i parametri in ingresso con SUB SP, 2 e andiamo a salvare poi il parametro di ritorno utilizzando sempre il BP (es. MOV [BP+8], AX).
 
+Per avere un valore di ritorno, riserviamo uno slot nello stack **prima ancora di salvare i parametri in ingresso** con SUB SP, 2 e andiamo a salvare poi il parametro di ritorno utilizzando sempre il BP (es. MOV [BP+8], AX).
 
-### VARIABILI LOCALI
+![alt-text](imgs/stack-proc.png)
+
+Es. Procedura per sommare gli elementi di un vettore passando come parametri attraverso lo stack la lunghezza del vettore e il suo offset.
+
+    SOM_VETT PROC
+        PUSH BP
+        MOV BP, SP
+        PUSH BX
+        PUSH CX
+        MOV CX, [BP+6]
+        MOV BX, [BP+4]
+        MOV AX, 0
+        ciclo: 
+            ADD AX, [BX]
+            ADD BX, 2
+            LOOP ciclo
+        POP CX
+        POP BX
+        POP BP
+        RET
+    SOM_VETT ENDP
+
+#### Liberazione dello stack
+Di norma e' compito del programma chiamante liberare lo stack, cancellando le parole utilizzate per il passaggio dei parametri.
+
+Questo puo' essere fatto:
+- Con successive operazioni di **POP**
+- Incrementando opportunamente il valore di **SP**
+
+Es. 
+
+    PUSH PARAM1
+    PUSH PARAM2
+    PUSH PARAM3
+    CALL MY_PROC
+    ADD SP, 6
+
+## Variabili locali
 L'unico modo per memorizzare delle variabili locali e' salvarle nello stack (metodo piu' utilizzato).
 
 
