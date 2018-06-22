@@ -1392,10 +1392,10 @@ Importante, vedere sul quadernino di JustEat (Risushitato) perche servivano i gr
 
 Bisogna che la frequenza di clock *f* dei flipflop sia determinata in modo che il tempo *T=1/f* fra due fronti di clock successivi rispetti la seguente disuguaglianza:
 
-`T > ∆ + δ`
+***T > ∆ + δ***
 
 - **∆** - Massimo ritardo della logica combinatoria
-- **δ** - Ritardo dei flip flop
+- **δ** - Ritardo dei flip flop (Spesso trascurabile rispetto a quello della logica combinatoria)
 
 
 
