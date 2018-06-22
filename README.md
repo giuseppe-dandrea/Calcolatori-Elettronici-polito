@@ -338,7 +338,6 @@ Table of Contents
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
-
 # 01-Introduzione ai sistemi di elaborazione.txt
 
 Un sistema di elaborazione dell'informazione può:
@@ -401,7 +400,7 @@ Nel 1971 Intel produce il primo microprocessore (Intel 4004): il primo processor
     Un multicore integra al suo interno più processori che lavorano in parallelo per completare un istruzione.
 
 ### FAMIGLIE E COMPATIBILITA'
-Il progettista del processore include all'interno della memoria una ISA (Instruction Set Architecture), cioè un set di istruzioni a cui il processore deve rispondere. Se quindi due processori hanno lo stesso ISA appartengono alla stessa "famiglia" e il software che può essere eseguito su uno, può essere eseguito anche sull'altro.
+Il progettista del processore include all'interno della memoria una **ISA (_Instruction Set Architecture_)**, cioè un set di istruzioni a cui il processore deve rispondere. Se quindi due processori hanno lo stesso ISA appartengono alla stessa "famiglia" e il software che può essere eseguito su uno, può essere eseguito anche sull'altro.
 ### 
 ### MICROCONTROLLORI (MCU):
 Se in sistemi di elaborazione general-purpose sono importanti le prestazioni quanto il costo e il consumo, per SE special-purpose molto spesso le prestazioni non sono importanti. (esempio processore per lettore di carte magnetiche per aprire una porta, o la centralina della macchina per girare i finestrini).
@@ -409,11 +408,12 @@ Se in sistemi di elaborazione general-purpose sono importanti le prestazioni qua
    - processore (adatto alla situazione, ancora oggi ci sono MCU con cpu a 4/8 bit)
    - Memoria
    - periferiche I/O
+
 In ambito special-purpose si parla quasi sempre di microcontrollori.
 ### 
 ### REALIZZAZIONE DI SISTEMI SPECIAL-PURPOSE:
    - SOLUZIONE SW: si acquista una scheda esistente equipaggiata di CPU/MCU e si scrive il programma per far eseguire ciò che ci serve.
-   ### - SOLUZIONE HW: ASIC (Application Specific IC):
+   - SOLUZIONE HW: ASIC (Application Specific IC):
        - SE progettato e realizzato specificatamente per un applicazione. (Viene chiamato SoC nel caso contenga uno o più processori)
 
 
@@ -421,26 +421,27 @@ In ambito special-purpose si parla quasi sempre di microcontrollori.
 # 02-Processori.txt
 
 Registri:
-PC - Program Counter, contiene l'indirizzo della prossima istruzione da eseguire
-IR - Istruction Registrer, contiene i byte dell'istruzione corrente.
+- PC - Program Counter, contiene l'indirizzo della prossima istruzione da eseguire
+- IR - Istruction Registrer, contiene i byte dell'istruzione corrente.
 
-AX, BX, CX, DX
+AX, BX, CX, DX - registri
 
-sTRUTTURE A BORDO DEL PROCESSORE IN GRADO DI MEMORIZZARE UN CERTO NUMERO DI BYTE.
+STRUTTURE A BORDO DEL PROCESSORE IN GRADO DI MEMORIZZARE UN CERTO NUMERO DI BYTE.
 
 
 
 # 03-Introduzione ad assembler
 
 Pseudo-istruzioni:
-	### Categorie:
-	- definizioni di variabili
-	- definizioni di costanti
-	- gestione dei segmenti (.data .code .stack)
-### 
-### COSTANTI:
-simbolo EQU espressione
-simbolo = espressione
+
+Categorie:
+- definizioni di variabili
+- definizioni di costanti
+- gestione dei segmenti (.data .code .stack)
+ 
+## COSTANTI:
+   simbolo EQU espressione
+   simbolo = espressione
 
 N.B. Le costanti definite tramite EQU non possono mai essere cambiate di valore nel corso del programma a differenza di quelle definite con '='
 
