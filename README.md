@@ -1124,6 +1124,7 @@ Livelli:
 - *Registri* (o *Register Transfer RT*)
 - *Sistema*
 
+
     Livello		Componenti				Unità di dato	Unità di tempo
     Sistema | CPU, Processori, IO   | Blocchi di parole | 10-3÷103s
     				memorie
