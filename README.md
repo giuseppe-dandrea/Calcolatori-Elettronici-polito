@@ -1556,13 +1556,13 @@ Possiamo avere anche soluzioni miste, ad esempio per sommare due numeri su 12 bi
 Sono molto utilizzate.
 
 
-##### ALU
+#### ALU
 Unita' aritmetico logiche combinatorie che integrano in un unico blocco che integra le principali soluzioni aritmetiche e logiche (in genere *somma, sottrazione, negazione, and, or, not, xor*). 
 
 Hanno due operandi in ingresso, un ingresso di controllo che indica alla alu quale operazione eseguire, un uscita per il risultato e in genere anche un carry in e un carry out.
 
 
-##### Comparatore
+#### Comparatore
 Modulo che confronta due valori numerici e ne restituisce il risultato.
 Ha in genere due ingressi per i valori numerici (a 4 bit?), 3 uscite per il confronto (***x<y, x==y, x>y***) e puo' avere un segnale di Enable (disattiva tutte le uscite a prescindere dagli ingressi).
 
