@@ -448,7 +448,7 @@ N.B. Le costanti definite tramite EQU non possono mai essere cambiate di valore 
 Es.
     column EQU 80
     row EQU 25
-    screen EQU column\*row
+    screen EQU column * row
 
 
 ## DIRETTIVA MODEL
@@ -812,6 +812,7 @@ C:
 
 ASSEMBLER:
 
+```
     .DATA
     TAB		DW	lab_1
     		DW	lab_2
@@ -823,7 +824,7 @@ ASSEMBLER:
     DEC VAR
     MOV BX, VAR
 
-    SHL BX, 1     ;ShiftLeft sposta i bit a sinistra, equivale a BX\*=2 (perche TAB ha elementi da 2 byte, quindi bx dev'essere 0, 2 o 4)
+    SHL BX, 1     ;ShiftLeft sposta i bit a sinistra, equivale a BX *= 2 (perche TAB ha elementi da 2 byte, quindi bx dev'essere 0, 2 o 4)
     JMP TAB[BX]
 
     lab_1:
@@ -833,6 +834,7 @@ ASSEMBLER:
     lab_3:
     	JMP continue
     continue:
+```
 
 ## Salto Condizionato
 Il salto viene eseguito solo se una determinata condizione e' verificata, in genere vengono eseguite dopo una **CMP**
@@ -1315,65 +1317,84 @@ Il ritardo dipende quindi dal numero di porte presenti tra il cammino piu' lungo
 
 Quindi:
     
-    DELTA = PRFONDITA' \* delta 
+    DELTA = PRFONDITA' * delta 
 
 NB. Questo solo se tutte le porte hanno lo stesso ritardo, senno' il calcolo del cammino critico diventa piu' complesso. 
 
 
 
-
-
-
-
-
 # 13-Progettazione-circuiti-sequenziali
 
-Nei circuiti sequenziali sono presenti alcuni moduli che sfruttando i ritardi delle porte riescono a 
-memorizzare informazioni.
+## Flip-Flop SR
+Nei circuiti sequenziali sono presenti alcuni moduli che sfruttando i ritardi delle porte riescono a memorizzare informazioni.
 
-Questi sono i flip-flop SR (Set, Reset), composti da due ingressi S ed R che possono assumere diversi valori:-  S=1, R=0 => 1-  S=0, R=1 => 0-  S=0, R=0 => Mantiene in uscita il valore precedente (puo' quindi memorizzare un valore in uscita e continuare ad emetterlo)-  S=1, R=1 => Limite del componente, questa e' una configurazione vietata perche' il flip-flop avrebbe in questo caso un comportamento non deterministico che varia a seconda dei ritardi associati alle singole porte che compongono il flip-flop
+Questi sono i flip-flop SR (Set, Reset), composti da due ingressi S ed R che possono assumere diversi valori:
+-  S=1, R=0 => 1
+-  S=0, R=1 => 0
+-  S=0, R=0 => Mantiene in uscita il valore precedente (puo' quindi memorizzare un valore in uscita e continuare ad emetterlo)
+-  S=1, R=1 => Limite del componente, questa e' una configurazione vietata perche' il flip-flop avrebbe in questo caso un comportamento non deterministico che varia a seconda dei ritardi associati alle singole porte che compongono il flip-flop
 
 Il comportamento del flip-flop, essendo un componente sequenziale e non combinatorio (per la presenza del ciclo nel circuito), puo' essere descritto attraverso la TAVOLA DEGLI STATI (sulle righe il valore precedente, sulle colonne le entrate)
-				### SR
+
+```
+                SR
 		00		01		10
-### Y	0 |	 0		 0		 1
+Y	0 |	 0		 0		 1
 	1 |	 1		 0		 1
+```
 
+![alt-text](imgs/ff-sr.png)
 
-FLIP FLOP SR SINCRONO (figura slide 109)
+## Flip-Flop SR Sincrono
 Non risolve ancora il problema della configurazione vietata ma aggiunge un segnale di Clock in input che funziona in pratica come un segnale di enable, quando il clock e' 0 il flip-flop mantiene la configurazione a prescindere da S e R. Se invece Clock e' 1, il valore in uscita dipende da S e R
 
+![alt-text](imgs/ff-sr-s.png)
 
 
-### FLIP FLOP D (figura slide 111)
-Risolve il problema della configurazione vietata utilizzando un solo ingresso D collegato a S direttamente e a R mediante una porta not, percio' S ed R potranno assumere due soli valori 01 - 10, ed e' ancora presente il segnale di clock che si comporta come nel flip-flop sr sincrono.
+## Flip-Flop D
+![alt-text](imgs/ff-d.png)
+Risolve il problema della configurazione vietata utilizzando un solo ingresso D collegato a S direttamente e a R mediante una porta not, percio' S ed R potranno assumere due soli valori *01* - *10*, ed e' ancora presente il segnale di clock che si comporta come nel flip-flop sr sincrono.
 
-### CLOCK=1
+```
+CLOCK=1
 			D
-		### 0		1
+		0		1
 Y	0 | 0		1		Se il clock e' a 1 quindi viene memorizzato il valore di D
-	### 1 |	0		1
+    1 |	0		1
+```
 
+```
+CLOCK=0
+            D
+        0       1
+Y   0 | 0       0       Se il clock e' a 0 in uscita continua a esserci il valore precedente
+    1 | 1       1
+```
 
 Se il clock e' uguale a 0 invece il valore di D viene ignorato e in uscita continua ad esserci il valore precedente
 
 NB. Il limite di questa configurazione e' che ci possono essere casi in cui non abbiamo il pieno controllo del segnale di clock, nel senso che potrebbe essere posto a 1 per piu' tempo del necessario. Questo in genere non piace perche se posto a 1 segue l'andamento di D, e se posto a 1 per periodi troppo lunghi potrebbe causare problemi.
 In questi casi si puo' utilizzare il flip-flop di tipo Master-Slave (slide 112).
 
-### FLIP FLOP MASTER-SLAVE
-Questo nasce per risolvere il problema del NB di prima. E' composto da due flip-flop di tipo D con clock. Il clock che entra nel primo flip-flop, entra negato nel secondo. Questo permette al flip flop di non cambiare valore finche il clock non viene RIMESSO a 0, e produrra in uscita l'ultimo valore ricevuto in ingresso prima di rimettere il clock a 0. 
+## Flip-Flop Master-Slave
+Questo nasce per risolvere il problema del NB di prima. 
 
-FLIP FLOP SR con Clock, Preset e Clear asincroni
+E' composto da due flip-flop di tipo D con clock. Il clock che entra nel primo flip-flop, entra negato nel secondo. Questo permette al flip flop di non cambiare valore finche il clock non viene RIMESSO a 0, e produrra in uscita l'ultimo valore ricevuto in ingresso prima di rimettere il clock a 0. 
+
+![alt-text](imgs/ff-ms.png)
+
+## Flip-Flop SR con Clock, Preset e Clear asincroni
 Preset e Clear mettono rispettivamente in uscita il valore 1 e 0 a prescindere dal valore di Clock. 
 
-### 
+
 ### RITARDO LOGICA COMBINATORIA:
 Importante, vedere sul quadernino di JustEat (Risushitato) perche servivano i grafici dei tempi e della frequenza.
-### Bisogna che la frequenza di clock f dei flipflop sia determinata in modo che il tempo T=1/f fra due fronti di clock successivi rispetti la seguente disuguaglianza:
-		### T > ∆ + δ
 
-∆ - Massimo ritardo della logica combinatoria
-δ - Ritardo dei flip flop
+Bisogna che la frequenza di clock *f* dei flipflop sia determinata in modo che il tempo *T=1/f* fra due fronti di clock successivi rispetti la seguente disuguaglianza:
+`T > ∆ + δ`
+
+**∆** - Massimo ritardo della logica combinatoria
+**δ** - Ritardo dei flip flop
 
 
 
