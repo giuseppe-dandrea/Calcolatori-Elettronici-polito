@@ -446,50 +446,76 @@ Categorie:
 N.B. Le costanti definite tramite EQU non possono mai essere cambiate di valore nel corso del programma a differenza di quelle definite con '='
 
 Es.
-column EQU 80
-row EQU 25
-screen EQU column\*row
+    column EQU 80
+    row EQU 25
+    screen EQU column\*row
 
 
-DIRETTIVA MODEL
+## DIRETTIVA MODEL
+    .MODEL {tipo}
 .MODEL small - Dice all'assemblatore che il programma avra' un solo segmento di ogni tipo.
-### Ne esistono ovviamente altri del tipo:
-tiny - 1 solo segmento per dati codice e stack
-small
-medium - 1 per i dati e molti per il codice
-compact
-large
-huge - molti segmenti sia per i dati che per il codice
+
+Ne esistono ovviamente altri del tipo:
+- tiny - 1 solo segmento per dati codice e stack
+- small
+- medium - 1 per i dati e molti per il codice
+- compact
+- large
+- huge - molti segmenti sia per i dati che per il codice
 
 
-DIRETTIVA END
-END {etichetta}
+## DIRETTIVA END
+    END {etichetta}
 Serve per concludere un modulo di un programma
 
-OPERATORE PTR
-tipo PTR nome
+## OPERATORE PTR
+    tipo PTR nome
 Serve per indicare all'assemblatore la dimensione dei dati su cui deve lavorare (es. 0 puo' essere sia da 8 che da 16 bit).
 Serve anche per fare il cast di un valore (es variabile su 2 byte la trasforma in una variabile su un byte).
 es.
-mov [si], byte ptr 0
-mov [si], word ptr 0
-BYTE PTR
-WORD PTR
+    mov [si], byte ptr 0
+    mov [si], word ptr 0
+
+
+    BYTE PTR
+    WORD PTR
 
 Ps. si usa quando o c'e' un solo operando che lui non e' in grado di capire quanto e' grande (inc [bx] --> inc byte ptr [bx])
  oppure quando ci sono le parentesi quadre a sinistra (mov [si], 100 --> mov [si], word ptr 100 ||  mov [si], 100 --> mov [si], byte ptr 100)
 
 
-### RAPPRESENTAZIONE DELLE PAROLE (little endian)
+## RAPPRESENTAZIONE DELLE PAROLE (little endian)
 Il byte meno significativo viene memorizzato nel byte con indirizzo minore.
+
 Es: FF00 viene memorizzato come 00 - FF.
 
-### BOOT
+## BOOT
 All'avvio del processore lui esegue il fetch all'indirizzo: FFFF0 che contiene del codice per eseguire la fase di boot del sistema
 
 
-### MODI DI INDIRIZZAMENTO 
-Gli operandi possono essere contenuti in: - registri - memoria - nell'istruzione stessa (costante del tipo mov ax, 0) - su una porta I/O
+## MODI DI INDIRIZZAMENTO 
+Gli operandi possono essere contenuti in: 
+- registri 
+- memoria 
+- nell'istruzione stessa (costante del tipo mov ax, 0) 
+- su una porta I/O
+
+
+NB. **IP (_Instruction Pointer_)** non contiene propriamente l'indirizzo della prossima istruzione da eseguire, perche **IP** e' su 16 bit mentre gli indirizzi sono su 20bit, percio' l'**IP** contiene **l'offset** da sommare al **CS (_Code Segment Register_)** per ottenere l'indirizzo.
+Questo e' possibile perche i vari **CS/DS/SS (_Code, Data, Stack_)** iniziano sempre ad indirizzi multipli di 16, quindi possiamo salvare il loro indirizzo in registri di 16 bit sottintendendo gli ultimi 4 bit a 0.
+
+### Direct Addressing
+Indirizzamente diretto, ad esempio:
+    MOV AX, TABLE
+Il processore prima controlla che table sia una variabile preventivamente dichiarata, poi ne legge l'indirizzo (offset) su 16 bit e lo somma al valore del **DS (_Data Segment_)** per ottenere l'indirizzo dove andare a leggere il contenuto.
+
+L'assemblatore mette quindi dentro l'istruzione che utilizza come operando un **Direct Addressing** l'offset della variabile.
+
+In casi come:
+    MOV AX, TABLE + 2
+    MOV AX, TABLE[2] 
+L'assemblatore somma all'offset della variabile il valore 2.
+
 
 [MANCANTE...]
 [RIPRENDE DA SLIDE 59]
