@@ -440,8 +440,8 @@ Categorie:
 - gestione dei segmenti (.data .code .stack)
  
 ## COSTANTI:
-   simbolo EQU espressione
-   simbolo = espressione
+    simbolo EQU espressione
+    simbolo = espressione
 
 N.B. Le costanti definite tramite EQU non possono mai essere cambiate di valore nel corso del programma a differenza di quelle definite con '='
 
