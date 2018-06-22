@@ -793,11 +793,12 @@ Es. Media  di un insieme di numeri
 
 # 07-Istruzioni-di-controllo del flusso
 
-## JUMP
+## Salto Incondizionato
+### JUMP
     
     JMP etichetta   ;Salto incondizionato all'etichetta passata
 
-### Costrutto switch:
+#### Costrutto switch:
 C:
 
     switch(var) {
@@ -832,6 +833,35 @@ ASSEMBLER:
     lab_3:
     	JMP continue
     continue:
+
+## Salto Condizionato
+Il salto viene eseguito solo se una determinata condizione e' verificata, in genere vengono eseguite dopo una **CMP**
+
+    CMP AX, 15
+
+## JE/JNE
+- **JE** Salta solo se i due operandi sono uguali
+- **JNE** Salta solo se i due operandi NON sono uguali
+
+## JZ/JNZ
+- **JZ** Salta solo se lo **ZF (Zero Flag)** e' attivato
+- **JNZ** Salta solo se lo **ZF** e' disattivato
+
+## JL/JB - JG/JA
+- **JL/JB** Salta solo se il primo numero e' minore del secondo (nella CMP)
+    - **JL** Per numeri con segno
+    - **JB** Per numeri senza segno
+- **JG/JA** Salta solo se il primo numero e' maggiore del secondo (nella CMP)
+    - **JG** Per numeri con segno
+    - **JA** Per numeri senza segno
+
+Riassumendo:
+- **Jump Less/Greater** Per numeri con segno
+- **Jump Above/Below** Per numeri senza segno
+
+## JC e JO
+Hanno anche le varianti **JNC** e **JNO**
+Si usano per testare il valore del flag di carry o di overflow   
 
 
 ## LOOP:
