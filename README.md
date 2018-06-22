@@ -635,148 +635,159 @@ NB. Non controlla se non c'e' piu' spazio o se non c'e' nessuna variabile da est
 
 
 
-# 05A-Istruzioni-aritmetiche
+# 06-Istruzioni-aritmetiche
 
-ADD:
-add dest, src
-sub dest, src
+## ADD e SUB
+
+    add dest, src
+    sub dest, src
 
 Nb. Non sono ammesse istruzioni tra registri di dimensioni diverse
 
 NB. Add e sub modificano il valore di tutti i flag (AF, PF, CF, SF, OF, ZF)
-	Se sub o add restituiscono un valore nullo il flag ZF viene impostato a 1.
-	SF, indica il segno del risultato (1 se negativo, 0 se positivo).
-	CF (carry flag), viene impostato a 1 se le due cifre piu' significative producono un riporto. (e quindi non e' possibile che venga rappresentato sul numero di bit di partenza) 
-(se i due operandi sono senza segno). (se invece i due numeri hanno il segno il fatto che ci sia il carry non ci dice che il numero non e' rappresentabile).
-	OF (overflow flag), se abbiamo due numeri con segno e questi danno un risultato non rappresentabile sui bit di partenza allora l'OF viene messo a 1.
-	PF (parity flag), dice se il numero di uni nel risultato e' pari o dispari.
+- **ZF - Zero Flag** Se sub o add restituiscono un valore nullo il flag ZF viene impostato a 1.
+- **SF - Sign Flag** indica il segno del risultato (1 se negativo, 0 se positivo).
+- **CF - Carry Flag** viene impostato a 1 se le due cifre piu' significative producono un riporto. (e quindi non e' possibile che venga rappresentato sul numero di bit di partenza) (se i due operandi sono senza segno). (se invece i due numeri hanno il segno il fatto che ci sia il carry non ci dice che il numero non e' rappresentabile).
+- **OF - Overflow Flag** se abbiamo due numeri con segno e questi danno un risultato non rappresentabile sui bit di partenza allora l'OF viene messo a 1.
+- **PF - Parity Flag** dice se il numero di uni nel risultato e' pari o dispari.
 
-### In breve:
+Ps. Funzionano solo su 8 e 16 bit.
+
+### Controllo dell'overflow
 Se ho due numeri senza segno controllo il CF, se i numeri hanno il segno uso l'OF.
 
-
-
-# 06-Istruzioni-Aritmetiche
-
-ADD e SUB
-Addizione e sottrazione, queste modificano il valore di tutti i flag (AF, PF, CF, SF, OF, ZF)
-ZF - Zero flag
-SF - Viene imppostato a uno nel caso di risultato negativo
-CF - Carry flag (Istruzione per il riporto)
-OF - Overflow flag
-PF - Parity flag (controlla tipo se il numero di 1 nel risultato e' pari (da controllare) ma comunque non importante
-ps. Funzionano solo su 8 e 16 bit.
-
+## CBW
 CBW (non ha operandi, opera leggendo da AL e riempie AH ---> Otteniamo il risultato in AX)
 Permette di convertire un byte nella word equivalente
 Ps. Torna utile quando si vuole eseguire un operazione di addizione o sottrazione tra un numero memorizzato in un byte e un numero memorizzato in una word.
 NB. CBW esegue l'estensione del segno del contenuto del registro AL a tutto il registro AH
-	es. Se AL contiene un numero positivo, AH e' caricato con il valore 00H
-	    Se AL contiene un numero negativo, AH e' caricato con il valore FFH
+	
+es: 
+- Se AL contiene un numero positivo, AH e' caricato con il valore 00H
+- Se AL contiene un numero negativo, AH e' caricato con il valore FFH
 
-### CWD (
+## CWD
 Si comporta come la CBW ma per espandere una word su una double word.
 
-ADC dest, sorg
+## ADC
+
+    ADC dest, sorg
+
 Somma al contenuto dell'operando dest il contenuto dell'operando sorg e il valore del flag CF.
-	es. Se CF vale 0 l'istruzione ADC si comporta come la ADD
-	    Se CF vale 1 l'istruzione ADC aggiunge 1 al risultato ottenuto con un'istruzione ADD.
+es. 
+- Se CF vale 0 l'istruzione ADC si comporta come la ADD
+- Se CF vale 1 l'istruzione ADC aggiunge 1 al risultato ottenuto con un'istruzione ADD
 
-//Somma di numeri su 32bit
-OPD1 DD ?
-OPD2 DD ?
-RES  DD ?
+NB. Utile per sommare numeri su 32bit
 
-MOV AX, WORD PTR OPD1
-ADD AX, WORD PTR OPD2
-MOV DX, WORD PTR OPD1+2
-ADC DX, WORD PTR OPD2+2		//Controlla prima se la add precedente ha settato il carry flag, e poi opera come scritto sopra
+    //Somma di numeri su 32bit
+    OPD1 DD ?
+    OPD2 DD ?
+    RES  DD ?
 
-MOV WORD PTR RES, AX
-MOV WORD PTR RES+2, DX
+    MOV AX, WORD PTR OPD1
+    ADD AX, WORD PTR OPD2
+    MOV DX, WORD PTR OPD1+2
+    ADC DX, WORD PTR OPD2+2		;Controlla prima se la add precedente ha settato il carry flag, e poi opera come scritto sopra
+
+    MOV WORD PTR RES, AX
+    MOV WORD PTR RES+2, DX
 
 
-SBB dest, sorg
+## SBB
+
+    SBB dest, sorg
+
 E' una sottrazione in cui se il CF vale 1 allora SBB sottrae 1 al risultato (da usare esattamente come ADC)
 
 
-INC E DEC
+## INC E DEC
 Incrementano e decrementano di uno l'operando, queste due istruzioni aggiornano il valore di tutti i flag tranne CF.
 
+## NEG
 
-NEG opd
+    NEG opd
+
 Cambia di segno l'operando che si assume rappresentato in complemento a 2
 
 
-MUL e IMUL (MUL operando) (opera tra l'operando e AL o AX)
+## MUL / IMUL
+    
+    MUL/IMUL operando   ;Opera tra l'operando passato e AL o AX
+
 Permottono di eseguire l'operazione di moltiplicazione tra numeri interi senza segno (MUL) e con segno (IMUL)
+
 L'operando puo essere sia un registro o una locazione di memoria, sia un byte che una word; non e' ammessa la moltiplicazione per un valore immediato.
 
 Opera su un byte o su una word e il primo operando e' obbligato (AL in caso byte, AX in caso word).
-Capisce se e' un operazione su byte o su word a seconda della dimensione dell'operando che passiamo.
-Nel caso byte, il risultato viene messo in AX. 1B ---> 2B
-Nel caso word, la parte piu' significativa viene messa in DX e la parte meno significativa in AX. 2B ---> 4B
+
+Capisce se e' un operazione su byte o su word a seconda della dimensione dell'operando che passiamo:
+- Nel caso byte, il risultato viene messo in AX. 1B ---> 2B
+- Nel caso word, la parte piu' significativa viene messa in DX e la parte meno significativa in AX. 2B ---> 4B
+
 NB. CF e OF valgono 0 solo se la parte piu' significativa del risultato e' nulla.
 
-ex.
-NUM DW ?
-RES DD ?
+es.
 
-MOV WORD PTR RES+2, 0
-MOV AX, NUM
-MUL AX
-MOV WORD PTR RES, AX
-JNC esce
-MOV WORD PTR RES+2, DX
-esce: ...
+    NUM DW ?
+    RES DD ?
+
+    MOV WORD PTR RES+2, 0
+    MOV AX, NUM
+    MUL AX
+    MOV WORD PTR RES, AX
+    JNC esce
+    MOV WORD PTR RES+2, DX
+    esce: ...
 
 PS. se voglio moltiplicare due numeri di dimensione diversa, riconduco il piu' piccolo su 16 bit con CBW, e poi li moltiplico.
 
 
+## DIV / IDIV
 
-DIV e IDIV (DIV operando)
+    DIV/IDIV operando
+
 Come prima DIV senza segno, IDIV con segno, e l'operando e' un registro o una locazione di memoria.
-Da una divisione ottengo un quoziente e un resto.
-Su byte (dividendo su 2 byte e divisore su 1 byte, ottengo un quoziente da un byte e un resto su un byte)
-	Legge il dividendo da AX e mette il quoziente in AL e il resto in AH
-Su word (dividendo su 4 byte e divisore su 2 byte, ottengo un quoziente e un resto su 2 byte)
-	Legge il dividendo da DX(piu significativo)+AX e mette il quoziente in AX e il resto in DX
 
-NB. Se il quoziente non e' rappresentabile sul numero di bit preposti, il programma da errore, e va ad eseguire un pezzo di codice che dovremmo aver scritto per gestire l'errore (viene 
-chiamata 'procedura di gestione dell'interruzione  causata da una divisione per 0 (interrupt di tipo 0)') anche se si verifica non solo per le divisioni per 0.
+Da una divisione ottengo un quoziente e un resto:
+- Su byte (dividendo su 2 byte e divisore su 1 byte, ottengo un quoziente da un byte e un resto su un byte)
+    - Legge il dividendo da AX e mette il quoziente in AL e il resto in AH
+- Su word (dividendo su 4 byte e divisore su 2 byte, ottengo un quoziente e un resto su 2 byte)
+    - Legge il dividendo da DX(piu significativo)+AX e mette il quoziente in AX e il resto in DX
+
+NB. Se il quoziente non e' rappresentabile sul numero di bit preposti, il programma da errore, e va ad eseguire un pezzo di codice che dovremmo aver scritto per gestire l'errore (viene chiamata 'procedura di gestione dell'interruzione  causata da una divisione per 0 (interrupt di tipo 0)') anche se si verifica non solo per le divisioni per 0.
+
 Il resto invece non ha mai problemi di rappresentabilita'
 
-OSS. per ogni istruzione il processore impieghera' N CPI (clock per instruction) per eseguire una determinata istruzione.
+**OSS**. per ogni istruzione il processore impieghera' N CPI (clock per instruction) per eseguire una determinata istruzione.
 Una divisione puo' richiedere fino a 190 CPI!!! (sono un sacco)
+
 Le moltiplicazioni e divisioni per una potenza di 2 possono essere eseguite con uno scalamento (shift) e le istruzioni per lo scalamento richiedono al piu' 17 colpi di clock, percio' se 
 dobbiamo eseguire moltiplicazioni e divisione per una potenza di 2 allora evitiamo mul e div e facciamo uno shift!!
 
 Es. Media  di un insieme di numeri
-LUNG EQU 10
-VETT  DW LUNG DUP (?)
-COUNT DB ?
-AVG DB ?
 
-MOV CX, LUNG
-MOV SI, 0
+    LUNG EQU 10
+    VETT  DW LUNG DUP (?)
+    COUNT DB ?
+    AVG DB ?
 
-
-### ciclo:
-CMP VETT[SI], 0
-JNG continua
-INC COUNT
-
-ADD BX, VETT[SI]
-### continua:
-ADD SI, 2
-DEC CX
-CMP CX, 0
-JNZ ciclo
-MOV AX, BX
+    MOV CX, LUNG
+    MOV SI, 0
 
 
+    ciclo:
+    CMP VETT[SI], 0
+    JNG continua
+    INC COUNT
 
-
+    ADD BX, VETT[SI]
+    continua:
+    ADD SI, 2
+    DEC CX
+    CMP CX, 0
+    JNZ ciclo
+    MOV AX, BX
 
 
 
