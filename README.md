@@ -571,7 +571,10 @@ L'assemblatore prende l'offset di **TABLE** e gli somma 6; al tempo di esecuzion
 
 # 04-Segmentazione e indirizzi.txt
 
-Finora abbiamo memorizzato indirizzi di memoria nei registri, ma ciò è falso perchè sappiamo che i registri sono a 16 bit, mentre l'address bus dell'8086 è a 20 bit (max memory 1 MB). Per aggirare ciò si utilizzano:- Un segmento di dati (DS)- Un segmento di codice (CS)- Un segmento di stack (SS).
+Finora abbiamo memorizzato indirizzi di memoria nei registri, ma ciò è falso perchè sappiamo che i registri sono a 16 bit, mentre l'address bus dell'8086 è a 20 bit (max memory 1 MB). Per aggirare ciò si utilizzano:
+- Un segmento di dati (DS)
+- Un segmento di codice (CS)
+- Un segmento di stack (SS)
 
 Gli indirizzi iniziali di questi segmenti devono essere multipli di 16 e sappiamo che sul codice binario le ultime 4 cifre di un numero multiplo di 16 sono degli zeri.
 Perciò se escludiamo gli ultimi  4 zeri possiamo rappresentare i multipli di 16 fino a 1 MB su 16 bit.
@@ -581,43 +584,54 @@ Perciò il processore salva gli indirizzi di partenza dei segmenti,  e quando de
 
 # 04A-Input_Output di un vettore di caratteri.txt
 
-Input da tastiera di un carattere:
-MOV               AH,             1
-INT                 21H                                 ;SALVA IN AL IL CODICE ASCII DELLA LETTERA PREMUTA
+## Input da tastiera di un carattere
+
+    MOV AH, 1
+    INT 21h         ;SALVA IN AL IL CODICE ASCII DELLA LETTERA PREMUTA
 
 
-### Output di un carattere:
-MOV               AH,           2
-INT                 21H                                 ;STAMPA IL CONTENUTO DI DL (DA INIZIALIZZARE PRIMA)
+## Output di un carattere:
+
+    MOV AH, 2
+    INT 21h     ;STAMPA IL CONTENUTO DI DL (DA INIZIALIZZARE PRIMA)
 
 
 
 # 05-Istruzioni-trasferimento-dati
 
-MOV:
-combinazioni non ammesse:- i due operandi sono due celle di memoria- i due operandi hanno dimensioni diverse (al, cx)
-### 
-### XCHG:
-XCHG operando1, operando2
-scambia i contenuti dei due operandi
-### 
-### LEA:
-LEA dest, src			===		mov dest, offset src
-carica nella destinazione l'offset (l'indirizzo) della sorgente 
+## MOV
+    
+    MOV AX, BX
+
+Combinazioni non ammesse:
+- i due operandi sono due celle di memoria
+- i due operandi hanno dimensioni diverse (al, cx)
 
 
-### STACK (PUSH, POP):
+## XCHG
+
+    XCHG operando1, operando2
+
+Scambia i contenuti dei due operandi
+
+## LEA:
+
+    LEA dest, src	;Equivalente a: mov dest, offset src
+
+Carica nella destinazione l'offset (l'indirizzo) della sorgente 
+
+
+## STACK (PUSH, POP)
 Lo stack viene riempito dal basso verso l'alto (indirizzi di memoria decrescenti) e SP (stack pointer) punta all'ultima cella aggiunta allo stack.
+
 La pseudo-istruzione .stack in assenza di altri parametri genera un segmento di stack grande 1 KB.
 
 Push e pop lavorano su 2 byte.
+
 Lavorano su registri general purpose, registri di segmento e locazioni di memoria.
 Nell'8086 non lavorano su costanti, funzione che viene introdotta nell' 80186. (es. push 7)
 
 NB. Non controlla se non c'e' piu' spazio o se non c'e' nessuna variabile da estrarre.
-
-Lo stack serve a 3 scopi:- Memorizzare variabili temporanee- bho..
-
 
 
 
