@@ -1125,10 +1125,10 @@ Livelli:
 - *Sistema*
 
 | Livello   | Componenti    | Unità di dato     | Unità di tempo    |
-| --------- | ------------- | ----------------- | -----------------:|
+| --------- |:-------------:|:-----------------:| -----------------:|
+| Porte logiche     | Porte logiche, Flip-Flop  | Bit   | 10<sup>-10</sup>s÷10<sup>-8</sup>s  |
 | Sistema    | CPU, Processori, IO, memorie  | Blocchi di parole     | 10<sup>-3</sup>s÷10<sup>3</sup>s |
 | Registri  | Registri, reti combinatorie, Reti sequenziali semplici    | Parole    | 10<sup>-9</sup>s÷10<sup>-6</sup>s    |
-| Porte logiche     | Porte logiche, Flip-Flop  | Bit   | 10<sup>-10</sup>s÷10<sup>-8</sup>s  |
 
 
 Il progetto di sistema avviene iterando ai vari livelli le stesse operazioni:
