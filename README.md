@@ -1170,79 +1170,79 @@ corrente dell'ingresso. (Rappresentabile con l'uscita associata all'arco.)
 
 
 
-
-
-
 # 11-Progettazione
 
 Varie fasi di progettazione per livelli (in ordine crescente):
 
 
+## Livello Elettrico
+Il sistema viene modellato come interconnessione di *componenti*.
 
-### LIVELLO ELETTRICO
-Il sistema viene modellato come interconnessione di componenti,
-Il calcolo dei valori di corrente e tensione comporta la risoluzione di sistemi di equazioni differenziali 
-e sta al progettista trovare un soddisfacente compromesso tra precisione e tempo di calcolo.
+Il calcolo dei valori di corrente e tensione comporta la risoluzione di sistemi di equazioni differenziali e sta al progettista trovare un soddisfacente compromesso tra precisione e tempo di calcolo.
+
 E' il livello piu' basso che trattiamo.
 
 
 
-### LIVELLO TRANSISTOR
-Il sistema viene modellato come interconnessione di transistor, considerati come interruttori pilotati dal 
-segnale di base. A seconda della tecnologia utilizzata (PMOS o NMOS) il transistor e' chiuso/aperto quando il 
-segnale di base ha una tensione inferiore/maggiore ad una certa soglia.
+## Livello Transistor
+Il sistema viene modellato come interconnessione di **transistor**, considerati come interruttori pilotati dal segnale di base. 
+
+A seconda della tecnologia utilizzata (*PMOS* o *NMOS*) il transistor e' chiuso/aperto quando il segnale di base ha una tensione inferiore/maggiore ad una certa soglia.
+
 Ps. La velocita' di commutazione di un transistor e' dell'ordine dei nanosecondi.
 
-Inverter NMOS: (esempio che sfrutta un transistor per modellare un semplice circuito. slide 38 progetto1)
-Se la tensione che applico alla base e' inferiore a una certa soglia, il transistor e' APERTO (circuito 
-aperto) e la tensione in uscita e' alta; viceversa se in ingresso applico una tensione maggiore della soglia 
-prestabilita, la tensione in uscita sara' alta.
+### Inverter NMOS
+(esempio che sfrutta un transistor per modellare un semplice circuito)
+Se la tensione che applico alla base e' inferiore a una certa soglia, il transistor e' APERTO (circuito aperto) e la tensione in uscita e' alta; 
 
-Possiamo poi passare da valori analogici a valori digitali, andando a considerare un valore minore della 
-soglia come uno 0 e maggiore della soglia come 1. (convenzione, avrei potuto fare anche il contrario).
-Dobbiamo pero' considerare una fascia di tensioni che non possono essere assunte (tranne che nei transitori) 
-(in genere in prossimita' del valore soglia) per evitare gli effetti del rumore (se assume un valore di 
-quelli c'e qualcosa che non va (vedere slide 37).
+Viceversa se in ingresso applico una tensione maggiore della soglia prestabilita, la tensione in uscita sara' alta.
 
-In sintesi andiamo quindi a definire 3 fasce di tensioni:- -------------- - 	Fascia in cui la tensione puo' essere considerata 1 ---> 0- - ------------- 	Fascia proibita: la tensione non deve trovarsi in questa fascia perche'- 	il circuito avrebbe problemi a capire se stiamo parlando di uno 0 o di un 1.- ------------ - 	Fascia in cui la tensione puo' essere considerata 0 ---> 1- - -------------
+![alt-text](imgs/inverter-nmos.png)
 
+Possiamo poi passare da valori analogici a valori digitali, andando a considerare un valore minore della soglia come uno 0 e maggiore della soglia come 1. (convenzione, avrei potuto fare anche il contrario).
 
-Buffer PMOS: (slide 39 progetto 1) (non un inverter perche associa all'uscita lo stesso valore logico 
-dell'ingresso)
-Come l'inverter NMOS ma al contrario: se la tensione in ingresso e' maggiore della soglia in uscita avremo 1, 
-se invece la tensione in ingresso e' minore della soglia allora l'uscita e' 0.- -------------- - 	Fascia in cui la tensione puo' essere considerata 1 ---> 1- - ------------- 	Fascia proibita: la tensione non deve trovarsi in questa fascia perche'- 	il circuito avrebbe problemi a capire se stiamo parlando di uno 0 o di un 1.- ------------ - 	Fascia in cui la tensione puo' essere considerata 0 ---> 0- - -------------
+Dobbiamo pero' considerare una fascia di tensioni che non possono essere assunte (tranne che nei transitori) (in genere in prossimita' del valore soglia) per evitare gli effetti del rumore (se assume un valore di quelli c'e qualcosa che non va (vedere slide 37).
 
+In sintesi andiamo quindi a definire 3 fasce di tensioni:
 
-Inverter CMOS
-Nella pratica in genere si usa un approccio misto tra NMOS e PMOS (slide 40), utilizza sia un transistor NMOS 
-che uno PMOS, che aprendosi e chiudendosi svolgono la stessa funzione degli esempi precedenti, ma fanno in 
-modo che non ci sia mai un collegamento diretto tra alimentazione e massa, riducendo il consumo del 
-dispositivo ed aumentandone la vita.
+![alt-text](imgs/tensioni-valori.png)
 
+### Buffer PMOS
+(non un inverter perche associa all'uscita lo stesso valore logico dell'ingresso)
+Come l'inverter NMOS ma al contrario: se la tensione in ingresso e' maggiore della soglia in uscita avremo 1, se invece la tensione in ingresso e' minore della soglia allora l'uscita e' 0.
 
+![alt-text](imgs/buffer-pmos.png)
 
+### Inverter CMOS
+Nella pratica in genere si usa un approccio misto tra NMOS e PMOS, utilizza sia un transistor NMOS che uno PMOS, che aprendosi e chiudendosi svolgono la stessa funzione degli esempi precedenti, ma fanno in modo che non ci sia mai un collegamento diretto tra alimentazione e massa, riducendo il consumo del dispositivo ed aumentandone la vita.
+
+![alt-text](imgs/inverter-pmos.png)
 
 
-### LIVELLO PORTE LOGICHE
-Un insieme di porte logiche si dice COMPLETO se utilizzando i soli tipi di porte in esso contenuti si puo' 
-realizzare qualsivoglia funzione combinatoria.
 
-Insiemi COMPLETI:- {NAND}- {NOR}- {AND, NOT}- {OR, NOT}- {AND, OR, NOT}
+## Livello Porte Logiche
+Un insieme di porte logiche si dice **COMPLETO** se utilizzando i soli tipi di porte in esso contenuti si puo' realizzare qualsivoglia funzione combinatoria.
+
+Insiemi COMPLETI:
+- {NAND}
+- {NOR}
+- {AND, NOT}
+- {OR, NOT}
+- {AND, OR, NOT}
 Ps. Nella pratica sono frequenti i circuiti che implementano solo porte NAND (o NOR)
 
 
-### Circuiti combinatori ben formati:
-Si dicono CCBF (Circuiti Combinatori Ben Formati) i circuiti che soddisfano le seguenti regole:- Una singola linea o una singola porta e' una ccbf- La giustapposizione di 2 ccbf (metterne 2 e non collegarli) e' un ccbf- Se C1 e C2 sono ccbf, il circuito ottenuto connettendo un insieme di linee di uscita di C1 ad un insieme di 
-linee di ingresso di C2 e' un ccbf- Se xi e xj sono due linee di ingresso ad un ccbf (ci sono 2 ccbf, xi e' relativo ad uno e xj all'altro), il 
-circuito ottenuto connettendo i due ingressi e' un ccbf. (In altre parole possiamo usare la stessa linea per 
-piloate due ingressi di due ccbf differenti.)- Non sono presenti CICLI!
+# CIRCUITI COMBINATORI BEN FORMATI
+Si dicono **CCBF (_Circuiti Combinatori Ben Formati_)** i circuiti che soddisfano le seguenti regole:
+- Una singola linea o una singola porta e' una **CCBF**
+- La giustapposizione di 2 **CCBF** (metterne 2 e non collegarli) e' un **CCBF**
+- Se _C1_ e _C2_ sono **CCBF**, il circuito ottenuto connettendo un insieme di linee di uscita di _C1_ ad un insieme di linee di ingresso di _C2_ e' un **CCBF**
+- Se _xi_ e _xj_ sono due linee di ingresso ad un **CCBF** (ci sono 2 **CCBF**, _xi_ e' relativo ad uno e _xj_ all'altro), il circuito ottenuto connettendo i due ingressi e' un **CCBF**. (In altre parole possiamo usare la stessa linea per piloaRe due ingressi di due **CCBF** differenti.)
+- Non sono presenti CICLI!
 
-
-FANIN: Numero di segnali in ingresso ad una porta.
-FANOUT: Numero di porte logiche pilotate dall'uscita di un'altra porta logica.
-
-
-
+## Parametri Circuito Combinatorio
+- **FANIN**: Numero di segnali in ingresso ad una porta.
+- **FANOUT**: Numero di porte logiche pilotate dall'uscita di un'altra porta logica.
 
 
 # 12-Progettazione-circuiti-combinatori
