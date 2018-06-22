@@ -1127,8 +1127,8 @@ Livelli:
 | Livello   | Componenti    | Unità di dato     | Unità di tempo    |
 | --------- |:-------------:|:-----------------:| -----------------:|
 | Porte logiche     | Porte logiche, Flip-Flop  | Bit   | 10<sup>-10</sup>s÷10<sup>-8</sup>s  |
-| Sistema    | CPU, Processori, IO, memorie  | Blocchi di parole     | 10<sup>-3</sup>s÷10<sup>3</sup>s |
 | Registri  | Registri, reti combinatorie, Reti sequenziali semplici    | Parole    | 10<sup>-9</sup>s÷10<sup>-6</sup>s    |
+| Sistema    | CPU, Processori, IO, memorie  | Blocchi di parole     | 10<sup>-3</sup>s÷10<sup>3</sup>s |
 
 
 Il progetto di sistema avviene iterando ai vari livelli le stesse operazioni:
@@ -1144,30 +1144,28 @@ costituisce direttamente l'insieme delle specifiche per il livello inferiore.
 # 10-Sistemi-combinatori-e-sequenziali
 
 Un sistema puo essere:
-COMBINATORIO: Se i valori delle sue uscite dipendono esclusivamente dai valori applicati sui suoi ingressi in 
-quell'istante (es. sommatore)
-SEQUENZIALE: Se i valori delle sue uscite dipendono sia dai valori applicati sugli ingressi in quell'istante 
-che negli istanti precedenti (contatore)
+- **COMBINATORIO**: Se i valori delle sue uscite dipendono esclusivamente dai valori applicati sui suoi ingressi in quell'istante (es. _sommatore_)
+- **SEQUENZIALE**: Se i valori delle sue uscite dipendono sia dai valori applicati sugli ingressi in quell'istante che negli istanti precedenti (_contatore_)
 
 
-### SISTEMA COMBINATORIO
-Puo' essere rappresentato mediante una tavola di verita' che specifica per ogni combinazione in ingresso la 
-corrispondente in uscita(2^n possiblita' con n numero di ingressi, quindi la cosa e' fattibile solo per n 
-piccoli); o attraverso la funzione booleana.
-implementata dalle uscite.
+## Sistema Combinatorio
+Puo' essere rappresentato:
+- Mediante una tavola di verita' che specifica per ogni combinazione in ingresso la corrispondente in uscita (*2^n* possiblita' con *n* numero di ingressi, quindi la cosa e' fattibile solo per *n* piccoli)
+- Attraverso la funzione booleana implementata dalle uscite
 
-Es. Codificatore (esempio slide 21 progetto1), e' un sistema che permette di codificare in uscita, l'entrata 
-in quel momento a 1.
+Es. Codificatore (esempio slide 21 progetto1), e' un sistema che permette di codificare in uscita, l'entrata in quel momento a 1.
 
-### SISTEMA SEQUENZIALE:
-La storia passata del sistema viene di solito codificata dalla VARIABILE DI STATO Y del sistema.
+## Sistema Sequenziale
+La storia passata del sistema viene di solito codificata dalla **VARIABILE DI STATO Y** del sistema.
 
-Puo' essere descritto in 3 forme:- Tavola degli stati/uscite (Come la tavola di verita' dei combinatori, ma con i campi relativi allo stato 
-corrente e allo stato futuro)- Diagramma degli stati/uscite (GRAFO)- Funzione di transizione degli stati e funzione delle uscite
+Puo' essere descritto in 3 forme:
+- *Tavola degli stati/uscite* (Come la tavola di verita' dei combinatori, ma con i campi relativi allo stato corrente e allo stato futuro)
+- *Diagramma degli stati/uscite* (GRAFO)
+- *Funzione di transizione degli stati* e *funzione delle uscite*
 
-Un sistema sequenziale puo' anche essere chiamato MACCHINA A STATI FINITI (FSM - Finite State Machine) che 
-puo' essere:- FSM di Moore: il valore dell'uscita dipende esclusivamente dal valore corrente della variabile di stato. 
-(Rappresentabile con l'uscita associata al vertice)- FSM di Mealy: il valore dell'uscita dipende sia dal valore corrente della variabile di stato che dal valore 
+Un sistema sequenziale puo' anche essere chiamato **MACCHINA A STATI FINITI (_FSM - Finite State Machine_)** che puo' essere:
+- **FSM di Moore**: il valore dell'uscita dipende esclusivamente dal valore corrente della variabile di stato. (Rappresentabile con l'uscita associata al vertice)
+- **FSM di Mealy**: il valore dell'uscita dipende sia dal valore corrente della variabile di stato che dal valore 
 corrente dell'ingresso. (Rappresentabile con l'uscita associata all'arco.)
 
 
