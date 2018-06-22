@@ -1124,23 +1124,11 @@ Livelli:
 - *Registri* (o *Register Transfer RT*)
 - *Sistema*
 
-```
-    Livello		           Componenti				  Unità di dato	          Unità di tempo
-    Sistema         | CPU, Processori, IO, memorie  | Blocchi di parole     | 10-3÷103s
-
-    Registri        | Registri, reti combinatorie   | Parole                | 10-9÷10-6s
-    		      Reti sequenziali semplici
-
-    Porte logiche   | Porte logiche, Flip-Flop      |   Bit                 | 10-10÷10-8s
-```
-
-
 | Livello   | Componenti    | Unità di dato     | Unità di tempo    |
 | --------- | ------------- | ----------------- | -----------------:|
-| Sistema    | CPU, Processori, IO, memorie  | Blocchi di parole     | 10-3÷103s |
-| Registri  | Registri, reti combinatorie, Reti sequenziali semplici    | Parole    | 10-9÷10-6s    |
-| Porte logiche     | Porte logiche, Flip-Flop  | Bit   | 10-10÷10-8s   |
-
+| Sistema    | CPU, Processori, IO, memorie  | Blocchi di parole     | 10<sup>-3</sup>s÷10<sup>3</sup>s |
+| Registri  | Registri, reti combinatorie, Reti sequenziali semplici    | Parole    | 10<sup>-9</sup>s÷10<sup>-6</sup>s    |
+| Porte logiche     | Porte logiche, Flip-Flop  | Bit   | 10<sup>-10</sup>s÷10<sup>-8</sup>s  |
 
 
 Il progetto di sistema avviene iterando ai vari livelli le stesse operazioni:
