@@ -1470,7 +1470,7 @@ In genere implementando un circuito combinatorio con i multiplexer non si ottien
 
 
 
-##* Decoder
+### Decoder
 E' un modulo con *n* ingressi e *k* uscite con n e k legati da: ***k=2^n***
 Questo prende i bit in ingresso e li vede come un numero e attiva la linea di uscita corrispondente a quel numero. 
 In alcuni casi esiste un segnale di ENABLE che serve per abilitare il decodificatore... Cioe' se il segnale di enable e' 0, in uscita non c'e' alcun segnale, se invece enable e' 1, il decoder opera come dovrebbe.
@@ -1480,7 +1480,7 @@ NB. Come sopra possiamo collegare diversi decoder in cascata (VL 25 43:00, lucid
 
 
 
-## Encoder
+### Encoder
 E' un modulo con n ingressi e k uscite, legati da n=2^k.
 Presuppone che in ingresso ci sia sempre soltanto una linea attiva, e manda in uscita l'indice della linea attiva.
 
@@ -1492,16 +1492,16 @@ Ps. Possiamo trovare anche un segnale di ENABLE che svolge la stessa funzione de
 
 
 
-# 16-Progettazione-liv-Registri-Moduli-Aritmetici
+### Moduli Aritmetici
 
-## Sommatori
+#### Sommatori
 3 tipi:
 - *SERIALI*
 - *COMBINATORI*
 - *COMBINATORI MODULARI*
 
 
-### Full-Adder
+##### Full-Adder
 E' quello che nel resto del file verra' indicato come **sommatore elementare** o modulo per la somma bit a bit, ha:
 - 2 ingressi da sommare
 - carry in
@@ -1514,28 +1514,28 @@ Puo' essere implementato mediante una porta XOR per l'uscita (XOR in aritmetica 
     Cout = XY + XCin + YCin
 
 
-### Sommatore Seriale
+##### Sommatore Seriale
 Implementato tramite un modulo per la somma bit a bit (2 ingressi da sommare, carry in, carry out e uscita) e un flip flop che memorizza il carry di un bit e lo riporta sul bit successivo durante il successivo periodo di clock.
 
 Questa soluzione e' quella che richiede il minimo costo in termini di porte logiche che sono indipendenti dal numero di cifre, ma rappresenta la soluzione con il massimo tempo di risposta (n periodi di clock)
 
 
 
-### Sommatore Combinatorio - Ripple Carry Adder
+##### Sommatore Combinatorio - Ripple Carry Adder
 Implementato tramite n sommatori bit a bit, con n numero massimo di bit degli addendi. (I sommatori vengono collegati in serie mediante il carry out... Il carry out del bit meno significativo e' collegato al carry in del bit successivo)
 
 Costa di piu in termini di materiali rispetto al sommatore seriale, ma e' molto piu veloce nell'eseguire l'operazione. Ha anche un altro svantaggio, infatti ogni sommatore deve aspettare il risultato del carry del precedente per poter eseguire l'operazione, percio' chiamando *∆* il ritardo associato ad un singolo sommatore, per sommare due numeri ad *n* bit otterremo un ritardo di *n∆*, che per *n* alti potrebbe diventare elevato, e questo ne limita l'applicabilita'.
 
 
 
-### Sommatore Combinatorio Ad Hoc
+##### Sommatore Combinatorio Ad Hoc
 Implementato ad-hoc tramite circuito combinatorio costruendone la tavola di verita', utilizzando 2 ingressi a parallelismo *n*, un carry in, un carry out e un uscita sempre a parallelismo *n*. 
 
 Questo tipo di circuito avra' un costo e soprattutto un ritardo sicuramente minore del ripple carry adder. Deve essere pero' progettato con porte logiche, aumentando quindi i tempi/costi di progettazione rispetto all' RCA.
 
 
 
-### Carry-Lookahead (VEDERE SLIDE 32)
+##### Carry-Lookahead (VEDERE SLIDE 32)
 Aggiunge una logica al Ripple Carry Adder per calcolare a priori tutti i carry dell'operazione ed evitare la propagazione dei carry che richiede tempo. 
 
 Questa logica calcola secondo le formule nella slide 32-33 i carry per tutti i bit della somma utilizzando soltanto il carry in ingresso e *g* e *p*, che sono semplicemente l'*and* e l'*or* tra due addendi corrispondenti.
@@ -1551,18 +1551,18 @@ Il fattore positivo e' che sono molto efficienti e hanno un ritardo minimo e sop
 NB. Detto *d* il ritardo introdotto da un circuito a 2 livelli, il ritardo di un sommatore carry lookahead e' *3d*.
 
 
-### Soluzioni Miste
+##### Soluzioni Miste
 Possiamo avere anche soluzioni miste, ad esempio per sommare due numeri su 12 bit potremmo avere 3 lookahead adder su 4 bit collegati in cascata a mo di ripple carry adder; in questo modo avremo un dispositivo piu veloce di un RCA e meno costoso di un lookahead adder.
 Sono molto utilizzate.
 
 
-### ALU
+##### ALU
 Unita' aritmetico logiche combinatorie che integrano in un unico blocco che integra le principali soluzioni aritmetiche e logiche (in genere *somma, sottrazione, negazione, and, or, not, xor*). 
 
 Hanno due operandi in ingresso, un ingresso di controllo che indica alla alu quale operazione eseguire, un uscita per il risultato e in genere anche un carry in e un carry out.
 
 
-### Comparatore
+##### Comparatore
 Modulo che confronta due valori numerici e ne restituisce il risultato.
 Ha in genere due ingressi per i valori numerici (a 4 bit?), 3 uscite per il confronto (***x<y, x==y, x>y***) e puo' avere un segnale di Enable (disattiva tutte le uscite a prescindere dagli ingressi).
 
