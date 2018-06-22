@@ -1127,13 +1127,13 @@ Livelli:
 
     Livello		Componenti				Unità di dato	Unità di tempo
     Sistema | CPU, Processori, IO   | Blocchi di parole | 10-3÷103s
-    				memorie
+    			     memorie
 
     Registri | Registri, reti combinatorie | Parole |     10-9÷10-6s
-    			Reti sequenziali semplici
+    		      Reti sequenziali semplici
 
     Porte logiche | Porte logiche          |   Bit  |     10-10÷10-8s
-    				Flip flop
+    			     Flip flop
 
 
 
