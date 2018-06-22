@@ -520,16 +520,52 @@ In casi come:
 
 L'assemblatore somma all'offset della variabile il valore 2.
 
+### Register Indirect Addressing
+Puo' essere implementato solo con i registri indice:
+- BX
+- SI
+- DI
+- BP (Si usa per accedere allo stack)
 
-[MANCANTE...]
-[RIPRENDE DA SLIDE 59]
-
-BASE INDEXED ADDRESSING
 Es.
-vett dw n dup ?
-mov ax, vett[si][di]+6		==	offset = offset(vett) + si + di + 6
-In pratica viene tutto sommato, non bisogna vedere sta roba come una matrice, ma semplicemente l'assemblatore somma all'indirizzo del primo elemento di vett i valori di si, di e 6.
 
+    MOV AX, [BX]
+
+In questi casi l'assemblatore nell'istruzione non mette l'offset da sommare al **DS**, ma viene specificato in quale registro il processore deve andare per trovare l'offset.
+
+Es.
+
+    VAR DW 10
+    LEA BX, VAR         ;Mette in BX l'offset di VAR
+    MOV AX, [BX]        ;Mette in AX il contenuto della cella di memoria il cui offset si trova in BX (il contenuto di VAR)
+
+
+### Base Relative Addressing
+Es. (Equivalenti)
+
+    MOV AX, [BX]+4
+    MOV AX, 4[BX]
+    MOV AX, [BX+4]
+
+Qui l'**Effective Address** dell'operando viene calcolato sommando al contenuto del **Base Register** (in queto caso **BX**) a un offset rappresentato da una costante all'interno dell'istruzione stessa.
+
+Questa somma a differenza degli altri modi di indirizzamento viene fatta al tempo di esecuzione e non dell'assemblaggio.
+
+
+### Direct Indexed Addressing
+Es.
+    
+    MOV AX, TABLE[DI]
+
+L'**Effecive Address** viene calcolato sommando all'offset di **TABLE** il contenuto di **DI** e quindi mette l'offset ottenuto all'interno dell'istruzione. (Che al tempo di esecuzione verra' sommato al **DS** per ottenere l'indirizzo reale)
+
+### Base Indexed Addressing
+Es.
+
+    MOV AX, TABLE[BX][DI] + 6
+
+Parliamo di Base Indexed Addressing anche senza + 6 (potrebbe esserci come non esserci).
+L'assemblatore prende l'offset di **TABLE** e gli somma 6; al tempo di esecuzione il processore somma al risultato precedente l'offset contenuto in **BX** e quello contenuto in **DI**
 
 
 
