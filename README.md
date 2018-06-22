@@ -1224,11 +1224,11 @@ Nella pratica in genere si usa un approccio misto tra NMOS e PMOS, utilizza sia 
 Un insieme di porte logiche si dice **COMPLETO** se utilizzando i soli tipi di porte in esso contenuti si puo' realizzare qualsivoglia funzione combinatoria.
 
 Insiemi COMPLETI:
-- {NAND}
-- {NOR}
-- {AND, NOT}
-- {OR, NOT}
-- {AND, OR, NOT}
+- {***NAND***}
+- {***NOR***}
+- {***AND***, ***NOT***}
+- {***OR***, ***NOT***}
+- {***AND***, ***OR***, ***NOT***}
 Ps. Nella pratica sono frequenti i circuiti che implementano solo porte NAND (o NOR)
 
 
@@ -1247,67 +1247,76 @@ Si dicono **CCBF (_Circuiti Combinatori Ben Formati_)** i circuiti che soddisfan
 
 # 12-Progettazione-circuiti-combinatori
 
-PROGETTO DI CIRCUITI COMBINATORI
 
-Partendo dalla tavola di verita: (vedere esempio slide 60 progetto1) -Per ogni 1 in uscita si associa una 
-porta AND
-- Si negano gli ingressi della porta AND che hanno valore 0 nella tavola. -Mettiamo tutte le uscite delle 
-porte AND in ingresso a una porta OR (questo per dire che se almeno una delle porte AND di prima ha ritornato 
-1, allora ritornare 1.
+Partendo dalla tavola di verita:
+- Per ogni 1 in uscita si associa una porta AND
+- Si negano gli ingressi della porta AND che hanno valore 0 nella tavola. 
+- Mettiamo tutte le uscite delle porte AND in ingresso a una porta OR (questo per dire che se almeno una delle porte AND di prima ha ritornato 1, allora ritornare 1.
 
 
-Per ottenere la funzione booleana dalla tavola di verita' si genera una somma di prodotti, cioe' ci saranno 
-tanti termini sommati quanti sono gli 1 in uscita nella tavola di verita' e questi termini saranno negati a 
-seconda dell'ingresso (non si nega tutto il termine (che e' composto dagli ingressi), ma solo gli ingressi a 
-### 0)
+Per ottenere la funzione booleana dalla tavola di verita' si genera una somma di prodotti, cioe' ci saranno tanti termini sommati quanti sono gli 1 in uscita nella tavola di verita' e questi termini saranno negati a seconda dell'ingresso (non si nega tutto il termine (che e' composto dagli ingressi), ma solo gli ingressi a 0)
 
-Il circuito che otteniamo in questo modo funziona, ma non sara' il circuito piu' efficiente che svolge 
-quell'operazione. Per semplificare il circuito ottenuto possiamo partire dalla funzione booleana e applicare 
-le regole dell'algebra booleana per semplificare il circuito. (es. slide 62)
+![alt-text](imgs/circ-comb1.png)
 
+Il circuito che otteniamo in questo modo funziona, ma non sara' il circuito piu' efficiente che svolge quell'operazione. 
 
-CIRCUITO COMBINATORIO MINIMO: Un circuito combinatorio si dice minimo se realizza la funzione booleana data e 
-soddisfa determinati vincoli: -La PROFONDITA' del circuito e' minore di un certo valore -Il numero di porte 
-utilizzate e' minimo -Il fanin massimo e' minore di un certo valore -Il fanout massimo e' minore di un certo 
-valore.
-
-PROFONDITA': Numero massimo di porte tra un ingresso e un'uscita.
+Per semplificare il circuito ottenuto possiamo partire dalla funzione booleana e applicare le regole dell'algebra booleana per semplificare il circuito. (es. slide 62, ma tanto non useremo questo metodo)
 
 
-TERMINOLOGIA -LETTERALE: quando compare una lettera ad indicare un i/o -MINTERM: Quando all'interno di un 
-gruppo AND compaiono tutti i termini in ingresso -MAXTERM: Quando all'interno di un gruppo OR compaiono tutti 
-i termini in ingresso -CUBO: Quando all'interno di un gruppo AND NON compaiono tutti i termini in ingresso
+## Circuito Combinatorio Minimo
+Un circuito combinatorio si dice minimo se realizza la funzione booleana data e soddisfa determinati vincoli: 
+- La **PROFONDITA'** del circuito e' minore di un certo valore 
+- Il numero di porte utilizzate e' minimo 
+- Il **fanin** massimo e' minore di un certo valore 
+- Il **fanout** massimo e' minore di un certo valore.
 
 
-### MAPPE DI KARNAUGH (Metodo per la costruzione del circuito combinatorio minimo) Utilizzabile per funzioni con:
-	1 sola uscita
-	fino a 4 ingressi
+**PROFONDITA'**: Numero massimo di porte tra un ingresso e un'uscita.
 
-Inizialmente si genera la mappa di Karnaugh relativa alla tavola di verita' Si estrae poi la funzione 
-booleana secondo le seguenti regole: (Si cercano di coprire il maggior numero di 1 con coppie o quaterne) - Ogni casella a 1 corrisponde a un minterm -Caselle a 1 adiacenti corrispondono ad un cubo
+## Terminologia
+- **LETTERALE**: quando compare una lettera ad indicare un i/o 
+- **MINTERM**: Quando all'interno di un gruppo *AND* compaiono tutti i termini in ingresso 
+- **MAXTERM**: Quando all'interno di un gruppo *OR* compaiono tutti i termini in ingresso 
+- **CUBO**: Quando all'interno di un gruppo *AND* **NON** compaiono tutti i termini in ingresso
 
-NB. In genere la copertura degli 1 sulla mappa non e' univoca, quindi bisogna cercare il minor numero di cubi 
-di dimensione massima (possono eventualmente sovrapporsi) (Non dimenticarsi che sono adiacenti anche la prima 
-e l'ultima colonna)
+## Mappe di Karnaugh 
+Metodo per la costruzione del circuito combinatorio minimo
+Utilizzabile per funzioni con:
+- 1 sola uscita
+- fino a 4 ingressi
 
-Per generare la funzione booleana basta guardare quali sono gli elementi che non cambiano nel cubo e 
-inserirli negati o no a seconda del caso.
+Inizialmente si genera la mappa di Karnaugh relativa alla tavola di verita'. (Vedere le videolezioni per piu' info)
 
-NB. I valori DONT CARE possono essere considerati 1 nella copertura della mappa di karnaugh per ottenere cubi piu grandi
+Si estrae poi la funzione booleana secondo le seguenti regole: (Si cercano di coprire il maggior numero di 1 con coppie o quaterne) 
+- Ogni casella a 1 corrisponde a un minterm 
+- Caselle a 1 adiacenti corrispondono ad un cubo
 
+NB. In genere la copertura degli 1 sulla mappa non e' univoca, quindi bisogna cercare il minor numero di cubi di dimensione massima (possono eventualmente sovrapporsi) 
 
-VALORI DON'T CARE In alcuni casi nelle specifiche, per alcune combinazioni in ingresso non e' prevista 
-un'uscita (perche' magari non accade mai.. Questi vengono chiamati valori DON'T CAREe vengono indicati nella 
-tavola di verita' o nella mappa di Karnaugh con una x o con un trattino.
+NB. Non dimenticarsi che sono adiacenti anche la prima e l'ultima colonna
 
+Per generare la funzione booleana basta guardare quali sono gli elementi che non cambiano nel cubo e inserirli negati o no a seconda del caso.
 
-RITARDI PORTE LOGICHE Le porte logiche sono soggette a un certo ritardo dal momento in cui viene cambiato il valore in ingresso alla propagazione in uscita. (il ritardo e' associato a una singola porta ed e' rappresentato con un delta minuscolo)
+NB. I valori **DONT CARE** possono essere considerati **1** nella copertura della mappa di karnaugh per ottenere cubi piu grandi
+
+## Valori DON'T CARE
+In alcuni casi nelle specifiche, per alcune combinazioni in ingresso non e' prevista un'uscita (perche' magari non accade mai o non sarebbe possibile gestirla).
+
+Questi vengono chiamati valori **DON'T CARE** e vengono indicati nella tavola di verita' o nella mappa di Karnaugh con una x o con un trattino.
+
+## Ritardi Porte Logiche
+Le porte logiche sono soggette a un certo ritardo dal momento in cui viene cambiato il valore in ingresso alla propagazione in uscita. (il ritardo e' associato a una singola porta ed e' rappresentato con un *delta minuscolo*)
 
 E' buona norma non applicare un nuovo cambiamento dei segnali in entrata finche' la propagazione degli effetti del precedente non si e' completamente esaurita.
 
-Il ritardo dell'intero circuito dipende dai ritardi delle singole porte, basta somamre i ritardi delle singole porte soggette a variazione per ottenere il ritardo del circuito rappresentato con DELTA maiuscolo.
+Il ritardo dell'intero circuito dipende dai ritardi delle singole porte, basta somamre i ritardi delle singole porte soggette a variazione per ottenere il ritardo del circuito rappresentato con **DELTA maiuscolo**.
+
 Il ritardo dipende quindi dal numero di porte presenti tra il cammino piu' lungo tra l'ingresso e l'uscita (la PROFONDITA' del circuito o CAMMINO CRITICO). 
-Quindi DELTA = PRFONDITA' \* delta 
+
+Quindi:
+    
+    DELTA = PRFONDITA' \* delta 
+
 NB. Questo solo se tutte le porte hanno lo stesso ritardo, senno' il calcolo del cammino critico diventa piu' complesso. 
 
 
