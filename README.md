@@ -793,79 +793,88 @@ Es. Media  di un insieme di numeri
 
 # 07-Istruzioni-di-controllo del flusso
 
-Costrutto JUMP: JMP
+## JUMP
+    
+    JMP etichetta   ;Salto incondizionato all'etichetta passata
 
 ### Costrutto switch:
-### C:
-switch(var) {
-	### case '1':
-		break;
-	### case '2':
-		break;
-	### case '3':
-		break;
-### }
+C:
 
-### ASSEMBLER:
-.DATA
-TAB		DW	lab_1
-		DW	lab_2
-		DW	lab_3
-### ..
-.CODE
-### ..
-DEC VAR
-MOV BX, VAR
+    switch(var) {
+    	case '1':
+    		break;
+    	case '2':
+    		break;
+    	case '3':
+    		break;
+    }
 
-SHL BX, 1     ; SHiftLeft sposta i bit a sinistra, equivale a BX\*=2
-JMP TAB[BX]
+ASSEMBLER:
 
-### lab_1:
-	JMP continue
-### lab_2:
-	JMP continue
-### lab_3:
-	JMP continue
-### continue:
+    .DATA
+    TAB		DW	lab_1
+    		DW	lab_2
+    		DW	lab_3
+    ..
+    .CODE
+    ..
+    
+    DEC VAR
+    MOV BX, VAR
+
+    SHL BX, 1     ;ShiftLeft sposta i bit a sinistra, equivale a BX\*=2 (perche TAB ha elementi da 2 byte, quindi bx dev'essere 0, 2 o 4)
+    JMP TAB[BX]
+
+    lab_1:
+    	JMP continue
+    lab_2:
+    	JMP continue
+    lab_3:
+    	JMP continue
+    continue:
 
 
-### ISTRUZIONE LOOP:
+## LOOP:
 Facilita la scrittura di cicli, utilizza il registro CX come contatore di 
 esecuzioni. Decrementa di 1 CX ad ogni iterazione.
 
-es. 
-MOV CX, N
-### BEGIN:
-	DEC CX
-	JNZ BEGIN
+es.
 
-### is equal to:
+    MOV CX, N
+    BEGIN:
+        DEC CX
+        JNZ BEGIN
 
-MV CX, N
-### BEGIN:
-	LOOP BEGIN
+Is equal to:
 
-LE istruzioni LOOPE e LOOPNE oltre a controllare il valore del registro CX 
-controllano anche il valore del flag ZF.
+    MOV CX, N
+    BEGIN:
+    	LOOP BEGIN
 
-### Oltre alle condizioni su CX valgono le seguenti:
-LOOPE salta all'etichetta solo se ZF e' uguale a 1
-LOOPNE salta all'etichetta solo se ZF e' uguale a 0.
+### LOOPE/LOOPNE - LOOPZ/LOOPNZ
+LE istruzioni LOOPE e LOOPNE oltre a controllare il valore del registro CX controllano anche il valore del flag ZF.
+
+Oltre alle condizioni su CX valgono le seguenti:
+- LOOPE salta all'etichetta solo se ZF e' uguale a 1
+- LOOPNE salta all'etichetta solo se ZF e' uguale a 0.
 
 LOOPZ e LOOPNZ si comportano in modo esattamente uguale ai precedenti (?)
 
 
-### MODIFICARE IL VALORE DI ALCUNI FLAG: (CF, DF, IF)
+## MODIFICARE IL VALORE DI ALCUNI FLAG: (CF, DF, IF)
 
-STC - Forza CF a 1
-CLC - Forza CF a 0
-CMC - Complementa il valore di CF
+Carry Flag:
+- **STC** - Forza CF a 1
+- **CLC** - Forza CF a 0
+- **CMC** - Complementa il valore di CF
 
-STD - Forza DF a 1
-CLD - Forza DF a 0
+Direction Flag: [wiki](https://en.wikipedia.org/wiki/Direction_flag)
+- **STD** - Forza DF a 1
+- **CLD** - Forza DF a 0
 
-STI - Forza IF a 1
-CLI - Forza IF a 0
+Interrupt Flag:
+- **STI** - Forza IF a 1
+- **CLI** - Forza IF a 0
 
 
 
