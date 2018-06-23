@@ -1,253 +1,267 @@
-
 Table of Contents
 =================
 
-   * [01-Introduzione ai sistemi di elaborazione.txt](#01-introduzione-ai-sistemi-di-elaborazionetxt)
-      * [Vantaggi:](#vantaggi)
-      * [Un sistema a processore utilizza 3 idee chiave:](#un-sistema-a-processore-utilizza-3-idee-chiave)
-      * [Ere dei calcolatori:](#ere-dei-calcolatori)
-      * [- Generazioni:](#--generazioni)
+   * [Introduzione ai Sistemi di Elaborazione](#introduzione-ai-sistemi-di-elaborazione)
+      * [Ere dei calcolatori](#ere-dei-calcolatori)
       * [Legge di Moore:](#legge-di-moore)
-      * [(Negli ultimi anni inizia ad esserci qualche dubbio.)](#negli-ultimi-anni-inizia-ad-esserci-qualche-dubbio)
-      * [CISC vs RISC vs SUPERSCALARI vs MULTICORE:](#cisc-vs-risc-vs-superscalari-vs-multicore)
-      * [FAMIGLIE E COMPATIBILITA'](#famiglie-e-compatibilita)
-      * [MICROCONTROLLORI (MCU):](#microcontrollori-mcu)
-      * [Da qui nasce l'idea di microcontrollori, dispositivi integrati su un unico IC composti da:](#da-qui-nasce-lidea-di-microcontrollori-dispositivi-integrati-su-un-unico-ic-composti-da)
-      * [REALIZZAZIONE DI SISTEMI SPECIAL-PURPOSE:](#realizzazione-di-sistemi-special-purpose)
-      * [- SOLUZIONE HW: ASIC (Application Specific IC):](#--soluzione-hw-asic-application-specific-ic)
-   * [02-Processori.txt](#02-processoritxt)
-   * [03-Introduzione ad assembler](#03-introduzione-ad-assembler)
+      * [CISC vs RISC vs Superscalari vs Multicore:](#cisc-vs-risc-vs-superscalari-vs-multicore)
+      * [Famiglie e Compatibilita'](#famiglie-e-compatibilita)
+      * [Microcontrollori (MCU):](#microcontrollori-mcu)
+      * [Realizzazione di Sistemi Special-Purpose:](#realizzazione-di-sistemi-special-purpose)
+   * [Processori](#processori)
+   * [Introduzione ad Assembler](#introduzione-ad-assembler)
       * [COSTANTI:](#costanti)
-      * [Ne esistono ovviamente altri del tipo:](#ne-esistono-ovviamente-altri-del-tipo)
+      * [DIRETTIVA MODEL](#direttiva-model)
+      * [DIRETTIVA END](#direttiva-end)
+      * [OPERATORE PTR](#operatore-ptr)
       * [RAPPRESENTAZIONE DELLE PAROLE (little endian)](#rappresentazione-delle-parole-little-endian)
       * [BOOT](#boot)
       * [MODI DI INDIRIZZAMENTO](#modi-di-indirizzamento)
-   * [04-Segmentazione e indirizzi.txt](#04-segmentazione-e-indirizzitxt)
-   * [04A-Input_Output di un vettore di caratteri.txt](#04a-input_output-di-un-vettore-di-caratteritxt)
+         * [Direct Addressing](#direct-addressing)
+         * [Register Indirect Addressing](#register-indirect-addressing)
+         * [Base Relative Addressing](#base-relative-addressing)
+         * [Direct Indexed Addressing](#direct-indexed-addressing)
+         * [Base Indexed Addressing](#base-indexed-addressing)
+   * [Segmentazione ed Indirizzi](#segmentazione-ed-indirizzi)
+   * [Input/Output di un carattere](#inputoutput-di-un-carattere)
+      * [Input da tastiera di un carattere](#input-da-tastiera-di-un-carattere)
       * [Output di un carattere:](#output-di-un-carattere)
-   * [05-Istruzioni-trasferimento-dati](#05-istruzioni-trasferimento-dati)
-      * [XCHG:](#xchg)
+   * [Istruzioni di Trasferimento Dati](#istruzioni-di-trasferimento-dati)
+      * [MOV](#mov)
+      * [XCHG](#xchg)
       * [LEA:](#lea)
-      * [STACK (PUSH, POP):](#stack-push-pop)
-   * [05A-Istruzioni-aritmetiche](#05a-istruzioni-aritmetiche)
-      * [In breve:](#in-breve)
-   * [06-Istruzioni-Aritmetiche](#06-istruzioni-aritmetiche)
-      * [CWD (](#cwd-)
-      * [ciclo:](#ciclo)
-      * [continua:](#continua)
-   * [07-Istruzioni-di-controllo del flusso](#07-istruzioni-di-controllo-del-flusso)
-      * [Costrutto switch:](#costrutto-switch)
-      * [C:](#c)
-      * [ASSEMBLER:](#assembler)
-      * [..](#-1)
-      * [..](#-2)
-      * [lab_1:](#lab_1)
-      * [lab_2:](#lab_2)
-      * [lab_3:](#lab_3)
-      * [continue:](#continue)
-      * [ISTRUZIONE LOOP:](#istruzione-loop)
-      * [BEGIN:](#begin)
-      * [is equal to:](#is-equal-to)
-      * [BEGIN:](#begin-1)
-      * [Oltre alle condizioni su CX valgono le seguenti:](#oltre-alle-condizioni-su-cx-valgono-le-seguenti)
+      * [STACK (PUSH, POP)](#stack-push-pop)
+   * [Istruzioni Aritmetiche](#istruzioni-aritmetiche)
+      * [ADD e SUB](#add-e-sub)
+         * [Controllo dell'overflow](#controllo-delloverflow)
+      * [CBW](#cbw)
+      * [CWD](#cwd)
+      * [ADC](#adc)
+      * [SBB](#sbb)
+      * [INC E DEC](#inc-e-dec)
+      * [NEG](#neg)
+      * [MUL / IMUL](#mul--imul)
+      * [DIV / IDIV](#div--idiv)
+   * [Istruzioni di Controllo del Flusso](#istruzioni-di-controllo-del-flusso)
+      * [Salto Incondizionato](#salto-incondizionato)
+         * [JUMP](#jump)
+            * [Costrutto switch:](#costrutto-switch)
+      * [Salto Condizionato](#salto-condizionato)
+         * [JE/JNE](#jejne)
+         * [JZ/JNZ](#jzjnz)
+         * [JL/JB - JG/JA](#jljb---jgja)
+         * [JC e JO](#jc-e-jo)
+      * [LOOP:](#loop)
+         * [LOOPE/LOOPNE - LOOPZ/LOOPNZ](#loopeloopne---loopzloopnz)
       * [MODIFICARE IL VALORE DI ALCUNI FLAG: (CF, DF, IF)](#modificare-il-valore-di-alcuni-flag-cf-df-if)
-   * [08-Istruzioni-manipolazione-bit](#08-istruzioni-manipolazione-bit)
-      * [ISTRUZIONI DI SCORRIMENTO:](#istruzioni-di-scorrimento)
-   * [08A-Procedure](#08a-procedure)
-      * [DEFINIZIONE DI UNA PROCEDURA:](#definizione-di-una-procedura)
-      * [CHIAMATA DELLA PROCEDURA](#chiamata-della-procedura)
-      * [NEAR VS FAR](#near-vs-far)
-      * [NB. E' buona regola fare in modo che ogni procedura:](#nb-e-buona-regola-fare-in-modo-che-ogni-procedura)
-      * [XXX PROC](#xxx-proc)
-      * [PASSAGGIO DI PARAMETRI](#passaggio-di-parametri)
-      * [VARIABILI LOCALI](#variabili-locali)
-   * [09-Progetto-di-circuiti-logici](#09-progetto-di-circuiti-logici)
-      * [SPECIFICHE:](#specifiche)
-      * [CICLO DI VITA DI UN PRODOTTO: (4 fasi)](#ciclo-di-vita-di-un-prodotto-4-fasi)
-      * [PROGETTO GERARCHICO:](#progetto-gerarchico)
-      * [LIVELLO DI PROGETTO:](#livello-di-progetto)
-   * [10-Sistemi-combinatori-e-sequenziali](#10-sistemi-combinatori-e-sequenziali)
-      * [SISTEMA COMBINATORIO](#sistema-combinatorio)
-      * [SISTEMA SEQUENZIALE:](#sistema-sequenziale)
-   * [11-Progettazione](#11-progettazione)
-      * [LIVELLO ELETTRICO](#livello-elettrico)
-      * [LIVELLO TRANSISTOR](#livello-transistor)
-      * [LIVELLO PORTE LOGICHE](#livello-porte-logiche)
-      * [Circuiti combinatori ben formati:](#circuiti-combinatori-ben-formati)
-   * [12-Progettazione-circuiti-combinatori](#12-progettazione-circuiti-combinatori)
-      * [0)](#0)
-      * [MAPPE DI KARNAUGH (Metodo per la costruzione del circuito combinatorio minimo) Utilizzabile per funzioni con:](#mappe-di-karnaugh-metodo-per-la-costruzione-del-circuito-combinatorio-minimo-utilizzabile-per-funzioni-con)
-   * [13-Progettazione-circuiti-sequenziali](#13-progettazione-circuiti-sequenziali)
-      * [Y	0 |	 0		 0		 1](#y0--0-0-1)
-      * [FLIP FLOP D (figura slide 111)](#flip-flop-d-figura-slide-111)
-      * [CLOCK=1](#clock1)
-      * [FLIP FLOP MASTER-SLAVE](#flip-flop-master-slave)
-      * [RITARDO LOGICA COMBINATORIA:](#ritardo-logica-combinatoria)
-      * [Bisogna che la frequenza di clock f dei flipflop sia determinata in modo che il tempo T=1/f fra due fronti di clock successivi rispetti la seguente disuguaglianza:](#bisogna-che-la-frequenza-di-clock-f-dei-flipflop-sia-determinata-in-modo-che-il-tempo-t1f-fra-due-fronti-di-clock-successivi-rispetti-la-seguente-disuguaglianza)
-   * [13-X-Progettazione-sequenziali-flusso-lavoro](#13-x-progettazione-sequenziali-flusso-lavoro)
-   * [14-Modello-Huffman-circuiti-sincroni](#14-modello-huffman-circuiti-sincroni)
-   * [15-Progettazione-livello-Registri-MPX-DEC-ENC](#15-progettazione-livello-registri-mpx-dec-enc)
-      * [PORTE LOGICHE OPERANTI SU PAROLE](#porte-logiche-operanti-su-parole)
-      * [MULTIPLEXER](#multiplexer)
-      * [CODIFICATORE (ENCODER)](#codificatore-encoder)
-   * [16-Progettazione-liv-Registri-Moduli-Aritmetici](#16-progettazione-liv-registri-moduli-aritmetici)
-      * [/*******/](#-3)
-      * [/******/](#-4)
-      * [SOMMATORE COMBINATORIO (AD-HOC)](#sommatore-combinatorio-ad-hoc)
-      * [CARRY-LOOKAHEAD (VEDERE SLIDE 32)](#carry-lookahead-vedere-slide-32)
-      * [utilizza questa formula ripetuta per tutti i bit dell'operazione:](#utilizza-questa-formula-ripetuta-per-tutti-i-bit-delloperazione)
-      * [SOLUZIONI MISTE](#soluzioni-miste)
-      * [ALU](#alu)
-      * [COMPARATORE](#comparatore)
-   * [17-Registri](#17-registri)
-      * [Ha altri due segnali:](#ha-altri-due-segnali)
-      * [REGISTRI A SCALAMENTO (SHIFT REGISTER)](#registri-a-scalamento-shift-register)
-      * [CONTATORI](#contatori)
-   * [18-Memorie](#18-memorie)
+   * [Istruzioni di Manipolazione Bit](#istruzioni-di-manipolazione-bit)
+      * [Istruzioni Logiche](#istruzioni-logiche)
+         * [AND](#and)
+         * [OR](#or)
+         * [XOR](#xor)
+         * [NOT](#not)
+         * [TEST](#test)
+      * [Istruzioni di Scorrimento](#istruzioni-di-scorrimento)
+         * [Shift](#shift)
+         * [Rotazione](#rotazione)
+   * [Procedure](#procedure)
+      * [Definizione di una procedura](#definizione-di-una-procedura)
+      * [Chiamata della procedura](#chiamata-della-procedura)
+      * [Near VS Far](#near-vs-far)
+      * [Salvataggio dei registri](#salvataggio-dei-registri)
+      * [Passaggio di Parametri](#passaggio-di-parametri)
+         * [Stack](#stack)
+            * [Liberazione dello stack](#liberazione-dello-stack)
+      * [Variabili locali](#variabili-locali)
+   * [Progetto di Circuiti Logici](#progetto-di-circuiti-logici)
+      * [Progetto](#progetto)
+         * [Specifiche](#specifiche)
+      * [Ciclo di vita di un prodotto](#ciclo-di-vita-di-un-prodotto)
+      * [Progetto Gerarchico](#progetto-gerarchico)
+      * [Livello di Progetto](#livello-di-progetto)
+   * [Sistemi Combinatori e Sequenziali](#sistemi-combinatori-e-sequenziali)
+      * [Sistema Combinatorio](#sistema-combinatorio)
+      * [Sistema Sequenziale](#sistema-sequenziale)
+   * [Progettazione](#progettazione)
+      * [Livello Elettrico](#livello-elettrico)
+      * [Livello Transistor](#livello-transistor)
+         * [Inverter NMOS](#inverter-nmos)
+         * [Buffer PMOS](#buffer-pmos)
+         * [Inverter CMOS](#inverter-cmos)
+      * [Livello Porte Logiche](#livello-porte-logiche)
+   * [Circuiti Combinatori Ben Formati](#circuiti-combinatori-ben-formati)
+      * [Parametri Circuito Combinatorio](#parametri-circuito-combinatorio)
+   * [Progettazione Circuiti Combinatori](#progettazione-circuiti-combinatori)
+      * [Circuito Combinatorio Minimo](#circuito-combinatorio-minimo)
+      * [Terminologia](#terminologia)
+      * [Mappe di Karnaugh](#mappe-di-karnaugh)
+      * [Valori DON'T CARE](#valori-dont-care)
+      * [Ritardi Porte Logiche](#ritardi-porte-logiche)
+   * [Progettazione Circuiti Sequenziali](#progettazione-circuiti-sequenziali)
+      * [Flip-Flop SR](#flip-flop-sr)
+      * [Flip-Flop SR Sincrono](#flip-flop-sr-sincrono)
+      * [Flip-Flop D](#flip-flop-d)
+      * [Flip-Flop Master-Slave](#flip-flop-master-slave)
+      * [Flip-Flop SR con Clock, Preset e Clear asincroni](#flip-flop-sr-con-clock-preset-e-clear-asincroni)
+      * [Ritardo Logica Combinatoria](#ritardo-logica-combinatoria)
+      * [Flusso di Lavoro](#flusso-di-lavoro)
+   * [Modello Huffman per Circuiti Sincroni](#modello-huffman-per-circuiti-sincroni)
+      * [Modello di Huffman](#modello-di-huffman)
+      * [Progettazione Circuiti Sequenziali Sincroni](#progettazione-circuiti-sequenziali-sincroni)
+   * [Progettazione a livello Registri](#progettazione-a-livello-registri)
+      * [Livello Registri o RT (Register Transfer)](#livello-registri-o-rt-register-transfer)
+      * [Componenti combinatori](#componenti-combinatori)
+         * [Porte logiche operanti su parole](#porte-logiche-operanti-su-parole)
+         * [Multiplexer](#multiplexer)
+         * [Decoder](#decoder)
+         * [Encoder](#encoder)
+         * [Moduli Aritmetici](#moduli-aritmetici)
+            * [Sommatori](#sommatori)
+               * [Full-Adder](#full-adder)
+               * [Sommatore Seriale](#sommatore-seriale)
+               * [Sommatore Combinatorio - Ripple Carry Adder](#sommatore-combinatorio---ripple-carry-adder)
+               * [Sommatore Combinatorio Ad Hoc](#sommatore-combinatorio-ad-hoc)
+               * [Carry-Lookahead (VEDERE SLIDE 32)](#carry-lookahead-vedere-slide-32)
+               * [Soluzioni Miste](#soluzioni-miste)
+            * [ALU](#alu)
+            * [Comparatore](#comparatore)
+   * [Registri](#registri)
+      * [Registro a <em>m</em> bit](#registro-a-m-bit)
+      * [Registri a scalamento - <em>Shift Register</em>](#registri-a-scalamento---shift-register)
+      * [Contatori](#contatori)
+         * [Contatore Asincrono - <em>Ripple Counter</em>](#contatore-asincrono---ripple-counter)
+         * [Contatore Sincrono](#contatore-sincrono)
+   * [Memorie](#memorie)
       * [RAM](#ram)
+         * [Struttura](#struttura)
+         * [Scrittura](#scrittura)
+         * [Lettura:](#lettura)
       * [ROM](#rom)
-      * [BANCHI DI MEMORIA (VL 28 da circa la meta')](#banchi-di-memoria-vl-28-da-circa-la-meta)
-      * [RAM STRUTTURA INTERNA (slide 79)](#ram-struttura-interna-slide-79)
-      * [Scrittura:](#scrittura)
-      * [Lettura:](#lettura)
-   * [19-Bus](#19-bus)
-      * [BUFFER TRI-STATE](#buffer-tri-state)
-      * [CONNESSIONE AL BUS](#connessione-al-bus)
-      * [TRANSCEIVER](#transceiver)
-   * [20-FPGA](#20-fpga)
-   * [21-Processore-Unita-di-elaborazione](#21-processore-unita-di-elaborazione)
-      * [SOMMA TRA DUE REGISTRI](#somma-tra-due-registri)
-      * [operazione [segnale]:](#operazione-segnale)
-      * [IMPORTANTE:](#importante)
-      * [FETCH](#fetch)
-      * [FETCH DEFINITIVO!!](#fetch-definitivo)
-      * [OPERAZIONI CON UN VALORE IMMEDIATO](#operazioni-con-un-valore-immediato)
-      * [[RD]](#rd)
-      * [[SEL=0]](#sel0)
-      * [ESEMPIO CON SCRITTURA IN MEMORIA](#esempio-con-scrittura-in-memoria)
-      * [[SEL=1]](#sel1)
-      * [ISTRUZIONI DI SALTO](#istruzioni-di-salto)
-   * [22-Processore-Unita-di-Controllo](#22-processore-unita-di-controllo)
-      * [MICROPROGRAMMATA](#microprogrammata)
-      * [UNITA DI CONTROLLO DELL'8088](#unita-di-controllo-dell8088)
-   * [23-Memorie-livello-processore](#23-memorie-livello-processore)
-      * [Una soluzione a questo problema puo' essere avere piu' livelli di memoria:](#una-soluzione-a-questo-problema-puo-essere-avere-piu-livelli-di-memoria)
-      * [LOCALITA' TEMPORALE](#localita-temporale)
-      * [LOCALITA' SPAZIALE](#localita-spaziale)
-      * [- VELOCITA:](#--velocita)
-      * [- MODI DI ACCESSO:](#--modi-di-accesso)
-      * [- ALTERABILITA':](#--alterabilita)
-      * [- DUREVOLEZZA DEL CONTENUTO:](#--durevolezza-del-contenuto)
-      * [- AFFIDABILITA':](#--affidabilita)
-      * [Possono capitare due  tipi di guasti:](#possono-capitare-due--tipi-di-guasti)
-      * [Misurata attraverso tre parametri:](#misurata-attraverso-tre-parametri)
-   * [24-Memorie-Accesso-Casuale-RAM](#24-memorie-accesso-casuale-ram)
-      * [Sono fondamentali da due punti di vista:- Permettono di sapere il tipo di operazione (lettura scrittura)- Permettono la sincronizzazione con l'esterno (manca il segnale di clock):](#sono-fondamentali-da-due-punti-di-vista--permettono-di-sapere-il-tipo-di-operazione-lettura-scrittura--permettono-la-sincronizzazione-con-lesterno-manca-il-segnale-di-clock)
-      * [ARCHITETTURA NELLA SLIDE 10.](#architettura-nella-slide-10)
-      * [PAGE MODE](#page-mode)
-      * [CLASSIFICAZIONE- ROM- PROM- EPROM- EEPROM- FLASH- RAM](#classificazione--rom--prom--eprom--eeprom--flash--ram)
-      * [PROM](#prom)
-      * [EPROM](#eprom)
-      * [EEPROM](#eeprom)
-      * [FLASH](#flash)
-      * [RIASSUNTO DI TUTTO CIO ALLA SLIDE 28](#riassunto-di-tutto-cio-alla-slide-28)
-      * [2 tipi:- STATICHE (SRAM):](#2-tipi--statiche-sram)
-      * [SRAM (Disegno slide 30)](#sram-disegno-slide-30)
-      * [DRAM (Disegno slide 34)](#dram-disegno-slide-34)
-      * [Per ovviare a questo problema si usano i cosiddetti CODICI DI PROTEZIONE:](#per-ovviare-a-questo-problema-si-usano-i-cosiddetti-codici-di-protezione)
-      * [MEMORIE INTERLACCIATE](#memorie-interlacciate)
-      * [0	1	2	3](#0123)
-      * [8	9	10	11](#891011)
-      * [BANCHI DI MEMORIA NELL'8086](#banchi-di-memoria-nell8086)
-   * [25-Memorie-CACHE](#25-memorie-cache)
-      * [Il tempo medio di accesso in memoria per la CPU e' dato da:](#il-tempo-medio-di-accesso-in-memoria-per-la-cpu-e-dato-da)
-      * [STRUTTURA CACHE](#struttura-cache)
-      * [Esiti della ricerca del blocco di memoria:](#esiti-della-ricerca-del-blocco-di-memoria)
-      * [DIRECT MAPPING](#direct-mapping)
-      * [SET ASSOCIATIVE MAPPING (W-ways)](#set-associative-mapping-w-ways)
-      * [In caso di miss si sovrascrive una determinata riga a seconda dei casi. Viene scelto tra:](#in-caso-di-miss-si-sovrascrive-una-determinata-riga-a-seconda-dei-casi-viene-scelto-tra)
-      * [CACHE SU DIVERSI LIVELLI:](#cache-su-diversi-livelli)
-      * [PRESTAZIONI](#prestazioni)
-   * [26-Memorie-ad-accesso-Seriale](#26-memorie-ad-accesso-seriale)
-      * [MEMORIE A DISCO MAGNETICO (HARD DISK)](#memorie-a-disco-magnetico-hard-disk)
-      * [TEMPO DI ACCESSO:](#tempo-di-accesso)
-      * [CODIFICA DEI DATI](#codifica-dei-dati)
-      * [PARAMETRI TIPICI](#parametri-tipici)
-      * [DISK DRIVER E DISK CONTROLLER](#disk-driver-e-disk-controller)
-      * [UNITA' A STATO SOLIDO](#unita-a-stato-solido)
-      * [Non hanno parti in movimento e rispetto agli HDD tradizionali:](#non-hanno-parti-in-movimento-e-rispetto-agli-hdd-tradizionali)
-      * [MEMORIE OFFLINE](#memorie-offline)
-      * [Servono per memorizzare grandi moli di dati digitali (es filmati) e in questi casi il tempo di accesso non e' un problema; In questi casi i parametri importanti sono:](#servono-per-memorizzare-grandi-moli-di-dati-digitali-es-filmati-e-in-questi-casi-il-tempo-di-accesso-non-e-un-problema-in-questi-casi-i-parametri-importanti-sono)
-      * [Per queste applicazioni si usano:](#per-queste-applicazioni-si-usano)
-      * [MEMORIE OTTICHE (CD DVD)](#memorie-ottiche-cd-dvd)
-      * [Sono diffuse sotto forma di dischi ottici e hanno le seguenti caratteristiche:](#sono-diffuse-sotto-forma-di-dischi-ottici-e-hanno-le-seguenti-caratteristiche)
-      * [ORGANIZZAZIONE](#organizzazione)
-   * [27-Gestione-Dispositivi-Input-Output](#27-gestione-dispositivi-input-output)
-      * [Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:](#il-numero-totale-di-registri-di-io-e-di-qualche-decina-quindi-quando-il-processore-emette-un-indirizzo-puo-riferirsi-sia-a-una-cella-di-memoria-che-a-un-registro-periferico-questo-puo-essere-gestito-in-due-modi)
-      * [ISOLATED I/O](#isolated-io)
-      * [MEMORY MAPPED I/O](#memory-mapped-io)
-      * [REGISTRI DI INTERFACCIA](#registri-di-interfaccia)
-      * [PER GESTIRE LA SINCRONIZZAZIONE:](#per-gestire-la-sincronizzazione)
-      * [*INTERRUPT](#interrupt)
-      * [Questo segnale viene gestito in diversi modi:](#questo-segnale-viene-gestito-in-diversi-modi)
-      * [POLLING](#polling)
-      * [INTERRUPT VETTORIZZATO](#interrupt-vettorizzato)
-      * [GESTIONE DI RICHIESTE DI INTERRUPT CONTEMPORANEE](#gestione-di-richieste-di-interrupt-contemporanee)
-      * [STATICA](#statica)
-      * [DINAMICA](#dinamica)
-      * [GESTIONE DELLE INTERRUZIONE DELLE INTERRUPT SERVICE ROUTINE](#gestione-delle-interruzione-delle-interrupt-service-routine)
-      * [Due strade:](#due-strade)
-      * [INTERRUZIONE DEGLI INTERRUPT](#interruzione-degli-interrupt)
-      * [Istruzioni 8086:](#istruzioni-8086)
-   * [27-Gestione-Dispositivi-Input-Output.save](#27-gestione-dispositivi-input-outputsave)
-      * [Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:](#il-numero-totale-di-registri-di-io-e-di-qualche-decina-quindi-quando-il-processore-emette-un-indirizzo-puo-riferirsi-sia-a-una-cella-di-memoria-che-a-un-registro-periferico-questo-puo-essere-gestito-in-due-modi-1)
-      * [ISOLATED I/O](#isolated-io-1)
-      * [MEMORY MAPPED I/O](#memory-mapped-io-1)
-      * [REGISTRI DI INTERFACCIA](#registri-di-interfaccia-1)
-      * [per gestire la sincronizzazione:](#per-gestire-la-sincronizzazione-1)
-      * [I/O PROGRAMMATO](#io-programmato)
-      * [INTERRUPT](#interrupt-1)
-      * [Questo segnale viene gestito in diversi modi:](#questo-segnale-viene-gestito-in-diversi-modi-1)
-      * [POLLING](#polling-1)
-      * [INTERRUPT VETTORIZZATO](#interrupt-vettorizzato-1)
-   * [28-8255-Interfaccia-parallela-programmabile](#28-8255-interfaccia-parallela-programmabile)
-      * [PORTE PARALLELE](#porte-parallele)
+      * [Banchi di Memoria](#banchi-di-memoria)
+   * [Bus](#bus)
+      * [Buffer Tri-State](#buffer-tri-state)
+      * [Connessione al bus](#connessione-al-bus)
+         * [Transceiver](#transceiver)
+   * [FPGA - <em>Field Programmable Gate Array</em>](#fpga---field-programmable-gate-array)
+   * [Processore](#processore)
+      * [Unita di elaborazione](#unita-di-elaborazione)
+         * [Somma tra due registri](#somma-tra-due-registri)
+         * [Trasferimento tra registri Ri -&gt; Rj (tra registri)](#trasferimento-tra-registri-ri---rj-tra-registri)
+         * [Fetch](#fetch)
+            * [Aggiornamento Program Counter nella fase di Fetch](#aggiornamento-program-counter-nella-fase-di-fetch)
+            * [Fetch parallelizzato](#fetch-parallelizzato)
+         * [Operazioni con un valore immediato](#operazioni-con-un-valore-immediato)
+         * [Operazioni con un registro che contiene l'indirizzo dell'operando](#operazioni-con-un-registro-che-contiene-lindirizzo-delloperando)
+         * [Scrittura in memoria](#scrittura-in-memoria)
+         * [Istruzioni di Salto](#istruzioni-di-salto)
+            * [Salto incondizionato](#salto-incondizionato-1)
+            * [Salto condizionato](#salto-condizionato-1)
+      * [Unita' di Controllo](#unita-di-controllo)
+         * [HardWired](#hardwired)
+         * [Microprogrammata](#microprogrammata)
+            * [Segnali Compatibili](#segnali-compatibili)
+               * [Programmazione orizzontale](#programmazione-orizzontale)
+               * [Programmazione verticale](#programmazione-verticale)
+         * [Unita' di Controllo dell'8086](#unita-di-controllo-dell8086)
+   * [Memorie livello Processore](#memorie-livello-processore)
+      * [Localita' Temporale](#localita-temporale)
+      * [Localita' Spaziale](#localita-spaziale)
+      * [Gerarchia delle memorie](#gerarchia-delle-memorie)
+      * [Classificazione delle Tecnologie di Memoria](#classificazione-delle-tecnologie-di-memoria)
+   * [Memorie ad Accesso Casuale](#memorie-ad-accesso-casuale)
+      * [Segnali di Controllo](#segnali-di-controllo)
+      * [Segnali di Stato](#segnali-di-stato)
+      * [Dimensioni](#dimensioni)
+      * [Architettura](#architettura)
+      * [Schema Generale](#schema-generale)
+      * [Organizzazione](#organizzazione)
+      * [Segnali RAS e CAS (matrice)](#segnali-ras-e-cas-matrice)
+         * [Page Mode](#page-mode)
+      * [Classificazione](#classificazione)
+         * [ROM](#rom-1)
+            * [Applicazioni](#applicazioni)
+            * [Struttura Fisica](#struttura-fisica)
+         * [PROM](#prom)
+         * [EPROM](#eprom)
+         * [EEPROM](#eeprom)
+         * [FLASH](#flash)
+         * [Quadro di sintesi](#quadro-di-sintesi)
+   * [RAM](#ram-1)
+      * [SRAM](#sram)
+         * [Funzionamento](#funzionamento)
+      * [DRAM](#dram)
+         * [Codici di Protezione](#codici-di-protezione)
+      * [Memorie Interlacciate](#memorie-interlacciate)
+      * [Banchi di Memoria nell'8086](#banchi-di-memoria-nell8086)
+   * [CACHE](#cache)
+      * [Struttura](#struttura-1)
+      * [Esiti della ricerca del blocco di memoria](#esiti-della-ricerca-del-blocco-di-memoria)
+      * [Modi di funzionamento](#modi-di-funzionamento)
+         * [Direct Mapping](#direct-mapping)
+         * [Set Associative Mapping (W-ways)](#set-associative-mapping-w-ways)
+      * [Aggiornamento della memoria principale](#aggiornamento-della-memoria-principale)
+         * [Write Back](#write-back)
+         * [Write Through](#write-through)
+      * [Cache su diversi livelli](#cache-su-diversi-livelli)
+      * [Instruction/Data Cache](#instructiondata-cache)
+      * [Prestazioni](#prestazioni)
+   * [Memorie ad Accesso Seriale](#memorie-ad-accesso-seriale)
+      * [Memorie a Disco Magnetico (Hard Disk)](#memorie-a-disco-magnetico-hard-disk)
+         * [Tempo di Accesso](#tempo-di-accesso)
+         * [Codifica dei Dati](#codifica-dei-dati)
+         * [Parametri](#parametri)
+         * [Disk Driver e Disk Controller](#disk-driver-e-disk-controller)
+      * [Unita' a Stato Solido](#unita-a-stato-solido)
+      * [Memorie Offline](#memorie-offline)
+         * [Memorie ottiche](#memorie-ottiche)
+         * [Organizzazione](#organizzazione-1)
+   * [Gestione dispositivi Input Output](#gestione-dispositivi-input-output)
+      * [Configurazioni](#configurazioni)
+         * [Isolated I/O](#isolated-io)
+         * [Memory Mapped I/O](#memory-mapped-io)
+      * [Registri di Interfaccia](#registri-di-interfaccia)
+      * [Sincronizzazione](#sincronizzazione)
+         * [I/O Programmato](#io-programmato)
+         * [Interrupt](#interrupt)
+            * [Polling](#polling)
+            * [Interrupt Vettorizzato](#interrupt-vettorizzato)
+               * [ISR (Interrupt Service Routine)](#isr-interrupt-service-routine)
+               * [IVT (Interrupt Vector Table)](#ivt-interrupt-vector-table)
+            * [Gestione di richieste di interrupt contemporanee](#gestione-di-richieste-di-interrupt-contemporanee)
+               * [Statica](#statica)
+               * [Dinamica](#dinamica)
+            * [Gestione dell'interruzione delle ISR (Interrupt Service Routine)](#gestione-dellinterruzione-delle-isr-interrupt-service-routine)
+               * [Ambiente 8086](#ambiente-8086)
+   * [8255 - Interfaccia Parallela Programmabile](#8255---interfaccia-parallela-programmabile)
+      * [Porte Parallele](#porte-parallele)
       * [8255 - INTERFACCIA PARALLELA](#8255---interfaccia-parallela)
-      * [Contiene:](#contiene)
-      * [Funzionamento:](#funzionamento)
-      * [Il modo interrupt funziona in questo modo:](#il-modo-interrupt-funziona-in-questo-modo)
-      * [INPUT](#input)
-      * [OUTPUT:](#output)
-      * [NOTA BENE:](#nota-bene)
-      * [MODO 2](#modo-2)
-      * [Possibili modi per le varie porte:](#possibili-modi-per-le-varie-porte)
-      * [-  A: 0/1/2](#---a-012)
-      * [-  C: 0](#---c-0)
-      * [Possibili programmazioni:](#possibili-programmazioni)
-      * [MODO 0](#modo-0)
-      * [MODO 1](#modo-1)
-      * [SEGNALI DI CONTROLLO DI OUTPUT](#segnali-di-controllo-di-output)
-      * [MODO 2](#modo-2-1)
-      * [SINGLE BIT SET/RESET](#single-bit-setreset)
+         * [Funzionamento:](#funzionamento-1)
+            * [Interrupt - Modo 1](#interrupt---modo-1)
+            * [Modo 2 - I/O](#modo-2---io)
+         * [Programmazione](#programmazione)
+            * [Modo 0](#modo-0)
+            * [Modo 1](#modo-1)
+            * [Modo 2](#modo-2)
+         * [Single Bit Set/Reset](#single-bit-setreset)
    * [DMA - Direct Memory Access](#dma---direct-memory-access)
       * [Fasi del DMAC](#fasi-del-dmac)
       * [Struttura del DMA](#struttura-del-dma)
          * [Registri del DMA](#registri-del-dma)
          * [Periferiche](#periferiche)
-      * [Modi di funzionamento](#modi-di-funzionamento)
+      * [Modi di funzionamento](#modi-di-funzionamento-1)
          * [Trasferimento a blocchi - BURST TRANSFER](#trasferimento-a-blocchi---burst-transfer)
-               * [Vantaggi](#vantaggi-1)
+               * [Vantaggi](#vantaggi)
                * [Svantaggi](#svantaggi)
          * [Trasferimento con CYCLE STEALING](#trasferimento-con-cycle-stealing)
-               * [Vantaggi](#vantaggi-2)
+               * [Vantaggi](#vantaggi-1)
                * [Svantaggi](#svantaggi-1)
          * [Trasferimento in TRANSPARENT DMA](#trasferimento-in-transparent-dma)
-               * [Vantaggi](#vantaggi-3)
+               * [Vantaggi](#vantaggi-2)
                * [Svantaggi](#svantaggi-2)
       * [Arbitraggio del bus](#arbitraggio-del-bus)
-   * [ECCEZIONI](#eccezioni)
+   * [Eccezioni](#eccezioni)
       * [Categorie di eccezioni](#categorie-di-eccezioni)
-   * [BUS SINCRONI E ASINCRONI](#bus-sincroni-e-asincroni)
+   * [Bus Sincroni e Asincroni](#bus-sincroni-e-asincroni)
       * [Caratteristiche](#caratteristiche)
       * [Connessione con le unita'](#connessione-con-le-unita)
       * [Implementazione](#implementazione)
@@ -266,25 +280,25 @@ Table of Contents
                * [Il bus SCSI](#il-bus-scsi)
             * [Centralizzato](#centralizzato)
                * [Daisy Chaining](#daisy-chaining)
-                  * [Struttura](#struttura)
-                  * [Funzionamento](#funzionamento-1)
-                  * [Vantaggi](#vantaggi-4)
-                  * [Svantaggi](#svantaggi-3)
-               * [Polling](#polling-2)
-                  * [Struttura](#struttura-1)
+                  * [Struttura](#struttura-2)
                   * [Funzionamento](#funzionamento-2)
-                  * [Vantaggi](#vantaggi-5)
+                  * [Vantaggi](#vantaggi-3)
+                  * [Svantaggi](#svantaggi-3)
+               * [Polling](#polling-1)
+                  * [Struttura](#struttura-3)
+                  * [Funzionamento](#funzionamento-3)
+                  * [Vantaggi](#vantaggi-4)
                   * [Svantaggi](#svantaggi-4)
                * [Richieste indipendenti](#richieste-indipendenti)
-                  * [Struttura](#struttura-2)
-                  * [Funzionamento](#funzionamento-3)
-                  * [Vantaggi](#vantaggi-6)
+                  * [Struttura](#struttura-4)
+                  * [Funzionamento](#funzionamento-4)
+                  * [Vantaggi](#vantaggi-5)
                   * [Svantaggi](#svantaggi-5)
-   * [8259 - PROGRAMMABLE INTERRUPT CONTROLLER (PIC)](#8259---programmable-interrupt-controller-pic)
+   * [8259 - Programmable Interrupt Controller (PIC)](#8259---programmable-interrupt-controller-pic)
       * [Funzioni](#funzioni)
-      * [Struttura](#struttura-3)
+      * [Struttura](#struttura-5)
       * [Procedura di interrupt](#procedura-di-interrupt)
-      * [Programmazione](#programmazione)
+      * [Programmazione](#programmazione-1)
          * [ICW](#icw)
             * [ICW1](#icw1)
             * [ICW2](#icw2)
@@ -294,20 +308,20 @@ Table of Contents
             * [OCW1](#ocw1)
             * [OCW2](#ocw2)
             * [OCW3](#ocw3)
-   * [MEMORIA VIRTUALE](#memoria-virtuale)
+   * [Memoria Virtuale](#memoria-virtuale)
       * [Suddivisione in pagine](#suddivisione-in-pagine)
       * [Memory Address Table MAT](#memory-address-table-mat)
          * [TLB](#tlb)
-      * [Vantaggi](#vantaggi-7)
+      * [Vantaggi](#vantaggi-6)
       * [In sintesi](#in-sintesi)
       * [Memoria virtuale VS Cache](#memoria-virtuale-vs-cache)
-   * [ISTRUZIONI MACCHINA E TEMPI DI ESECUZIONE](#istruzioni-macchina-e-tempi-di-esecuzione)
+   * [Istruzioni Macchina e Tempi di Esecuzione](#istruzioni-macchina-e-tempi-di-esecuzione)
       * [Formato del codice macchina](#formato-del-codice-macchina)
          * [Numero di byte](#numero-di-byte)
             * [Primo byte](#primo-byte)
             * [Secondo byte](#secondo-byte)
       * [Tempi di esecuzione](#tempi-di-esecuzione)
-   * [ARCHITETTURE A PIPELINE](#architetture-a-pipeline)
+   * [Architetture a Pipeline](#architetture-a-pipeline)
       * [Pipeline](#pipeline)
       * [CPI](#cpi)
       * [Problemi](#problemi)
@@ -327,9 +341,9 @@ Table of Contents
                   * [Ottimizzazione](#ottimizzazione)
          * [Salti condizionati](#salti-condizionati)
       * [RISC - Reduced Instruction Set Computer (CPI ~ 1)](#risc---reduced-instruction-set-computer-cpi--1)
-         * [Caratteristiche](#caratteristiche)
+         * [Caratteristiche](#caratteristiche-1)
       * [PROCESSORI SUPERSCALARI (CPI &lt; 1)](#processori-superscalari-cpi--1)
-         * [Struttura](#struttura)
+         * [Struttura](#struttura-6)
          * [Problemi](#problemi-1)
             * [Completamento non in ordine](#completamento-non-in-ordine)
          * [Numero di stadi della pipeline](#numero-di-stadi-della-pipeline)
@@ -338,7 +352,8 @@ Table of Contents
 
 Created by [gh-md-toc](https://github.com/ekalinin/github-markdown-toc)
 
-# 01-Introduzione ai sistemi di elaborazione.txt
+
+# Introduzione ai Sistemi di Elaborazione
 
 Un sistema di elaborazione dell'informazione può:
    - Ricevere informazioni dall'esterno
@@ -347,78 +362,80 @@ Un sistema di elaborazione dell'informazione può:
 
 Spesso sono sistemi a microprocessore (è quindi capace di eseguire del software), (negli altri casi sono tanto semplici che non c'è bisogno di scomodare un processore).
 
-### Vantaggi:
+Vantaggi:
    - Velocità
    - Dimensione
    - Affidabilità
    - Costo
 
-### Un sistema a processore utilizza 3 idee chiave:
-   - Tecniche per RAPPRESENTARE informazioni in maniera da poterle immagazzinare, trasmettere e modificare.
-   - Capacità di definire una sequenza di operazioni (ALGORITMO) necessaria a risolvere un problema.
-   - Techiche per MEMORIZZARE dati e AUTOMATIZZARE operazioni.
+Un sistema a processore utilizza 3 idee chiave:
+   - Tecniche per **RAPPRESENTARE** informazioni in maniera da poterle immagazzinare, trasmettere e modificare.
+   - Capacità di definire una sequenza di operazioni (**ALGORITMO**) necessaria a risolvere un problema.
+   - Techiche per **MEMORIZZARE** dati e **AUTOMATIZZARE** operazioni.
 
-### Ere dei calcolatori:
-   - Era meccanica (~ - 1945)
-       - Macchina di Pascal 1642 (somme e sottrazioni)
-       - Macchina di Liebeniz 1671 (anche moltiplicazioni e divisioni attraverso somme e sottrazioni successive)
-       - Telaio di Jacquard 1801 (telaio da tessitura programmabile attraverso schede perforate)
-       - Macchina differenziale (di Babbage) 1823 (calcolava tabelle di numeri utili per la navigazione)
-       - Macchina analitica (evoluzione della precedente) 1834 (prendeva in input un programma e ne restituisce l'output) (non venne mai realizzata)
-       - pausa
-       - Zuse (tedesco) tra il 39 e il 44 realizza i primi modelli di calcolatori (elettro-meccanici) basati su relè elettromagnetici. (in realtà i finanziamenti vengono bloccati  prima perchè si credeva che avessero già vinto la guerra e i prototipi vengono distrutti nei bombardamenti su Berlino).
-       - Harvard con IBM producono Mark 1 e 2 basati sulle idee di Babbage ma utilizzanto relè elettromagnetici
-       - Turing a Londra (dal 1937) crea col suo gruppo Colossus (macchina calcolatrice che aveva come scopo l'individuazione di codici tedeschi).
+## Ere dei calcolatori
+- Era meccanica (~ - 1945)
+    - Macchina di Pascal 1642 (somme e sottrazioni)
+    - Macchina di Liebeniz 1671 (anche moltiplicazioni e divisioni attraverso somme e sottrazioni successive)
+    - Telaio di Jacquard 1801 (telaio da tessitura programmabile attraverso schede perforate)
+    - Macchina differenziale (di Babbage) 1823 (calcolava tabelle di numeri utili per la navigazione)
+    - Macchina analitica (evoluzione della precedente) 1834 (prendeva in input un programma e ne restituisce l'output) (non venne mai realizzata)
+    - pausa
+    - Zuse (tedesco) tra il 39 e il 44 realizza i primi modelli di calcolatori (elettro-meccanici) basati su relè elettromagnetici. (in realtà i finanziamenti vengono bloccati  prima perchè si credeva che avessero già vinto la guerra e i prototipi vengono distrutti nei bombardamenti su Berlino).
+    - Harvard con IBM producono Mark 1 e 2 basati sulle idee di Babbage ma utilizzanto relè elettromagnetici
+    - Turing a Londra (dal 1937) crea col suo gruppo Colossus (macchina calcolatrice che aveva come scopo l'individuazione di codici tedeschi).
 
-   - Era elettronica (1945 - 1975)
-       - ENIAC (1943-1946) costruito con tubi a vuoto, primo calcolatore a non avere parti in movimento.
-       - EDVAC (1951) doveva esssere un evoluzione dell'ENIAC e progettato dallo stesso gruppo (rappresentazione binaria) (Non fu mai costruito) (von Neumann crea quella che è l'architettura basi dei sistemi di elaborazione moderni (Cpu-Memoria-Bus-Periferici) )
-           - Questa architettura differisce dall'architettura Harvard perchè in quella erano presenti due memorie distinte per dati e codice
-       ### - Generazioni:
-           - Prima: utilizzava i tubi a vuoto, potvano essere usate da un solo utente alla volta ed erano utilizzate prettamente per scopi militari, a volte gestionali.
-           - Seconda: utilizza i transistor (molto più piccoli, veloci e affidabili dei tubi a vuoto), vengono introdotti i primi linguaggi di alto livello e i primi sistemi operativi.
-           - Terza (1965): i circuiti integrati sostituiscono i transistor (implementavano più transistor su una piastra di silicio puro).
+- Era elettronica (1945 - 1975)
+    - ENIAC (1943-1946) costruito con tubi a vuoto, primo calcolatore a non avere parti in movimento.
+    - EDVAC (1951) doveva esssere un evoluzione dell'ENIAC e progettato dallo stesso gruppo (rappresentazione binaria) (Non fu mai costruito) (von Neumann crea quella che è l'architettura basi dei sistemi di elaborazione moderni (Cpu-Memoria-Bus-Periferici) )
+        - Questa architettura differisce dall'architettura Harvard perchè in quella erano presenti due memorie distinte per dati e codice
+    - Generazioni:
+        - Prima: utilizzava i tubi a vuoto, potvano essere usate da un solo utente alla volta ed erano utilizzate prettamente per scopi militari, a volte gestionali.
+        - Seconda: utilizza i transistor (molto più piccoli, veloci e affidabili dei tubi a vuoto), vengono introdotti i primi linguaggi di alto livello e i primi sistemi operativi.
+        - Terza (1965): i circuiti integrati sostituiscono i transistor (implementavano più transistor su una piastra di silicio puro).
 
-   - Era VLSI (1975 - ~) (Era dei circuidi ad alta densità di integrazione) (Very Large Scale Integration)
-       - Si riescono a condensare decine di migliaia di transistor in un unico chip così i dispositivi diventano più economici, meno ingombranti e più veloci.
+- Era VLSI (1975 - ~) (Era dei circuiti ad alta densità di integrazione) (Very Large Scale Integration)
+    - Si riescono a condensare decine di migliaia di transistor in un unico chip così i dispositivi diventano più economici, meno ingombranti e più veloci.
 
-### Legge di Moore:
-    Il numero  di transistor integrati su un singolo circuito raddoppia ogni 18/24 mesi.
-   ###  (Negli ultimi anni inizia ad esserci qualche dubbio.)
+## Legge di Moore:
+*Il numero  di transistor integrati su un singolo circuito raddoppia ogni 18/24 mesi.*
+
+(Negli ultimi anni inizia ad esserci qualche dubbio.)
 
 Questo gran numero di transistor disponibili permette di realizzare i SoC (System on a Chip) che integrano a bordo di un unico circuito uno o più processori, memoria, periferici e logica special-purpose.
 
 Nel 1971 Intel produce il primo microprocessore (Intel 4004): il primo processore integrato su un solo IC (chip).
 
-### CISC vs RISC vs SUPERSCALARI vs MULTICORE:
-    I processori fino agli anni 80 erano tutti di tipo CiSC (Complex Instruction Set Computer), caratterizzati da un set di istruzioni (istruzioni eseguibili dal processore definite dal produttore) relativamente ampio (>100).
+## CISC vs RISC vs Superscalari vs Multicore:
+I processori fino agli anni 80 erano tutti di tipo **CISC (*Complex Instruction Set Computer*)**, caratterizzati da un set di istruzioni (istruzioni eseguibili dal processore definite dal produttore) relativamente ampio (>100).
 
-    Negli anni 80 poi nascono i processori RISC (Reduced Instruction Set Computer) che hanno un set di istruzioni ridotto (es 32) e che sono molto più veloci nell'eseguire le operazioni previste (in genere hanno bisogno di un singolo colpo di clock per completare una istruzione).
+Negli anni 80 poi nascono i processori **RISC (*Reduced Instruction Set Computer*)** che hanno un set di istruzioni ridotto (es 32) e che sono molto più veloci nell'eseguire le operazioni previste (in genere hanno bisogno di un singolo colpo di clock per completare una istruzione).
 
-    Un processore superscalare è in grado di eseguire più istruzioni in un singolo colpo di clock.
+Un processore superscalare è in grado di eseguire più istruzioni in un singolo colpo di clock.
 
-    Un multicore integra al suo interno più processori che lavorano in parallelo per completare un istruzione.
+Un multicore integra al suo interno più processori che lavorano in parallelo per completare un istruzione.
 
-### FAMIGLIE E COMPATIBILITA'
+## Famiglie e Compatibilita'
 Il progettista del processore include all'interno della memoria una **ISA (_Instruction Set Architecture_)**, cioè un set di istruzioni a cui il processore deve rispondere. Se quindi due processori hanno lo stesso ISA appartengono alla stessa "famiglia" e il software che può essere eseguito su uno, può essere eseguito anche sull'altro.
-### 
-### MICROCONTROLLORI (MCU):
+
+## Microcontrollori (MCU):
 Se in sistemi di elaborazione general-purpose sono importanti le prestazioni quanto il costo e il consumo, per SE special-purpose molto spesso le prestazioni non sono importanti. (esempio processore per lettore di carte magnetiche per aprire una porta, o la centralina della macchina per girare i finestrini).
-### Da qui nasce l'idea di microcontrollori, dispositivi integrati su un unico IC composti da:
-   - processore (adatto alla situazione, ancora oggi ci sono MCU con cpu a 4/8 bit)
-   - Memoria
-   - periferiche I/O
+
+Da qui nasce l'idea di microcontrollori, dispositivi integrati su un unico IC composti da:
+    -processore (adatto alla situazione, ancora oggi ci sono MCU con cpu a 4/8 bit)
+    - Memoria
+    - periferiche I/O
 
 In ambito special-purpose si parla quasi sempre di microcontrollori.
-### 
-### REALIZZAZIONE DI SISTEMI SPECIAL-PURPOSE:
-   - SOLUZIONE SW: si acquista una scheda esistente equipaggiata di CPU/MCU e si scrive il programma per far eseguire ciò che ci serve.
-   - SOLUZIONE HW: ASIC (Application Specific IC):
+
+## Realizzazione di Sistemi Special-Purpose:
+   - **SOLUZIONE SW**: si acquista una scheda esistente equipaggiata di CPU/MCU e si scrive il programma per far eseguire ciò che ci serve.
+   - **SOLUZIONE HW**: **ASIC (*Application Specific IC*)**:
        - SE progettato e realizzato specificatamente per un applicazione. (Viene chiamato SoC nel caso contenga uno o più processori)
 
 
 
-# 02-Processori.txt
+# Processori
 
 Registri:
 - PC - Program Counter, contiene l'indirizzo della prossima istruzione da eseguire
@@ -430,7 +447,7 @@ STRUTTURE A BORDO DEL PROCESSORE IN GRADO DI MEMORIZZARE UN CERTO NUMERO DI BYTE
 
 
 
-# 03-Introduzione ad assembler
+# Introduzione ad Assembler
 
 Pseudo-istruzioni:
 
@@ -569,7 +586,7 @@ L'assemblatore prende l'offset di **TABLE** e gli somma 6; al tempo di esecuzion
 
 
 
-# 04-Segmentazione e indirizzi.txt
+# Segmentazione ed Indirizzi
 
 Finora abbiamo memorizzato indirizzi di memoria nei registri, ma ciò è falso perchè sappiamo che i registri sono a 16 bit, mentre l'address bus dell'8086 è a 20 bit (max memory 1 MB). Per aggirare ciò si utilizzano:
 - Un segmento di dati (DS)
@@ -582,7 +599,7 @@ Perciò il processore salva gli indirizzi di partenza dei segmenti,  e quando de
 
 
 
-# 04A-Input_Output di un vettore di caratteri.txt
+# Input/Output di un carattere
 
 ## Input da tastiera di un carattere
 
@@ -597,7 +614,7 @@ Perciò il processore salva gli indirizzi di partenza dei segmenti,  e quando de
 
 
 
-# 05-Istruzioni-trasferimento-dati
+# Istruzioni di Trasferimento Dati
 
 ## MOV
     
@@ -635,7 +652,7 @@ NB. Non controlla se non c'e' piu' spazio o se non c'e' nessuna variabile da est
 
 
 
-# 06-Istruzioni-aritmetiche
+# Istruzioni Aritmetiche
 
 ## ADD e SUB
 
@@ -791,7 +808,7 @@ Es. Media  di un insieme di numeri
 
 
 
-# 07-Istruzioni-di-controllo del flusso
+# Istruzioni di Controllo del Flusso
 
 ## Salto Incondizionato
 ### JUMP
@@ -910,7 +927,7 @@ Interrupt Flag:
 
 
 
-# 08-Istruzioni-manipolazione-bit
+# Istruzioni di Manipolazione Bit
 ## Istruzioni Logiche
 ### AND
 
@@ -979,7 +996,7 @@ per RCL invece CF e' come se fosse posto alla sinistra della parola da ruotare.
 
 
 
-# 08A-Procedure
+# Procedure
 
 Le procedure sono l'equivalente assembly delle funzioni.
 
@@ -1085,7 +1102,7 @@ L'unico modo per memorizzare delle variabili locali e' salvarle nello stack (met
 
 
 
-# 09-Progetto-di-circuiti-logici
+# Progetto di Circuiti Logici
 
 ## Progetto
 Siano dati un sistema da realizzare di cui e' noto il comportamento e una serie di componenti: l'attivita' di progetto consiste nell'individuare una connessione di componenti tale per cui il comportamento sia quello desiderato e le specifiche siano soddisfatte.
@@ -1143,7 +1160,7 @@ costituisce direttamente l'insieme delle specifiche per il livello inferiore.
 
 
 
-# 10-Sistemi-combinatori-e-sequenziali
+# Sistemi Combinatori e Sequenziali
 
 Un sistema puo essere:
 - **COMBINATORIO**: Se i valori delle sue uscite dipendono esclusivamente dai valori applicati sui suoi ingressi in quell'istante (es. _sommatore_)
@@ -1172,7 +1189,7 @@ corrente dell'ingresso. (Rappresentabile con l'uscita associata all'arco.)
 
 
 
-# 11-Progettazione
+# Progettazione
 
 Varie fasi di progettazione per livelli (in ordine crescente):
 
@@ -1234,7 +1251,7 @@ Insiemi COMPLETI:
 Ps. Nella pratica sono frequenti i circuiti che implementano solo porte NAND (o NOR)
 
 
-# CIRCUITI COMBINATORI BEN FORMATI
+# Circuiti Combinatori Ben Formati
 Si dicono **CCBF (_Circuiti Combinatori Ben Formati_)** i circuiti che soddisfano le seguenti regole:
 - Una singola linea o una singola porta e' una **CCBF**
 - La giustapposizione di 2 **CCBF** (metterne 2 e non collegarli) e' un **CCBF**
@@ -1247,8 +1264,7 @@ Si dicono **CCBF (_Circuiti Combinatori Ben Formati_)** i circuiti che soddisfan
 - **FANOUT**: Numero di porte logiche pilotate dall'uscita di un'altra porta logica.
 
 
-# 12-Progettazione-circuiti-combinatori
-
+# Progettazione Circuiti Combinatori
 
 Partendo dalla tavola di verita:
 - Per ogni 1 in uscita si associa una porta AND
@@ -1323,7 +1339,7 @@ NB. Questo solo se tutte le porte hanno lo stesso ritardo, senno' il calcolo del
 
 
 
-# 13-Progettazione-circuiti-sequenziali
+# Progettazione Circuiti Sequenziali
 
 ## Flip-Flop SR
 Nei circuiti sequenziali sono presenti alcuni moduli che sfruttando i ritardi delle porte riescono a memorizzare informazioni.
@@ -1407,7 +1423,7 @@ Bisogna che la frequenza di clock *f* dei flipflop sia determinata in modo che i
 
 
 
-# 14-Modello-Huffman-circuiti-sincroni
+# Modello Huffman per Circuiti Sincroni
 
 ## Modello di Huffman
 Composto da:
@@ -1428,7 +1444,7 @@ Si creano quindi un circuito per ogni uscita che vengono poi assemblati a formar
 
 
 
-# 15-Progettazione-livello-Registri
+# Progettazione a livello Registri
 
 ## Livello Registri o RT (Register Transfer)
 A differenza del livello delle porte logiche, l'unita' elementare di dato non e' piu il singolo bit, ma la parola (insieme di bit).
@@ -1575,7 +1591,7 @@ Possiamo collegare comparatori in serie per confrontare numeri a piu di 4 bit co
 
 
 
-# 17-Registri
+# Registri
 
 ## Registro a *m* bit 
 Riceve in in ingresso *m* bit di dato che salvera' internamente, e che poi mandera' in uscita.
@@ -1626,7 +1642,7 @@ Questo ha un costo piu' elevato del ripple counter, ma ha il vantaggio di non es
 
 
 
-# 18-Memorie
+# Memorie
 
 Oggetti che permettono di memorizzare un certo numero di parole su un certo numero di bit
 
@@ -1678,7 +1694,7 @@ Mettiamo quindi un **decoder con parallelismo *20-18=2bit*** che mappera' il mod
 
 
 
-# 19-Bus
+# Bus
 
 Indica una **connessione** che dal punto di vista fisico possono corrispondere a connessioni molto diverse.
 
@@ -1708,7 +1724,7 @@ E' uno scatolotto che connette i vari moduli al bus (slide 74) e puo' ricevere 3
 
 
 
-# 20-FPGA - *Field Programmable Gate Array*
+# FPGA - *Field Programmable Gate Array*
 
 Sono circuiti a cui noi diciamo che tipo di circuito implementare capaci di configurarsi in modo da emulare il circuito desiderato.
 
@@ -1993,7 +2009,7 @@ Caratteristiche:
 - 504 microistruzioni
 
 
-# 23-Memorie-livello-processore
+# Memorie livello Processore
 
 La velocita' con cui aumenta nel tempo la velocita' delle CPU e' molto maggiore della velocita' con cui aumenta la velocita' delle memorie nel tempo, e questo e' un problema perche si genera un collo di bottiglia.
 
@@ -2269,7 +2285,7 @@ Abbiamo anche un altro segnale **BHE**, che dice al processore se accedere a 8 b
 ![alt-text](imgs/mem-8086.png)
 
 
-# 25-Memorie-CACHE
+# CACHE
 
 *Livello di memoria intermedio tra i registri e la memoria principale.*
 
@@ -2775,7 +2791,7 @@ Il DMAC e' uno dei dispositivi che possono divenire **Master** del bus, e solo u
 
 
 
-# ECCEZIONI
+# Eccezioni
 Sono richieste di interrupt che *provengono dall'interno della CPU* (magari per problemi, tipo divisione per 0, o anche l'int 21h per input/output e' un eccezione) che vengono gestite esattamente come gli interrupt periferici (la CPU accede alla *Interrupt Vector Table* ed esegue la *Interrupt Service Routine* corrispondente all'indice dell'interrupt)
 
 ## Categorie di eccezioni
@@ -2788,7 +2804,7 @@ PS. Per quanto riguarda il debug, molti processori prevedono una modalita' **TRA
 
 
 
-# BUS SINCRONI E ASINCRONI
+# Bus Sincroni e Asincroni
 
 ## Caratteristiche
 - Interconnette due o piu' dispositivi
@@ -2969,8 +2985,7 @@ Quando il *bus busy* va a 0, l'arbitro si vede arrivare tutte le richieste di *b
 - *2n+1* linee 
 
 
-
-# 8259 - PROGRAMMABLE INTERRUPT CONTROLLER (PIC)
+# 8259 - Programmable Interrupt Controller (PIC)
 Progettato per minimizzare il software e i tempi di risposta per la gestione di livelli multipli di interrupt a diverse priorita'. Raccoglie quindi le diverse richieste di interrupt provenienti dai periferici e inoltra alla CPU le richieste in ordine di priorita'
 
 Puo' gestire fino a 8 periferiche e supporta il collegamento di piu' controllodi di interrupt *in cascata* fino ad un massimo di 64 periferiche
@@ -3067,7 +3082,7 @@ Serve per informare l'8259 quando ha finito una procedura di servizio, ma non sc
 
 
 
-# MEMORIA VIRTUALE
+# Memoria Virtuale
 Es. processore con 32 bit di indirizzo, quindi ha 4 gb di ram massima. Magari pero' non vogliamo metterci 4 gb di ram, quindi noi facciamo credere al processore di avere 4gb di memoria virtuale, ed emette indirizzi su 4gb, e questo sistema di memoria virtuale accede alla memoria principale e serve il processore. La maggior parte delle volte il dato di cui la cpu ha bisogno lo troviamo in memoria principale. In altri rari (auspicabile) casi questo dato si trova in memoria secondaria (potrebbe succedere proprio perche' abbiamo meno memoria di quanta ne crede il processore).
 
 Il principio e' basato sul prevedere a quali blocchi fara' accesso il processore sfruttando il principio della localita' dei riferimenti.
@@ -3110,7 +3125,7 @@ Benche' vi siano molti elementi di somiglianza tra la memoria virtuale e la cach
 
 
 
-# ISTRUZIONI MACCHINA E TEMPI DI ESECUZIONE
+# Istruzioni Macchina e Tempi di Esecuzione
 
 ## Formato del codice macchina
 Per i processori della famiglia x86 non esistono regole generali per la traduzione delle istruzioni dal linguaggio sorgente al codice macchina, ma per ogni istruzione si hanno regole specifiche. E' uno dei processori con il codice macchina piu' irregolare e complicato, ed e' uno dei difetti dell'x86
@@ -3147,7 +3162,7 @@ Il tempo  richiesto puo' essere cosi scomposto:
 
 
 
-# ARCHITETTURE A PIPELINE
+# Architetture a Pipeline
 Verso la fine degli anni 70' ci si rende conto che l'architettura delle cpu cosi com era stata pensata fino a quel momento poteva portare a dei problemi. La richiesta di  aumento delle prestazioni veniva fatto con 
 l'evoluzione della tecnologia senza ricorrere a modifiche dell'architettura. Questo trend portava a dei processori sempre piu' complessi (CISC, per essere ottimizzati veniva ampliato il set di istruzioni e le funzioni utilizzate piu' spesso supportate anche in hardware rendendo il tutto piu' veloce ma anche piu complesso.) 
 
