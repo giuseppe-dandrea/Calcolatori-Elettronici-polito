@@ -2060,7 +2060,7 @@ In ordine decrescente di velocita' e costo:
 
 
 
-# 24-Memorie-Accesso-Casuale-RAM
+# Memorie ad Accesso Casuale
 
 ## Segnali di Controllo
 Sono fondamentali da due punti di vista:
@@ -2183,131 +2183,193 @@ Sono in grado di eseguire un numero LIMITATO di cicli di scrittura.
 ![alt-text](imgs/ram-sintesi.png)
 
 
-RAM
-### 2 tipi:- STATICHE (SRAM):
-- La singola cella corrisponde a un flip flop.- DINAMICHE (DRAM):
-- La singola cella corrisponde a un condensatore(gratis) e a un transistor
-- L'informazione e' memorizzata sotto forma di carica del condensatore
-- Richiedono un refreshing periodico delle informazioni (perche' le correnti parassite dopo un po scaricano il condensatore) (il rinfresco occupa la ram per tempi molto brevi, dell'ordine di qualche centesimo)
-- La lettura e' di tipo distruttivo (Destructive Read-Out) (Perche' il condensatore manda l'uno sulla linea di dato scaricandosi, distruggendo quindi il contenuto del condensatore che dev'essere riscritto rendendo il tempo di ciclo maggiore del tempo di accesso)
+# RAM
+2 tipi:
+- **STATICHE (*SRAM*)**:
+    - La singola cella corrisponde a un flip flop.
+- **DINAMICHE (*DRAM*)**:
+    - La singola cella corrisponde a un condensatore(gratis) e a un transistor
+    - L'informazione e' memorizzata sotto forma di carica del condensatore
+    - Richiedono un ***refreshing*** periodico delle informazioni (perche' le correnti parassite dopo un po scaricano il condensatore) (il rinfresco occupa la ram per tempi molto brevi, dell'ordine di qualche centesimo)
+     - La lettura e' di tipo distruttivo (***Destructive Read-Out***) (Perche' il condensatore manda l'uno sulla linea di dato scaricandosi, distruggendo quindi il contenuto del condensatore che dev'essere riscritto rendendo il tempo di ciclo maggiore del tempo di accesso)
 
 
-### SRAM (Disegno slide 30)
+## SRAM
+
+![alt-text](imgs/sram.png)
+
 Viene implementato in tutto con 6 transistor (compreso il flip flop).
 Qui al contrario delle ram dinamiche tempo di accesso e tempo di ciclo coincidono.
 
+### Funzionamento
+Per leggere o scrivere una parola si deve attivare la relativa linea di parola.
 
-### DRAM (Disegno slide 34)
+Quando la linea di parola non è attivata, il relativo flip flop mantiene il proprio valore.
+
+Quando la linea di parola è attivata, è possibile:
+- leggere i valori (opposti) forzati dal flip flop sulle due linee di dato (**lettura**)
+- scrivere un nuovo valore, forzando due valori opposti sulle linee di dato (**scrittura**).
+
+
+## DRAM
+
+![alt-text](imgs/dram.png)
+
 Viene implementato con un transistor e un condensatore(in realta' come condensatore viene usata la capacita' parassita del transistor(pochi picofarad, quindi molto piccolo), quindi e' gratis), aprendo e chiudendo il transistor (circuito) il condensatore si carica e si scarica per rappresentare rispettivamente uno 0 o un 1.
 Bisogna aggiungere il costo del circuito che svolge l'operazione di rinfresco, che inizialmente doveva essere gestita da circuiteria apposita esterna ai chip di DRAM.
+
 Se un operazione di accesso e una di rinfresco vengono attivate contemporaneamente, quella di accesso viene temporaneamente sospesa dando priorita' a quella di rinfresco.
+
 La probabilita' di incappare in un rinfresco e' dello 0,64% (slide 38 per altri numeri).
-La DRAM e' quindi piu' lenta, piu' economica e piu' densa della SRAM. 
+
+La DRAM e' quindi **piu' lenta**, **piu' economica** e **piu' densa** della SRAM. 
 
 La DRAM e' pero' poco affidabile perche' avendo piccoli condensatori, basta poco per scaricarli e generare un guasto transitorio. E l'affidabilita' diminuisce con il diminuire della dimensione dei condensatori.
-### Per ovviare a questo problema si usano i cosiddetti CODICI DI PROTEZIONE:
+
+Per ovviare a questo problema si usano i cosiddetti CODICI DI PROTEZIONE
+
+### Codici di Protezione
 	
-- CODICE DI PARITA': Per ogni parola si aggiunge agli m bit di dato un ulteriore bit di parita' che gli utenti non vedono. Ogni volta che scrivo nella generica parola c'e' un circuitino che legge la parola a cui sto accedendo e ne calcola e memorizza il bit di parita' (secondo una certa logica. Es, se la somma dei bit a 1 e' pari, il bit di parita' viene messo a 0). Quando leggo invece, la parola e il bit di parita' vengono letti, ricalcolo la parita' e confronto il nuovo valore con quello memorizzato. Se sono uguali il dato e' integro, altrimenti c'e' stato un errore. In questo modo, anche se non aumenta l'affidabilita' ho modo di sapere se ho dati sporchi. (Se cambiano due bit non me ne accorgo, o se cambia valore il bit di parita' ottengo un errore che invece non ho).
+- ***CODICE DI PARITA'***: Per ogni parola si aggiunge agli *m* bit di dato un ulteriore bit di parita' che gli utenti non vedono. Ogni volta che scrivo nella generica parola c'e' un circuitino che legge la parola a cui sto accedendo e ne calcola e memorizza il bit di parita' (secondo una certa logica. Es, se la somma dei bit a 1 e' pari, il bit di parita' viene messo a 0). Quando leggo invece, la parola e il bit di parita' vengono letti, ricalcolo la parita' e confronto il nuovo valore con quello memorizzato. Se sono uguali il dato e' integro, altrimenti c'e' stato un errore. In questo modo, anche se non aumenta l'affidabilita' ho modo di sapere se ho dati sporchi. (Se cambiano due bit non me ne accorgo, o se cambia valore il bit di parita' ottengo un errore che invece non ho).
 	
-- CODICI DI HAMMING: Attraverso questi codici possiamo non solo rilevare l'errore ma anche correggerli. Non e' piu pero' un solo bit, ma log2(n) bit. Si basa piu' o meno sullo stesso meccanismo di prima, ma quando il circuito si accorge dell'errore riesce anche a correggerlo se e' sbagliato un solo bit, se ne sono sbagliati due segnala solo l'errore ma non riesce a correggerlo; se invece ne sono sbagliati piu' di due, non garantisce niente. Vengono chiamati codici SECDED (Single Error Correction Double Error Correction)
+- ***CODICI DI HAMMING***: (Anche chiamati codici **SECDED (*Single Error Correction Double Error Detection*)**) Attraverso questi codici possiamo non solo rilevare l'errore ma anche correggerli. Non e' piu pero' un solo bit, ma ***log<sub>2</sub>(n)*** bit. Si basa piu' o meno sullo stesso meccanismo di prima, ma quando il circuito si accorge dell'errore:
+    - Riesce anche a correggerlo se e' sbagliato un solo bit, 
+    - Segnala l'errore ma non riesce a correggerlo se ne sono sbagliati due
+    - Non garantisce nulla se invece ne sono sbagliati piu' di due
 
 Ps. L'affidabilita' tra l'altro diminuisce con l'altezza, perche' aumentano le radiazioni. (Sui satelliti ci sono memorie fatte apposta).
 
 
 
 
-### MEMORIE INTERLACCIATE
+## Memorie Interlacciate
 Per velocizzare la memoria queste vengono organizzate in banchi che possono lavorare in parallelo. Gli indirizzi adiacenti vengono messi sui moduli adiacenti, in modo da poter accedere in parallelo ai dati.
 
-Es.- -------------- -------------
-### 0	1	2	3
+Es.
+
+```
+-------------- 
+--------------
+0	1	2	3
 4	5	6	7
-### 8	9	10	11
+8	9	10	11
 12	13	14	15
+```
 
 Ad esempio in questo esempio, considerando ogni numero da un byte, la memoria riesce ad accedere a 4 byte alla volta contemporaneamente con lo stesso tempo di accesso utilizzando solo un bus piu' largo.
 
 
-### BANCHI DI MEMORIA NELL'8086
+## Banchi di Memoria nell'8086
 Il processore funziona a 16 bit, mentre la memoria e' a 8 bit. 
-Il processore allora utilizza solo indirizzi pari e utilizza due banchi da 8 interlacciati, e quando ad esempio riceve l'indirizzo 16, lui accede sia all'indirizzo 16 che 17, riempiendo i 16 bit.
-Abbiamo anche un altro segnale BHE, che dice al processore se accedere a 8 bit o a 16 bit. (C'e' uno schema sull'ultima slide che ne descrive il funzionamento).
 
+Il processore allora utilizza solo indirizzi pari e utilizza due banchi da 8 interlacciati, e quando ad esempio riceve l'indirizzo 16, lui accede sia all'indirizzo 16 che 17, riempiendo i 16 bit.
+
+Abbiamo anche un altro segnale **BHE**, che dice al processore se accedere a 8 bit o a 16 bit.
+
+![alt-text](imgs/mem-8086.png)
 
 
 # 25-Memorie-CACHE
 
-Livello di memoria intermedio tra i registri e la memoria principale.
+*Livello di memoria intermedio tra i registri e la memoria principale.*
 
-Il processore sfrutta il principio di localita' dei riferimenti. (Tende a ripetere l'accesso sui singoli blocchi su cui sta lavorando)
+Il processore sfrutta il ***principio di localita' dei riferimenti***. (Tende a ripetere l'accesso sui singoli blocchi su cui sta lavorando)
+
 Quindi quando accedo in memoria, mi conviene portare l'intero blocco sulla cache, per rendere piu' veloce l'accesso a quel blocco. Quando il blocco viene abbandonato dal processore, deve ritornare nella memoria principale per fare spazio ai blocchi correntemente usati.
+
 Una chiamata a memoria viene gestita in questo modo: la chiamata viene intercettata dalla cache che controlla se il dato e' presente in cache e nel caso effettua l'operazione, altrimenti bisogna accedere alla memoria.
-Si misura la probabilita' di trovare un dato in cache con un parametro h che ha un valore massimo di 1. Questo valore h non tende al rapporto della capacita' della cache / capacita' della memoria, ma tende a 0,9 solo grazie al principio di localita' dei riferimenti (slide 3).
 
-### Il tempo medio di accesso in memoria per la CPU e' dato da:
-- h: hit ratio della cache
-- C: tempo di accesso alla cache
-- M: tempo di accesso alla memoria quando il dato non e' in cache.
-=>					t(medio) = hC + (1-h)M
+Si misura la probabilita' di trovare un dato in cache con un parametro **h (*Hit Ratio*)** che ha un valore massimo di 1. Questo valore **h** non tende al rapporto della capacita' della cache / capacita' della memoria, ma tende in genere a 0,9 solo grazie al principio di localita' dei riferimenti.
+
+Il tempo medio di accesso in memoria per la CPU e' dato da:
+- ***h***: hit ratio della cache
+- ***C***: tempo di accesso alla cache
+- ***M***: tempo di accesso alla memoria quando il dato non e' in cache.
+=>					`t(medio) = hC + (1-h)M`
 
 
-### STRUTTURA CACHE
+## Struttura
 Una cache contiene al suo interno un certo numero di linee e ogni linea contiene un blocco di memoria e gli e' associato un campo TAG che indica il blocco di memoria presente nella linea in quel momento.
-Contiene anche la logica per:- intercettare gli indirizzi del processore- cercare al suo interno l'eventuale blocco a cui il processore vuole fare l'accesso- eventualmente caricare da memoria il blocco.
 
-### Esiti della ricerca del blocco di memoria:
-HIT: Se il dato e' presente in cache
-MISS: Se il dato non e' presente in cache e bisogna andare in memoria
+Contiene anche la logica per:
+- intercettare gli indirizzi del processore
+- cercare al suo interno l'eventuale blocco a cui il processore vuole fare l'accesso
+- eventualmente caricare da memoria il blocco.
+
+## Esiti della ricerca del blocco di memoria
+- **HIT**: Se il dato e' presente in cache
+- **MISS**: Se il dato non e' presente in cache e bisogna andare in memoria
 
 In caso di miss il cache controller deve calcolare qual'e' il blocco di memoria meno utile tra quelli salvati per sovrascriverlo con nuovi dati provenienti dalla memoria. Questo in realta' non si fa perche' si perderebbe troppo tempo nella ricerca. Si usa quindi un meccanismo che associa al blocco di memoria, direttamente la linea di cache in cui deve andare a finire utilizzando l'operatore modulo (tipo tabelle di hash).
 
-
-### DIRECT MAPPING
-Per velocizzere la ricerca all'interno della cache, l'i-esimo blocco di memoria va a finire nella k=i mod n esima riga di cache. Per fare il modulo non c'e' bisogno della divisione, ma data una cache di N=2^w righe, il resto della divisione i/N, sono i bit in uscita dallo shift di i verso destra di w bit. (quindi il resto della divisione e' dato dai w bit meno significativi del numero del blocco).
+## Modi di funzionamento
+### Direct Mapping
+Per velocizzere la ricerca all'interno della cache, l'*i*-esimo blocco di memoria va a finire nella *k=i mod n* esima riga di cache. Per fare il modulo non c'e' bisogno della divisione, ma data una cache di *N=2<sup>w</sup>* righe, il resto della divisione *i/N*, sono i bit in uscita dallo shift di *i* verso destra di ***w*** bit. (quindi il resto della divisione e' dato dai w bit meno significativi del numero del blocco).
 
 Possiamo quindi dividere l'indirizzo di memoria in diverse parti.
-|--Etichetta--|--Blocco--|--Parola--|
-Etichetta: identifica il blocco di memoria; e' il campo che viene confrontato con il tag.
-Blocco: Attraverso la funzione di mapping identifica la linea di cache.
-Parola: Identifica la parola all'interno del blocco.
+`|--Etichetta--|--Blocco--|--Parola--|`
+
+- ***Etichetta***: identifica il blocco di memoria; e' il campo che viene confrontato con il tag.
+- ***Blocco***: Attraverso la funzione di mapping identifica la linea di cache.
+- ***Parola***: Identifica la parola all'interno del blocco.
 
 In sintesi: si prendono i bit dell'indirizzo che identificano il blocco e si va a guardare QUELLA linea di cache. Se il campo tag e' uguale all'etichetta dell'indirizzo, allora e' hit. Altrimenti e' miss.
 
+Ci possono essere casi in cui magari il processore lavora solo su due blocchi che devono andare a finire nella stessa linea, quindi ogni volta che prova ad accedere o a uno a all'altro lui ottiene un miss.
 
-Ci possono essere casi in cui magari il processore lavora solo su due blcochi che devono andare a finire nella stessa linea, quindi ogni volta che prova ad accedere o a uno a all'altro lui ottiene un miss.
-Per risolvere questo problema utilizziamo il set associative mapping.
+Per risolvere questo problema utilizziamo il ***set associative mapping***.
 
 
-### SET ASSOCIATIVE MAPPING (W-ways)
-Le linee della cache sono organizzate in S insiemi composti da W linee. Ogni blocco i e' associato all'insieme k=i mod S e puo' essere messo in una qualunque delle W linee dell'insieme k. Valori comuni di W sono 2 o 4.
-Se S=N (Con N dimensione della cache) abbiamo il direct mapping. Se S=1 si ha l'associative mapping.
+### Set Associative Mapping (W-ways)
+Le linee della cache sono organizzate in *S* insiemi composti da *W* linee. Ogni blocco *i* e' associato all'insieme *k=i mod S* e puo' essere messo in una qualunque delle *W* linee dell'insieme *k*. 
 
-### In caso di miss si sovrascrive una determinata riga a seconda dei casi. Viene scelto tra:
-LRU (Least Recently Used): viene sovrascritto quello che non viene utilizzato da piu' tempo.
-FIFO (First-In First-Out): e' piu' economico ma non viene usato.
-LFU (Least Frequently Used): viene sovrascritto quello utilizzato meno frequentemente. Teoricamente e' il piu' efficace ma piu' costoso dell'LRU.
-random: semplice ed efficiente. (muah) 
+Valori comuni di W sono 2 o 4.
+
+Se *S=N* (Con *N* dimensione della cache) abbiamo il ***direct mapping***. Se *S=1* si ha l'***associative mapping***.
+
+In caso di miss si sovrascrive una determinata riga a seconda dei casi. Viene scelto tra:
+- **LRU (*Least Recently Used*)**: viene sovrascritto quello che non viene utilizzato da piu' tempo.
+- **FIFO (*First-In First-Out*)**: e' piu' economico ma non viene usato.
+- **LFU (*Least Frequently Used*)**: viene sovrascritto quello utilizzato meno frequentemente. Teoricamente e' il piu' efficace ma piu' costoso dell'LRU.
+- **random**: semplice ed efficiente. (muah) 
 
 Ps. Ogni linea contiene anche un bit di validita' che ci dice se ci e' stato gia' scritto sopra o contiene valori non inizializzati.
 
-SLIDE 26-ecc VEDERE WRITE-BACK E WRITE THROUGH
+## Aggiornamento della memoria principale
+### Write Back
+Con questo meccanismo si mantiene in cache per ogni linea anche un bit di flag (***Dirty Bit***) che ci dice se il blocco e' stato modificato o meno da quando e' stato caricato nella cache.
 
-### 
-### CACHE SU DIVERSI LIVELLI:
+Quando un blocco viene eliminato dalla cache e il *Dirty Bit* e' settato, il blocco viene copiato dalla cache nella memoria principale
+
+Svantaggi:
+- La sostituzione di un blocco in cache e' piu' lenta perche potrebbe richiedere la copiatura in memoria del blocco sostituito
+- Nei sistemi multiprocessore si puo' avere inconsistenza tra le cache di diversi processori
+- Il ripristino dei dati della memoria dopo eventuali *System Failure* puo' non essere possibile.
+
+### Write Through
+Ogni volta che la CPU esegue un'operazione di **scrittura** la esegue sia sul dato nella cache che in quello nella memoria principale.
+
+La perdita di efficienza che ne deriva e' limitata dal fatto che le operazioni di scrittura sono di solito molto meno numerose di quelle in lettura.
+
+## Cache su diversi livelli
 Possiamo avere piu' livelli di cache, una piu piccola e veloce e le altre piu grandi e piu lente. In questo modo ogni volta che il prcessore deve accedere in memoria, accede a quella di primo livello, in caso di miss passa alla seconda ecc.. I dati continuano poi a cambiare posizione all'interno delle cache a seconda del loro utilizzo per ottimizzare i tempi.
 
 
-INSTRUCTION CACHE E DATA CACHE
-A volte si usano cache separate per dati e istruzioni. Questo perche in genere la cache delle istruzioni e' piu' semplice da gestire in quanto le istruzioni non possono essere modificate; questo si traduce in un cache controller piu' semplice. Nei processori RISC e' obbligatorio avere due cache separate. 
+## Instruction/Data Cache
+A volte si usano cache separate per dati e istruzioni. Questo perche in genere la cache delle istruzioni e' piu' semplice da gestire in quanto le istruzioni non possono essere modificate; questo si traduce in un cache controller piu' semplice. **Nei processori RISC e' obbligatorio avere due cache separate.**
+
 Il rovescio della medaglia e' che puo' succedere di avere una cache per le istruzioni semi-vuota e quella per i dati piena, diminuendo il valore di H.
 
-Il modello su cui si basa un processore con due cache separate per dati e istruzioni viene chiamato HARVARD.
+Il modello su cui si basa un processore con due cache separate per dati e istruzioni viene chiamato ***HARVARD***.
 
 
 
-### PRESTAZIONI
+## Prestazioni
 In caso di hit la cache riduce i tempi di accesso.
-In caso di miss il processore puo' comportarsi in due modi:- Accede alla memoria, carica il contenuto nella cache e poi ritorna la parola. In questo caso il tempo di accesso e' piu' lento rispetto all'avere solo la memoria.- Accede alla memoria, fornisce la parola richiesta e poi provvede al caricamento del blocco (load-thorugh o early-restart). Questa e' piu' veloce della prima ma si traduce in un cache controller piu' complicato.
+
+In caso di **miss** il processore puo' comportarsi in due modi:
+- Accede alla memoria, carica il contenuto nella cache e poi ritorna la parola. In questo caso il tempo di accesso e' piu' lento rispetto all'avere solo la memoria.
+- Accede alla memoria, fornisce la parola richiesta e poi provvede al caricamento del blocco (***load-thorugh*** o ***early-restart***). Questa e' piu' veloce della prima ma si traduce in un cache controller piu' complicato.
 
 
 
@@ -2513,92 +2575,6 @@ STI - Mette IF a 1
 CLI - Mette IF a 0
 
 NB. Di default quando l'8086 fa partire una procedura di servizio (ISR) mette automaticamente l'IF a 0. Se dobbiamo evitare che questo succeda basta mettere una STI tra le istruzione della ISR.
-
-
-
-# 27-Gestione-Dispositivi-Input-Output.save
-
-DISPOSITIVI DI INPUT/OUTPUT
-Moduli in grado di fornire/ricevere informazioni dal sistema (anche bidirezionali).
-Prevedono quindi un flusso di bit o byte in entrata o in uscita e possono essere flussi molto diversi a seconda del dispositivo.
-
-I dispositivi vengono collegati al bus mediante un interfaccia che prevede sempre uno o piu' registri accessibili dal processore su cui puo' scrivere o leggere come farebbe su una cella di memoria.
-L'interfaccia e' quindi una struttura hardware caratterizzata da questi registri che hanno un indirizzo e che si comportano da tramite tra il processore e la periferica.
-
-### Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:
-
-
-### ISOLATED I/O
-Il processore ha sempre n bit di indirizzo ma ha anche un segnale che dice se si riferisce alla memoria o all'I/O (chiamato IO/M 0 se si riferisce alla memoria, altrimenti 1).
-Se IO/M e' attivo il segnale arriva all'IO-Controller che riconosce a quale registro vuole accedere il processore e lo gestisce.
-Questo permette di avere con n bit di indirizzo: 2^n celle di memoria e 2^n periferiche.
-Con questo modo per accedere alle periferiche in 8086 dobbiamo utilizzare le istruzioni IN e OUT
-Es.
-IN AL, KKK	-	E' come una mov AL, KKK accedendo all'indirizzo kkk che e' un registro periferico.
-
-
-### MEMORY MAPPED I/O
-I registri di I/O sono connessi come le normali celle di memoria.
-In questo modo un indirizzo di n bit permette di controllare 2^n tra celle di memoria e periferici. E a seconda dell indirizzo il relativo controller decide cosa attivare.
-Con questo modo in programmazione 8086 basta dire l'indirizzo del registro e non c'e' bisogno di specificare altro.
-
-
-
-### REGISTRI DI INTERFACCIA
--  Registro di dato
--  Registro di stato
--  Registro di controllo
-
-In tutto cio' c'e' un problema di sincronizzazione dei dati tra la cpu e i periferici. 
-Per risolvere si introduce un nuovo registro detto di STATO che include dei bit che dicono alla CPU se ad esempio e' disponibile un nuovo dato o se il registro della periferica e' pronto per la scrittura o cose del genere.
-
-In alcuni casi ci puo' essere un terzo registro detto di CONTROLLO in cui la cpu va a scrivere alcuni bit che danno informazioni alla periferica. (Esempio della stampante e bit che dicono alla stampante in che qualita' stampare o se stampare in bianco e nero o a colori).
-
-
-
-### per gestire la sincronizzazione:
-### I/O PROGRAMMATO
-Ogni volta che la periferica scrive un dato nel registro, un bit di stato viene messo a 1, quando la cpu legge il dato, quel bit viene messo a 0. Quindi la cpu quando ha bisogno di input controlla sempre quel bit di stato  e appena viene messo a 1, la cpu legge il dato dal registro di dato.
-
-Quindi per ogni parola: (POLLING)
- 1 - Verifica il bit di stato se e' a 1
- 2 - Se e' a 1 allora scrive una parola sul registro di dato
- 3 - Se non e' pronta, torna al punto 1.
-
-Caratteristiche: Poco costoso in termini di hardware ma e' poco efficiente perche se abbiamo molte periferiche la cpu rimane bloccata nel punto 1 per molta parte del tempo. Va bene solo quando la cpu e' dedicata completamente ad eseguire qualche operazione semplice di input output e va bene che la cpu non faccia niente mentre aspetta il risultato.
-
-
-
-### INTERRUPT
-E' basato su un segnale asincrono che il dispositivo invia alla CPU quando ha bisogno di un servizio.
-Dal lato CPU questo corrisponde a un qualcosa che gestisce questo segnale e quando lo riceve deve 
-interrompersi e rispondere alla periferica, dopo questo dovra' tornare a quello che stava facendo.
-In questo caso la CPU viene quindi occupata solo per il tempo che ci mette a eseguire l'operazione richiesta dalla periferica.
-Se questo metodo dal lato della periferica e' abbastanza semplice da implementare (un solo segnale) dal lato della CPU e' piu' complesso perche deve ricevere questo segnale asincrono e bloccarsi per poi ritornarci dopo aver eseguito l'operazione, anche perche' sono presenti piu' periferiche e deve quindi anche capire chi gli ha inviato il segnale di interrupt.
-
-(Vedere schema slide 18)
-La cpu riceve quindi un segnale di interrupt (detto INT) ricevuto da un nuovo dispotivo detto Controllore dell'Interrupt. 
-### Questo segnale viene gestito in diversi modi:
--  Polling
--  Interrupt Vettorizzato
-
-
-### POLLING
-Esiste un solo segnale per le richieste di interrupt e quando la cpu lo riceve scandisce il bit di stato di tutte le periferiche e agisce su quella che ha il bit di stato ad 1.
-
-
-### INTERRUPT VETTORIZZATO
-L'Interrupt Controller manda alla CPU il segnale di Interrupt, la cpu risponde con un segnale detto di Interrupt Acknowledge all'interrupt controller che quando lo riceve mette sul bus un codice corrispondente alla periferica che ha mandato il segnale di Interrupt. La cpu legge quel codice dal bus ed esegue l'operazione che doveva eseguire sul registro di quella periferica.
-
-	### ISR (Interrupt Service Routine)
-	Possiamo vederli come i driver che installiamo per le periferiche: sono i pezzi di codice che la cpu esegue per comunicare con quella periferica.
-	A differenza delle normali procedure usa IRET per terminare perche oltre a ripristinare il PC (program counter) come la ret, ripristina anche il registro dei flag (PSW)
-
-	### IVT (Interrupt Vector Table)
-	E' una tabella in cui ad ogni periferica viene associata l'ISR corrispondente. Il codice che l'interrupt controller mette sul bus e' l'indice della periferica nell'IVT.
-
-Questo meccanismo e' molto flessibile, infatti per aggiungere una nuova periferica basta aggiungere una nuova ISR e aggiungere un indice all'IVT.
-
 
 
 # 28-8255-Interfaccia-parallela-programmabile
