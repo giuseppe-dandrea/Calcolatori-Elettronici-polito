@@ -1577,16 +1577,16 @@ Possiamo collegare comparatori in serie per confrontare numeri a piu di 4 bit co
 
 # 17-Registri
 
-REGISTRO A m BIT
-Riceve in in ingresso m bit di dato che salvera' internamente, e che poi mandera' in uscita.
-### Ha altri due segnali:
-LOAD: memorizza internamente cio' che riceve in  ingresso
-CLEAR: azzera il contenuto del registro
+## Registro a *m* bit 
+Riceve in in ingresso *m* bit di dato che salvera' internamente, e che poi mandera' in uscita.
+Ha altri due segnali:
+- **LOAD**: memorizza internamente cio' che riceve in  ingresso
+- **CLEAR**: azzera il contenuto del registro
 
 E' composto da tanti flip flop di tipo D quanto e' il parallelismo del registro. (slide 46)
 
 
-### REGISTRI A SCALAMENTO (SHIFT REGISTER)
+## Registri a scalamento - *Shift Register*
 Oltre a memorizzare un valore ha anche la funzionalita' di scalare questo valore a destra o a sinistra di un certo numero di bit. 
 
 Esistono registri a scalamento universali che hanno la capacita' di shiftare di  tot posizioni e riempire le relative celle con valori determinati da ingressi, e anche di comportarsi da normali registri (fig pag 49)
@@ -1596,22 +1596,32 @@ E' composto da 4 flip flop di tipo D in sequenza (uscita di uno collegata all'en
 
 Per costruire uno shift register multidirezionale, li collego in sequenza utilizzando un multiplexer per ogni flip flop a cui sono collegati l'uscita del ff precedente e del successivo, in modo che il segnale che indica la direzione dello shift sia quello che pilota i multiplexer e che sceglie quale valore mandare in ingresso ai ff. (vl 27 33:25)
 
-Utilizzo:- Moltiplicazione e divisione per potenze di due di numeri senza segno (con qualche accorgenza anche con segno)- Memorizzazione dati seriali (FIFO)- Conversione seriale-parallelo e parallelo-seriale. Caricandolo come una fifo e poi mandano i segnali in uscita in parallelo.
+Utilizzo:
+- *Moltiplicazione e divisione per potenze di due di numeri senza segno* (con qualche accorgenza anche con segno)
+- *Memorizzazione dati seriali (FIFO)*
+- *Conversione seriale-parallelo e parallelo-seriale.* Caricandolo come una fifo e poi mandano i segnali in uscita in parallelo.
 
 
 
-### CONTATORI
-Modulo con un segnale di conteggio, un uscita, segnale di clear (a volte anche un ingresso in parallelo). Alcuni hanno un segnale ulteriore che avvisa che avvisa quando il contatore e' arrivato in fondo (alla prossima attivazione andra' a zero).
+## Contatori
+Modulo con *un segnale di conteggio*, *un uscita*, *segnale di clear* (a volte anche un *ingresso in parallelo*). Alcuni hanno un segnale ulteriore che avvisa che avvisa quando il contatore e' arrivato in fondo (alla prossima attivazione andra' a zero).
 
-Esistono diversi tipi di contatori:-  up-down counter: possono contare in avanti e indietro-  programmable counter: il valore del modulo puo' essere modificato-  binary/decimal/gray/BCD: possono contare in binario/decimale/gray/BCD
+Esistono diversi tipi di contatori:
+-  **Up-Down counter**: possono contare in avanti e indietro
+-  **Programmable counter**: il valore del modulo puo' essere modificato
+-  **binary/decimal/gray/BCD**: possono contare in binario/decimale/gray/BCD
 
-CONTATORE ASINCRONO (RIPPLE COUNTER)
-E' formato na n ff di tipo T (slide 55) che  sono dei flip flop che hanno l'ingresso e l'uscita collegati mediante una porta not (ad ogni colpo di clock assumeranno il valore complementare) ed hanno un segnale di CLEAR.
+
+### Contatore Asincrono - *Ripple Counter*
+E' formato na *n* Flip-Flop di tipo **T** (slide 55) che  sono dei flip flop che hanno l'ingresso e l'uscita collegati mediante una porta *not* (ad ogni colpo di clock assumeranno il valore complementare) ed hanno un segnale di *CLEAR* e di *ENABLE*
 E' un contatore che conta a ritroso partendo da n bit ad 1. 
-Questo ha il vantaggio  di essere economico e facile da progettare, ma e' oneroso in termini di tempo; infatti chiamando ∆ il tempo che impiega un ff a commutare, per il primo passaggio (000.. -> 111...) dovremo attendere n∆, che per n grandi e' fastidioso. E poi e' asincrono, che e' pure fastidioso.
+Questo ha il vantaggio  di essere economico e facile da progettare, ma e' oneroso in termini di tempo; infatti chiamando *∆* il tempo che impiega un ff a commutare, per il primo passaggio (000.. -> 111...) dovremo attendere *n∆*, che per n grandi e' fastidioso. E poi e' asincrono, che e' pure fastidioso.
 
-CONTATORE SINCRONO
-Formato da un registro (con clear e load) con un uscita a n bit, e da una logica combinatoria collegata in ingresso all'uscita del registro e in uscita all'entrata del registro. Questa logica e' semplicemente un sommatore con un ingresso all'uscita del registro e l'altro con fisso in ingresso il passo da incrementare. (slide 57)
+Questo contatore e' costruito collegando questi flip flop in cascata, collegando l'uscita di uno al segnale di *ENABLE* del successivo.
+
+### Contatore Sincrono
+Formato da un registro (con *clear* e *load*) con un uscita a *n* bit, e da una logica combinatoria collegata in ingresso all'uscita del registro e in uscita all'entrata del registro. Questa logica e' semplicemente un sommatore con un ingresso all'uscita del registro e l'altro con fisso in ingresso il passo da incrementare. (slide 57)
+
 Questo ha un costo piu' elevato del ripple counter, ma ha il vantaggio di non essere asincrono ed il tempo di incremento e' minore.
 
 
