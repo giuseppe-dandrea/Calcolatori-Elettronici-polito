@@ -1678,31 +1678,32 @@ Mettiamo quindi un **decoder con parallelismo *20-18=2bit*** che mappera' il mod
 
 
 
-
 # 19-Bus
 
-BUS
-Indica una connessione che dal punto di vista fisico possono corrispondere a connessioni molto diverse.
-Generalmente sono strutture di connessione caratterizzate da un certo parallelismo (n linee di interconnessione); a queste strutture sono collegati diversi moduli che operano in lettura e scrittura, possono cioe' leggere e scrivere da e sul bus.
-Per funzionare correttamente: -  Ad ogni istante deve esserci almeno un modulo che scrive sul bus (se non e' pilotato da nessuno puo' assumere dei valori casuali che possono danneggiare elettricamente il bus stesso e i dispositivi connessi)-  Non deve esserci piu di un dispositivo alla volta a scrivere sul bus
+Indica una **connessione** che dal punto di vista fisico possono corrispondere a connessioni molto diverse.
+
+Generalmente sono strutture di connessione caratterizzate da un certo parallelismo (*n linee di interconnessione*); a queste strutture sono collegati diversi moduli che operano in lettura e scrittura, possono cioe' leggere e scrivere da e sul bus.
+
+Per funzionare correttamente: 
+-  *Ad ogni istante deve esserci almeno un modulo che scrive sul bus* (se non e' pilotato da nessuno puo' assumere dei valori casuali che possono danneggiare elettricamente il bus stesso e i dispositivi connessi)
+-  *Non deve esserci piu di un dispositivo alla volta a scrivere sul bus*
 
 La differenza tra le connessioni che abbiamo visto finora nei circuiti e i bus e' che in questi ultimi piu moduli possono operare contemporaneamente sul bus (uno scrive e altri due leggono ad esempio), cosa che non era possibile in precedenza, perche' era sempre e solo uno a pilotare la connessione.
 
-I bus possono essere connessi gerarchicamente tramite un bridge per limitare i tempi di attesa tra le operazioni sulle memorie/periferiche collegate.
+I bus possono essere connessi gerarchicamente tramite un **bridge** per limitare i tempi di attesa tra le operazioni sulle memorie/periferiche collegate. (Cioe' avere diversi livelli du bus, uno piu' veloce per la memoria, uno piu' lento per i periferici collegati da un bridge)
 
-### BUFFER TRI-STATE
+## Buffer Tri-State
 Per gestire piu connessioni contemporaneamente, vengono dotati di interfacce dotate di segnali di controllo, tale per cui se e' attivato, il modulo e' collegato al bus, se e' disattivato e' come se fosse fisicamente scollegato dal bus. In questo modo posso facilmente collegare e controllare piu dispositivi connessi al bus.
 
-Questo buffer tri state e' dotato di n ingressi e n uscite di dato e 1 segnale di controllo e. Se e e' 1, allora il buffer rappresenta un circuito chiuso (le linee in ingresso sono collegate a quelle in uscita), altrimenti il buffer rappresenta un circuito aperto, scollegando il modulo dal bus.
+Questo buffer tri state e' dotato di *n* ingressi e *n* uscite di dato e *1 segnale di controllo* ***e***. Se ***e*** e' *1*, allora il buffer rappresenta un circuito chiuso (le linee in ingresso sono collegate a quelle in uscita), altrimenti il buffer rappresenta un circuito aperto, scollegando il modulo dal bus.
 
 
-### CONNESSIONE AL BUS
+## Connessione al bus
 Tra ogni modulo e il bus e' presente un buffer tri state per collegare al bus solo il modulo effettivamente utilizzato.
-I buffer tri state collegati ai moduli sono in genere pilotati da un decoder.
+I buffer tri state collegati ai moduli sono in genere pilotati da un *decoder*.
 
 
-
-### TRANSCEIVER
+### Transceiver
 E' uno scatolotto che connette i vari moduli al bus (slide 74) e puo' ricevere 3 segnali di controllo (lettura, scrittura, scollegato). (Ovviamente ingloba anche un buffer tri-state).
 
 
