@@ -2021,7 +2021,7 @@ In ordine decrescente di velocita' e costo:
 ## Classificazione delle Tecnologie di Memoria
 - **COSTO**: costo in dollari/bit o dollari/MB
 - **VELOCITA**:
-    - ***Tempo di accesso (latenza)***: E' il tempo che intercorre tra la richiesta di un'azione e la sua esecuzione (inversamente proporzionale al costo)
+    - ***Tempo di accesso*** **(*latenza*)**: E' il tempo che intercorre tra la richiesta di un'azione e la sua esecuzione (inversamente proporzionale al costo)
     - ***Tempo di ciclo***: E' il tempo che intercorre tra una richiesta e il momento in cui la memoria e' pronta per accettare una nuova richiesta. (Tra l'operazione e una nuova richiesta una memoria potrebbe dover gestire operazioni interne) Puo' essere superiore al tempo di accesso, in altri casi puo' coincidere.
     - ***Tempo di trasferimento***: Se dobbiamo accedere a un blocco di memoria, dobbiamo attendere il tempo di accesso per ottenere la prima parte del blocco, mentre dovremo aspettare il tempo di trasferimento per accedere alle altre porzioni del blocco, che e' minore del tempo di accesso.
 - **MODI DI ACCESSO**:
