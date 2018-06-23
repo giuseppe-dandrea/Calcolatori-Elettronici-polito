@@ -2601,94 +2601,106 @@ Istruzioni 8086:
 **NB.** Di default quando l'8086 fa partire una procedura di servizio (ISR) mette automaticamente l'IF a 0. Se dobbiamo evitare che questo succeda basta mettere una STI tra le istruzione della ISR.
 
 
-# 28-8255-Interfaccia-parallela-programmabile
+# 8255 - Interfaccia Parallela Programmabile
 
-INTERFACCE PARALLELE E SERIALI
--  PARALLELE: hanno un interfaccia su un numero di bit piu' alto delle seriali. Questo comporta un maggior costo per la creazione dell'interfaccia ma una maggiore velocita' nel trasferimento dei dati.
--  SERIALI; hanno un interfaccia su 1-2 bit e quindi hanno un costo minore per quanto riguarda i collegamenti ma una minore velocita' di trasmissione.
+INTERFACCE PARALLELE E SERIALI:
+-  **PARALLELE**: hanno un interfaccia su un numero di bit piu' alto delle seriali. Questo comporta un maggior costo per la creazione dell'interfaccia ma una maggiore velocita' nel trasferimento dei dati.
+-  **SERIALI**: hanno un interfaccia su 1-2 bit e quindi hanno un costo minore per quanto riguarda i collegamenti ma una minore velocita' di trasmissione.
 
 
-### PORTE PARALLELE
+## Porte Parallele
 Vengono usate per moli significative di dati (non possiamo aspettare che vengano trasferite in seriale) e il canale puo' assumere un parallelismo sufficiente.
 
-### 8255 - INTERFACCIA PARALLELA
+## 8255 - INTERFACCIA PARALLELA
 Messa sul mercato prima dell'8086 e corrispondeva ad un dispositivo che andava inserito sulla scheda madre. Nel tempo il processore e' diventato sempre piu' potente e l'interfaccia parallela e' andata a finire direttamente nel chipset della CPU.
 
 L'8255 puo' gestire fino a 3 periferiche, quindi 3 canali che posso programmare come Input/output.
-### Contiene:
--  3 registri di dato associati alle 3 periferiche che lui e' in grado di gestire.
--  1 registro di controllo dove la cpu puo' scrivere se le periferiche sono di input o output.
--  2 bit (A0, A1) connessi al bit a 0 e a quello a 1 dell'address bus che servono per selezionare uno dei 4 possibili registri su cui operare
--  2 bit (RD, WR) collegati al control bus che servono per decidere se leggere e scrivere.
--  Un segnale di CS (Chip Select) che quando e' disattivo, la periferica e' dormiente, quando invece e' attivo, la periferica e' in grado di operare e rispondere alla cpu.
+Contiene:
+-  **3 registri di dato** associati alle 3 periferiche che lui e' in grado di gestire.
+-  **1 registro di controllo** dove la cpu puo' scrivere se le periferiche sono di input o output.
+-  **2 bit (A0, A1)** connessi al bit a 0 e a quello a 1 dell'address bus che servono per selezionare uno dei 4 possibili registri su cui operare
+-  **2 bit (RD, WR)** collegati al control bus che servono per decidere se leggere e scrivere.
+-  Un segnale di **CS (*Chip Select*)** che quando e' disattivo, la periferica e' dormiente, quando invece e' attivo, la periferica e' in grado di operare e rispondere alla cpu.
 
 (Nell'esempio di un sistema composto da 8086, Memoria, 8255 e altre periferiche, il tutto mappato in isolated IO, oltre a questi componenti avremo anche una logica combinatoria che quando IO/M viene attivato capisce a quale periferica si riferisce l'indirizzo ricevuto e attiva il CS corrispondente alla periferica. E' quindi una logica combinatoria che rimanda alla periferica desiderata.)
 
 ### Funzionamento:
 L'8255 puo' anche essere configurato per decidere il modo di funzionamento (polling 0 o interrupt 1 o modo 2).
+
 Possiamo utilizzare il polling per le periferiche di input solo se siamo sicuri che la cpu riesca a leggere il dato messo sul registro prima che ne riceva uno nuovo (quindi solo per periferiche "lente" tipo sensore) altrimenti nasce un problema di sincronizzazione e il dato viene perso.
 
-### Il modo interrupt funziona in questo modo:
-### INPUT
--  La periferica mette il dato che e' pronta a inviare sulle linee di dato
--  Attraverso un segnale di STROBE (STB) informa l'8255 che e' pronta a scrivere un nuovo dato
--  L'8255 allora prende il dato e lo va a scrivere nel registro e manda poi un segnale di INPUT BUFFER FULL (IBF)
--  L'8255 attraverso un segnale di Interrupt informa la CPU del nuovo dato pronto per essere letto
--  Non appena la CPU avra' letto il dato tramite la procedura di servizio, l'8255 informa la periferica che e' pronta a ricevere un nuovo dato annullando il segnale IBF.
--  E il ciclo puo' ricominciare...
-### 
-### OUTPUT:
--  La cpu scrive sul registro di dato dell'8255 che manda un segnale di OUTPUT BUFFER FULL (OBF) alla periferica.
--  La periferica legge il registro di dato e manda un segnale di ACKNOWLEDGE per informare la periferica che l'ha ricevuto e che lo sta elaborando.
--  Quando la periferica e' pronta per ricevere un nuovo dato, disattiva il segnale di ACKNOWLEDGE e l'8255 manda un segnale di interrupt alla CPU per farle scrivere sul registro di dato
--  E il ciclo puo' ricominciare...
+#### Interrupt - Modo 1
+INPUT:
 
-### 
-### NOTA BENE:
-I segnali utilizzati in interrupt (STB, IBF / OBG, ACK e anche l'Interrupt) non sono previsti nel chip (disegno slide 4), percio' se dobbiamo utilizzare una periferica in modalita' interrupt, potremo controllare solo 2 periferiche con l'8255 e non piu' 3, perche' i segnali aggiuntivi verranno utilizzati al posto di due segnali della terza periferica che non e' piu' utilizzabile.
+1. La periferica mette il dato che e' pronta a inviare sulle linee di dato
+2.  Attraverso un segnale di STROBE (STB) informa l'8255 che e' pronta a scrivere un nuovo dato
+3.  L'8255 allora prende il dato e lo va a scrivere nel registro e manda poi un segnale di **INPUT BUFFER FULL (*IBF*)**
+4.  L'8255 attraverso un segnale di **Interrupt** informa la CPU del nuovo dato pronto per essere letto
+5.  Non appena la CPU avra' letto il dato tramite la procedura di servizio, l'8255 informa la periferica che e' pronta a ricevere un nuovo dato annullando il segnale **IBF**.
+6.  E il ciclo puo' ricominciare...
 
 
-### MODO 2
+
+OUTPUT:
+
+1.  La cpu scrive sul registro di dato dell'8255 che manda un segnale di **OUTPUT BUFFER FULL (*OBF*)** alla periferica.
+2.  La periferica legge il registro di dato e manda un segnale di **ACKNOWLEDGE** per informare la periferica che l'ha ricevuto e che lo sta elaborando.
+3.  Quando la periferica e' pronta per ricevere un nuovo dato, *disattiva il segnale di **ACKNOWLEDGE*** e l'8255 manda un segnale di **interrupt** alla CPU per farle scrivere sul registro di dato
+4.  E il ciclo puo' ricominciare...
+
+**NOTA BENE:**
+
+I segnali utilizzati in interrupt (**STB**, **IBF** / **OBF**, **ACK** e anche l'**Interrupt**) non sono previsti nel chip (disegno slide 4), percio' se dobbiamo utilizzare una periferica in modalita' interrupt, potremo controllare solo 2 periferiche con l'8255 e non piu' 3, perche' i segnali aggiuntivi verranno utilizzati al posto di due segnali della terza periferica che non e' piu' utilizzabile.
+
+
+#### Modo 2 - I/O
 Utilizzata per le periferiche sia di Input che di Output e avra' quindi bisogno di 4 segnali aggiuntivi (STB, IBF, OBG, ACK), quindi anche in questo modo potremo collegare al massimo 2 periferiche e non 3. (E' possibile collegare solo la periferica 1 in modo 2 perche avra' bisogno in totale di 5 segnali aggiuntivi (anche l'interrupt oltre quelli di prima), quindi non abbiamo abbastanza segnali per collegare anche la seconda periferica in modo 2.)
 
-PROGRAMMAZIONE 8255 (Vedere slide 15 per capire i bit del registro di controllo)
-### Possibili modi per le varie porte:
-### -  A: 0/1/2
--  B: 0/1
-### -  C: 0
+### Programmazione
+Bit del registro di controllo:
 
-### Possibili programmazioni:
-### MODO 0
--  2 porte da 8 bit e 2 da 4 bit
--  Ognuna puo essere input o output
--  Gli output sono LATCHED
--  Gli input non sono LATCHED
--  16 possibili configurazioni diverse di I/O
+![alt-text](imgs/8255-prog.png)
 
-NB. LATCHED significa che il valore nel registro viene aggiornato ogni volta che viene effettuata un operazione della cpu e per il resto del tempo ci rimane il valore scritto in precedenza. Altrimenti in un caso non latched, il valore viene aggiornato dalla periferica quando gli pare, e quando la cpu legge quei valori, leggera' solamente l'ultimo scritto dalla periferica.
+Possibili modi per le varie porte:
+- **A**: 0/1/2
+- **B**: 0/1
+- **C**: 0
+
+#### Modo 0
+- 2 porte da 8 bit e 2 da 4 bit
+- Ognuna puo essere input o output
+- Gli output sono LATCHED
+- Gli input non sono LATCHED
+- 16 possibili configurazioni diverse di I/O
+
+NB. ***LATCHED*** significa che il valore nel registro viene aggiornato ogni volta che viene effettuata un operazione della cpu e per il resto del tempo ci rimane il valore scritto in precedenza. Altrimenti in un caso non latched, il valore viene aggiornato dalla periferica quando gli pare, e quando la cpu legge quei valori, leggera' solamente l'ultimo scritto dalla periferica.
 
 
-### MODO 1
+#### Modo 1
 SEGNALI DI CONTROLLO IN INPUT
--  STB - Strobe input, segnale che la periferica invia per dire "ho un nuovo valore per la cpu che ho messo sul canale" (attivo basso)
--  IBF - Input Buffer Full, segnale che l'8255 manda alla periferica per dire "ho ricevuto il tuo valore, aspettiamo che l'8086 lo legga" se alto, se basso invece vuol dire "l'8086 ha finito di leggere il dato, puoi inviarmene un altro" (attivo alto)
--  INTR - Interrupt request, segnale che l'8255 manda all'8086 per dirgli di leggere il dato letto dalla periferica
+- **STB** - Strobe input, segnale che la periferica invia per dire "ho un nuovo valore per la cpu che ho messo sul canale" (**attivo basso**)
+- **IBF** - Input Buffer Full, segnale che l'8255 manda alla periferica per dire "ho ricevuto il tuo valore, aspettiamo che l'8086 lo legga" se alto, se basso invece vuol dire "l'8086 ha finito di leggere il dato, puoi inviarmene un altro" (**attivo alto**)
+- **INTR** - Interrupt request, segnale che l'8255 manda all'8086 per dirgli di leggere il dato letto dalla periferica
 
-### SEGNALI DI CONTROLLO DI OUTPUT
- Molto simile a sopra, vedere slide 29-30-31
+SEGNALI DI CONTROLLO DI OUTPUT
+- **OBF** - Output buffer full, se basso indica alla periferica che la cpu ha scritto il dato sulla porta (**attivo basso**)
+- **ACK** - Acknowledge Input, se basso informa l'8255 che il dato e' stato ricevuto dalla periferica (**attivo basso**)
+- **INTR** - Interrupt Request, se alto puo' essere usato come richiesta di interrupt alla CPU
+- **INTE<sub>A</sub>** - Interrupt enable per il gruppo A, controllato dal bit set/reset di PC<sub>6</sub>
+- **INTE<sub>B</sub>** - Interrupt enable per il gruppo B, controllato dal bit set/reset di PC<sub>2</sub>
 
 PS. Questi meccanismi in genere vengono chiamati handshaking, perche abbiamo due segnali di controllo, uno che dice quando l'ha preso e che fara' attendere finche non l'ha elaborato prima di riceverne un altro. 
 
 
-### MODO 2
--  2 segnali di controllo per l'input
--  2 segnali di controllo per l'output
--  Segnale di interrupt request che puo' segnalare sia la presenza di un nuovo dato in lettura che la richiesta di un nuovo dato in scrittura, e sara' poi la cpu a dover capire cosa fare. 
+#### Modo 2
+- 2 segnali di controllo per l'input
+- 2 segnali di controllo per l'output
+- Segnale di interrupt request che puo' segnalare sia la presenza di un nuovo dato in lettura che la richiesta di un nuovo dato in scrittura, e sara' poi la cpu a dover capire cosa fare. 
 
 
+### Single Bit Set/Reset
+Puo' capitare ad esempio che programmando la porta A, l'8255 abbia bisogno di scrivere un solo bit di controllo sulla porta C. Per fare cio' l'8255 mette a disposizione un **SINGLE BIT SET/RESET MODE** che viene attivata mettendo il primo bit (il piu' significativo) a 0, scrivendo nelle penultime 3 posizioni l'indice del bit da cambiare e nell'ultimo bit 1 o 0 a seconda del valore che vogliamo settare sul bit.
 
-### SINGLE BIT SET/RESET
-Puo' capitare ad esempio che programmando la porta A, l'8255 abbia bisogno di scrivere un solo bit di controllo sulla porta C. Per fare cio' l'8255 mette a disposizione un \*\*SINGLE BIT SET/RESET MODE\*\* che viene attivata mettendo il primo bit (il piu' significativo) a 0, scrivendo nelle penultime 3 posizioni l'indice del bit da cambiare e nell'ultimo bit 1 o 0 a seconda del valore che vogliamo settare sul bit.
 ![alt-text](imgs/single-bit-set-reset.png)
 
 
