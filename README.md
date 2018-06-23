@@ -2062,52 +2062,90 @@ In ordine decrescente di velocita' e costo:
 
 # 24-Memorie-Accesso-Casuale-RAM
 
-SEGNALI DI CONTROLLO
-### Sono fondamentali da due punti di vista:- Permettono di sapere il tipo di operazione (lettura scrittura)- Permettono la sincronizzazione con l'esterno (manca il segnale di clock):
-- SOLUZIONE SINCRONA: Chi mi fornisce la memoria mi dice quali sono i tempi da rispettare nello scambio di informazioni con l'esterno, e cosi il programmatore deve organizzare la lettura dei dati considerando l'attesa. (Non sono necessari ulteriori segnali) (Il difetto fondamentale e' che la memoria dopo quel tempo deve aver risposto, per forza, qualsiasi cosa accada. Ricordare il caso del refreshing che rende il tempo di accesso poco stabile, e in questo caso bisogna adattare il tempo di attesa al massimo, il che e' uno spreco perche' nel 90% dei casi non abbiamo bisogno di aspettare anche il tempo del refreshing)
-- SOLUZIONE ASINCRONA: Ha un segnale di controllo che avvisa quando i dati sono presenti sul Dbus. (Molto piu conveniente ad esempio quando c'e' il ciclo di refreshing) (Sconveniente perche' la memoria deve produrre l'MFC (il segnale di completamento) e l'utente deve gestirlo)
-- Chip Select (CS) - Equivalente al segnale di enable, quando non e' attivo, la memoria mantiene il contenuto, ma non risponde ad operazioni.- Output Enable (OE) - Sui segnali di dato ci saranno dati in uscita in operazioni in lettura e dati in entrata in operazioni di scrittura. Quando la memoria e' in idle le linee di dato vanno in alta impedenza (Z), vengono disconnesse dallamemoria). Questo segnale mi permette di dre alla memoria di mantenere il dato in uscita sulle linee di dato.- Write Enable (WE) - Questo segnale mi permette di dire alla memoria di mantenere il dato in entrata sulle linee di dato.
+## Segnali di Controllo
+Sono fondamentali da due punti di vista:
+- Permettono di sapere il ***tipo di operazione*** (lettura scrittura)
+- Permettono la ***sincronizzazione con l'esterno*** (manca il segnale di clock):
+    - ***SOLUZIONE SINCRONA***: Chi mi fornisce la memoria mi dice quali sono i tempi da rispettare nello scambio di informazioni con l'esterno, e cosi il programmatore deve organizzare la lettura dei dati considerando l'attesa. (Non sono necessari ulteriori segnali) (Il difetto fondamentale e' che la memoria dopo quel tempo deve aver risposto, per forza, qualsiasi cosa accada. Ricordare il caso del refreshing che rende il tempo di accesso poco stabile, e in questo caso bisogna adattare il tempo di attesa al massimo, il che e' uno spreco perche' nel 90% dei casi non abbiamo bisogno di aspettare anche il tempo del refreshing)
+    - ***SOLUZIONE ASINCRONA***: Ha un segnale di controllo che avvisa quando i dati sono presenti sul *Dbus*. (Molto piu conveniente ad esempio quando c'e' il ciclo di refreshing) (Sconveniente perche' la memoria deve produrre l'**MFC** (il segnale di completamento) e l'utente deve gestirlo)
+
+- ***Chip Select*** **(CS)**: Equivalente al segnale di enable, quando non e' attivo, la memoria mantiene il contenuto, ma non risponde ad operazioni.
+- ***Output Enable*** **(OE)**: Sui segnali di dato ci saranno dati in uscita in operazioni in lettura e dati in entrata in operazioni di scrittura. Quando la memoria e' in idle le linee di dato vanno in alta impedenza **(Z)**, vengono disconnesse dalla memoria). *Questo segnale mi permette di dire alla memoria di mantenere il dato in uscita sulle linee di dato.*
+- ***Write Enable*** **(WE)**: Questo segnale mi permette di dire alla memoria di mantenere il dato in entrata sulle linee di dato.
+
+
+## Segnali di Stato
+- ***ERRORE***: La memoria ha indiduato una parola con un dato errato.
+- ***MFC***: La memoria ha completato l'operazione di lettura/scrittura.
+
+
+## Dimensioni
+- ***N*** - Numero di parole
+- ***M*** - Numero di bit per parola
+
+Il numero di segnali in ingresso e uscita e' quindi:
+-  ***log<sub>2</sub>(n)*** per i segnali di **indirizzo**
+-  ***m*** per i segnali di **dato**
+
+
+## Architettura
+
+![alt-text](imgs/ram-arch.png)
+
+## Schema Generale
+
+![alt-text](imgs/ram-schema.png)
+
+## Organizzazione
+- ***VETTORE***: Organizza i dati in un vettore di parole, ma se il numero di parole e' troppo grande, occorrera' un decoder degli indirizzi troppo grande. Funziona quindi solo con un numero di parole limitato. (Ricordarsi che abbiamo anche bisogno di *n* **driver** dalle celle verso l'uscita) (Non si usa mai)
+- ***MATRICE***: Organizza i dati in una matrice di celle, ogni cella ha in questo caso bisogno di 2 segnali di alimentazione (un segnale che le dice quando c'e' l'indirizzo corrispondente in ingresso); in questo modo abbiamo 2 decoder, uno per le righe che riceve i  bit piu' significativi dell'indirizzo e uno per le colonne che riceve i bit meno significativi dell'indirizzo. I decoder saranno di dimensione ***log<sub>2</sub>(n)/2*** (la complessita' del decoder cresce in maniera esponenziale) e abbiamo bisogno di ***2\*sqrt(n) driver***.
+
+
+## Segnali RAS e CAS (matrice)
+- **RAS - *Row Address Strobe***
+- **CAS - *Column Address Strobe***
+
+Utilizzati nell'organizzazione a matrice per *dimezzare il numero di pin di indirizzo della memoria*, passando prima i bit piu significativi e attivando ***RAS***, e poi quelli meno significativi utilizzando ***CAS***.
+
+### Page Mode
+Il ***Page Mode*** e' una modalita' delle memorie con organizzazione a matrice che permette di ridurre i tempi di accesso alla memoria.
+Se dobbiamo accedere consecutivamente a celle poste ad indirizzi successivi il Page Mode fa i seguenti passi:
+
+1. Si invia alla memoria la parte di indirizzo relativo alla riga attivando ***RAS***
+2. Si invia alla memoria la parte di indirizzo relativo alla colonna attivando ***CAS***
+3. Si accede al dato
+4. So ripete dal punto 2
 
 
 
-SEGNALI DI STATO- ERRORE: La memoria ha indiduato una parola con un dato errato.- MFC: La memoria ha completato l'operazione di lettura/scrittura.
+## Classificazione
+- ROM
+- PROM
+- EPROM
+- EEPROM
+- FLASH
+- RAM
 
 
+### ROM
+***Read Only Memory***
 
-DIMENSIONI- N - Numero di parole- M - Numero di bit per parola
+#### Applicazioni
+- Pezzi di codice di boot o che vengono eseguiti spesso e non devono essere modificati.
+- Memorizzare costanti (es per evitare l'utilizzo della floating point unit, tipo se dobbiamo usare il seno, salviamo n valori del seno nella rom, e quando ne abbiamo bisogno ne interpoliamo il contenuto per ottenere il risultato.
 
-Il numero di segnali in ingresso e uscita e' quindi:-  log2(n) per i segnali di indirizzo-  m per i segnali di dato
+#### Struttura Fisica
 
+![alt-text](imgs/rom-schema.png)
 
-### ARCHITETTURA NELLA SLIDE 10.
-SCHEMA GENERALE NELLA SLIDEE 11.
+Ogni cella di ROM e' composta da due linee (***linea di parola***, proveniente dal decoder degli indirizzi, e ***linea di dato***), queste sono connesse mediante un transistor che permette al circuito di aprirsi e chiudersi, per rappresentare rispettivamente un 1 o uno 0. (Perche il transistor chiudendo il circuito collega l'alimentazione direttamente alla massa, deviandola dalla linea di dato, facendo arrivare sulla linea di dato uno 0).
 
-
-ORGANIZZAZIONE:- VETTORE: Organizza i dati in un vettore di parole, ma se il numero di parole e' troppo grande, occorrera' un decoder degli indirizzi troppo grande. Funziona quindi solo con un numero di parole limitato. (Ricordarsi che abbiamo anche bisogno di n driver dalle celle verso l'uscita) (Non si usa mai)- MATRICE: Organizza i dati in una matrice di celle, ogni cella ha in questo caso bisogno di 2 segnali di alimentazione (un segnale che le dice quando c'e' l'indirizzo corrispondente in ingresso); in questo modo abbiamo 2 decoder, uno per le righe che riceve i  bit piu' significativi dell'indirizzo e uno per le colonne che riceve i bit meno significativi dell'indirizzo. I decoder saranno di dimensione log2(n)/2 (la complessita' del decoder cresce in maniera esponenziale) e abbiamo bisogno di 2\*sqrt(n) driver.
-
-
-### PAGE MODE
-RAS - Row Address Strobe
-CAS - Column Address Strobe
-Utilizzati nell'organizzazione a matrice per dimezzare il numero di pin della memoria, passando prima i bit piu significativi e attivando RAS, e poi quelli meno significativi utilizzando CAS.
-
-
-
-### CLASSIFICAZIONE- ROM- PROM- EPROM- EEPROM- FLASH- RAM
-
-
-ROM
-Read Only Memory.
-
-Applicazioni:- Pezzi di codice di boot o che vengono eseguiti spesso e non devono essere modificati.- Memorizzare costanti (es per evitare l'utilizzo della floating point unit, tipo se dobbiamo usare il seno, salviamo n valori del seno nella rom, e quando ne abbiamo bisogno ne interpoliamo il contenuto per ottenere il risultato.
-
-Struttura Fisica;
-Ogni cella di ROM e' composta da due linee (parola, proveniente dal decoder degli indirizzi, e di dato), queste sono connesse mediante un transistor che permette al circuito di aprirsi e chiudersi, per rappresentare rispettivamente un 1 o uno 0. (Perche il transistor chiudendo il circuito collega l'alimentazione direttamente alla massa, deviandola dalla linea di dato, facendo arrivare sulla linea di dato uno 0).
+Quindi ***se il transistor e' chiuso*** (circuito chiuso) sulla linea di dato viene 0 (perche la linea di parola viene collegata direttamente a massa), ***se invece il transistor e' aperto*** (circuito aperto) la linea di parola e' collegata direttamente a quella di dato mandando un uno sulla linea di dato.
 
 
 
 ### PROM
-Programmable Read Only Memory
+***Programmable Read Only Memory***
 La scrittura e' eseguita a valle del processo di produzione, tramite appositi strumenti detti "programmatori"
 
 Viene programmata usando un diodo tra la messa a terra e il transistor che puo' essere bruciato all'occorrenza per determinare il contenuto della memoria.
@@ -2115,30 +2153,34 @@ Viene programmata usando un diodo tra la messa a terra e il transistor che puo' 
 
 
 ### EPROM
-Electrically Programmable ROM
+***Electrically Programmable ROM***
 Possono essere riprogrammate previa precedente cancellazione tramite esposizione prolungata (circa 20 min) a luce ultravioletta.
-A differenza della PROM puo' essere programmata un numero indefinito di volte e la scrittura puo' avvenire anche dopo il montaggio sulla scheda.
+A differenza della **PROM** puo' essere programmata un numero indefinito di volte e la scrittura puo' avvenire anche dopo il montaggio sulla scheda.
 Sono ovviamente piu' costose delle PROM.
 
 
 
 ### EEPROM
+***Electrically Erasable Programmable Rom***
 Non serve la luce ultravioletta per cancellare il contenuto e costano ancora di piu
 
 
-
 ### FLASH
-Hanno un costo intermedio tra EPROM e EEPROM.
-Non sono volatili e sono programmabili un numero indefinito di volte.
+Hanno un costo intermedio tra **EPROM** e **EEPROM**.
+**Non sono volatili** e sono programmabili un numero indefinito di volte.
 Usano un solo transistor per bit.
-In lettura si comportano come le RAM mentre per la scrittura:- Sono piu lente- Vanno eseguite a blocchi- Richiedono una precedente operazione di cancellazione.
+In lettura si comportano come le RAM mentre per la scrittura:
+- Sono piu lente
+- Vanno eseguite a blocchi
+- Richiedono una precedente operazione di cancellazione.
 
 Sono in grado di eseguire un numero LIMITATO di cicli di scrittura.
 
 
 
-### RIASSUNTO DI TUTTO CIO ALLA SLIDE 28
+### Quadro di sintesi
 
+![alt-text](imgs/ram-sintesi.png)
 
 
 RAM
