@@ -1708,44 +1708,52 @@ E' uno scatolotto che connette i vari moduli al bus (slide 74) e puo' ricevere 3
 
 
 
-# 20-FPGA
+# 20-FPGA - *Field Programmable Gate Array*
 
-Field Programmable Gate Array
 Sono circuiti a cui noi diciamo che tipo di circuito implementare capaci di configurarsi in modo da emulare il circuito desiderato.
- E' il contrario di ASIC (Application Specific Integrated Circuit), circuito implementato sotto specifiche che non possono piu' essere cambiate.
+
+E' il contrario di **ASIC (*Application Specific Integrated Circuit*)**, circuito implementato sotto specifiche che non possono piu' essere cambiate.
 
 Sono composti da moduli riprogrammabili in diversi modi per ottenere diversi circuiti. slide 66 per i 3 tipi.
 
-Possono essere programmate:- Al momento del primo utilizzo, "bruciando" alcuni elementi del dispositivo e puo' essere eseguita una volta sola- Caricando in una flash interna una serie di bit (bitstream) che implementano il comportamento del dispositivo. Puo essere programmato ogni volta che si vuole cambiare il circuito implementato.- Caricando in una ram interna il bitstream. La programmazione avviene ogni volta che il dispositivo viene alimentato.
-
-
+Possono essere programmate:
+- Al momento del primo utilizzo, *"bruciando"* alcuni elementi del dispositivo e puo' essere eseguita una volta sola
+- Caricando in una flash interna una serie di bit (*bitstream*) che implementano il comportamento del dispositivo. Puo essere programmato ogni volta che si vuole cambiare il circuito implementato.
+- Caricando in una ram interna il *bitstream*. La programmazione avviene ogni volta che il dispositivo viene alimentato.
 
 NB. Puo implementare sia un circuito combinatorio che sequenziale.
 
 
+# Processore
+2 parti fondamentali (hardware):
+- *Unita di controllo*
+- *Unita di elaborazione*
 
-# 21-Processore-Unita-di-elaborazione
+## Unita di elaborazione
+Un processore esegue istruzioni... accede alla memoria, fa il ***fetch***, sposta l'istruzione nell **IR (*instruction register*)**, la decodifica e sa che operazione eseguire.
 
-2 parti fondamentali (hardware):- Unita di controllo- Unita di elaborazione
+L'unita di elaborazione e' la parte che contiene:
+- *Registri*
+- Il *bus interno* che collega i registri
+- *ALU* 
+- *Parte hardware in grado di eseguire le istruzioni*
 
-Un processore esegue istruzioni... accede alla memoria, fa il fetch, sposta l'istruzione nell IR (instruction register), la decodifica e sa che operazione eseguire.
-L'unita di elaborazione e' la parte che contiene i registri, il bus interno che collega i registri, alu  e la parte hardware in grado di eseguire le istruzioni
 
-
-### SOMMA TRA DUE REGISTRI
+### Somma tra due registri
 Es slide n.6: (ci fa vedere le operazioni necessarie ad eseguire questa add internamente all'unita di elaborazione)
-ADD R1, R2, R3				==			R1+R2->R3
 
-### operazione [segnale]:
-R1 -> BUS [R1out]
-BUS -> Y [Yin]
-R2 -> BUS [R2out]
-ADD (tra y e il bus) (mando alla alu i segnali che le indicano di eseguire la somma)
-ALU -> Z [Zin]
-Z -> BUS [Zout]
-BUS -> R3 [R3in]
+    ADD R1, R2, R3	     ==  		R1+R2->R3
 
-Queste sopra sono dette microistruzioni (istruzioni elementari) e ad ogni colpo di clock viene eseguita una microistruzione (quindi per una istruzione serviranno piu colpi di clock)
+Operazione [segnale]:
+1. *R1 -> BUS [R1out]*
+2. *BUS -> Y [Yin]*
+3. *R2 -> BUS [R2out]*
+4. *ADD* (tra y e il bus) (mando alla alu i segnali che le indicano di eseguire la somma)
+5. *ALU -> Z [Zin]*
+6. *Z -> BUS [Zout]*
+7. *BUS -> R3 [R3in]*
+
+Queste sopra sono dette ***microistruzioni*** (*istruzioni elementari*) e ad ogni colpo di clock viene eseguita una microistruzione (quindi per una istruzione serviranno piu colpi di clock)
 
 
 
