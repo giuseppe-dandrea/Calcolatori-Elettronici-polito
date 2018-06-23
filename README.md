@@ -1628,46 +1628,54 @@ Questo ha un costo piu' elevato del ripple counter, ma ha il vantaggio di non es
 
 # 18-Memorie
 
-MEMORIE
 Oggetti che permettono di memorizzare un certo numero di parole su un certo numero di bit
 
-### RAM
-E' composto da 2^k parole da n bit. L'accesso puo' avvenire sia in lettura che in scrittura, quindi ha n segnali di input e n segnali di output, ha dei segnali read e write che dicono alla memoria che operazione eseguire e un ingresso di indirizzo su k bit che contiene il numero d'ordine della parola su cui eseguire l'operazione. (Puo' avere un segnale di enable che quando non e' attivo significa che la memoria e' in stand-by, cioe' mantiene il suo contenuto ma non esegue operazioni di lettura e scrittura.
+## RAM
+E' composto da *2^k* parole da *n* bit. L'accesso puo' avvenire sia in lettura che in scrittura, quindi ha *n* segnali di input e *n* segnali di output, ha dei segnali **read** e **write** che dicono alla memoria che operazione eseguire e un ***ingresso di indirizzo*** su *k* bit che contiene il numero d'ordine della parola su cui eseguire l'operazione. 
 
-### ROM
-Memorie a sola lettura che implementano una funzione combinatoria e il suo contenuto viene determinato solo all'atto della fabbricazione e non puo' in nessun modo essere modificato successivamente.
-Implementa una funzione combinatoria perche' i valori delle uscite della rom dipendono solo dal valore degli ingressi e non dallo stato in cui si trova perche i valori della rom non possono essere modificati.[
-Nella rom c'e' il contenuto di base per l'inizializzazione del sistema (periferiche e co)
-Nei sistemi special purpose (non tutti) il codice (segmento .code) e' contenuto nella ROM perche' non deve piu' essere modificato.
+Puo' avere un segnale di enable che quando non e' attivo significa che la memoria e' in stand-by, cioe' mantiene il suo contenuto ma non esegue operazioni di lettura e scrittura.
 
-### BANCHI DI MEMORIA (VL 28 da circa la meta')
-Un banco di memoria e' un insieme di moduli di memoria interconnessi che si comportano come un'unica memoria (ROM, RAM o mista) di dimensioni complessive pari alla somma delle dimensioni dei moduli componenti
+### Struttura
+Una ram da *2^k* parole da *n* bit sara' composta da:
+- *2^k registri*
+- *Un decoder in ingresso*
+- *Un multiplexer in uscita*
 
-Es. numero di parole corretto, ma dimensione ridotta. 
-Dobbiamo costruire una memoria da 1MB x 16 bit, ma abbiamo a disposizione moduli da 1MB x 8 bit.
-In questo caso basta affiancare i due moduli, mandare i bit di indirizzo sia a un modulo che all'altro e collegare le uscite su 8 bit, all'entrata a 16 bit del multiplexer. In questo modo abbiamo l'informazione salvata per 8 bit su un modulo e per 8 bit sull'altro.
-
-
-Es. Parallelismo corretto, ma numero di parole sbagliato
-Dobbiamo costruire una memoria da 1M x 16 bit, ma abbiamo a disposizione moduli da 256k x 8 bit.
-Per fare cio basta prendere 4 moduli da 256k. I 256k indirizzi sono rappresentabili su 18bit, mentre per avere 1MB di indirizzi ci servono 20bit. Percio se su 18 bit possiamo mappare tutti i 256k indirizzi e su 20bit 1M di indirizzi, i primi 2 bit dell'indirizzo su 1MB rappresenteranno il numero del modulo a cui bisogna accedere, gli altri 18 bit rappresentano invece l'indirizzo all'interno del modulo al quale accedere.
-Mettiamo quindi un decoder con parallelismo 20-18=2bit che mappera' il modulo dal quale andare a prendere i dati. (00, 01, 10, 11 => rappresentano i 4 moduli)
-
-
-/\*\*\*\*bus\*\*\*\*/
-
-
-### RAM STRUTTURA INTERNA (slide 79)
-Una ram da 2^k parola da n bit sara' composta da:-  2^k registri-  Un decoder in ingresso-  Un multiplexer in uscita
-
-### Scrittura:
+### Scrittura
 I segnali di indirizzo vanno agli ingressi del decoder le cui uscite alimentano il segnale di load dei vari registri. Quando quindi il decoder attiva il relativo registro, quest'ultimo sara' attivato per caricare i dati in ingresso.
 
 ### Lettura:
-In lettura attivo il multiplexer che riceve in ingresso gli n bit di dato di uscita di ogni registro. Il multiplexer sara' pilotato dallo stesso segnale di indirizzo del decoder che ha attivato la parola da leggere e attiva l'uscita su n bit del multiplexer relativa alla parola attivata.
-
+In lettura attivo il **multiplexer** che riceve in ingresso gli *n* bit di *dato di uscita di ogni registro*. Il multiplexer sara' pilotato dallo stesso *segnale di indirizzo* del decoder che ha attivato la parola da leggere e attiva l'uscita su n bit del multiplexer relativa alla parola attivata.
 
 La limitazione di questa configurazione e' che per un numero di parole molto elevato sia il decoder che il multiplexer raggiungono dimensioni molto elevate, rendendolo di difficile realizzazione.
+
+
+## ROM
+Memorie a sola lettura che implementano una funzione combinatoria e il suo contenuto viene determinato solo all'atto della fabbricazione e non puo' in nessun modo essere modificato successivamente.
+
+Implementa una funzione combinatoria perche' i valori delle uscite della rom dipendono solo dal valore degli ingressi e non dallo stato in cui si trova perche i valori della rom non possono essere modificati.
+
+Nella rom c'e' il contenuto di base per l'inizializzazione del sistema (periferiche e co)
+
+Nei sistemi special purpose (non tutti) il codice (segmento .code) e' contenuto nella ROM perche' non deve piu' essere modificato.
+
+## Banchi di Memoria
+<sub>Per esercizi completi vedere VL 28 da circa meta'.</sub>
+
+Un banco di memoria e' un insieme di moduli di memoria interconnessi che si comportano come un'unica memoria (ROM, RAM o mista) di dimensioni complessive pari alla somma delle dimensioni dei moduli componenti
+
+Es. *numero di parole corretto, ma parallelismo ridotta.* 
+Dobbiamo costruire una memoria da **1MB x 16 bit**, ma abbiamo a disposizione moduli da **1MB x 8 bit**.
+In questo caso basta affiancare i due moduli, *mandare i bit di indirizzo sia a un modulo che all'altro* e collegare le uscite su 8 bit al multiplexer. In questo modo abbiamo l'informazione salvata per 8 bit su un modulo e per 8 bit sull'altro.
+
+
+Es. *Parallelismo corretto, ma numero di parole sbagliato*
+Dobbiamo costruire una memoria da **1M x 16 bit**, ma abbiamo a disposizione moduli da **256k x 16 bit**.
+Per fare cio basta prendere *4 moduli da 256k*. I *256k* indirizzi sono rappresentabili su *18bit*, mentre per avere *1MB* di indirizzi ci servono *20bit*. Percio se su 18 bit possiamo mappare tutti i 256k indirizzi e su 20bit 1M di indirizzi, ***i primi 2 bit dell'indirizzo su 1MB rappresenteranno il numero del modulo a cui bisogna accedere***, gli altri 18 bit rappresentano invece l'indirizzo all'interno del modulo al quale accedere.
+Mettiamo quindi un **decoder con parallelismo *20-18=2bit*** che mappera' il modulo dal quale andare a prendere i dati. 
+
+(00, 01, 10, 11 => rappresentano i 4 moduli)
+
 
 
 
