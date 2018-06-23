@@ -1834,31 +1834,31 @@ AGGIORNAMENTO DEL PC NELLA FASE DI FETCH (PC -> PC + k) (Facciamo avanzare PC al
 NB. Per aggiornare il valore del PC possiamo anche utilizzare il CarryIn della ALU invece che un registro apposito k, che fara' cosi incrementare PC di uno senza utilizzare un registro addizionale (tutte le fasi stanno nella slide 16)
 
 
+### Operazioni con un valore immediato
+Es. `SUB R1, 13, R4		==		R1-13 -> R4`
 
-### OPERAZIONI CON UN VALORE IMMEDIATO
-Es. SUB R1, 13, R4		==		R1-13 -> R4
-
+```
 [Fetch]
 [R1out]
 [Yin]
-[IRout]			(Il pezzo dell'IR che contiene l'immediato viene messo sul bus)\*\*\*\*IMPORTANTE
+[IRout]			(Il pezzo dell'IR che contiene l'immediato viene messo sul bus) IMPORTANTE
 [Sub]
 [Zin]
 [Zout]
 [R4in]
+```
 
+### Operazioni con un registro che contiene l'indirizzo dell'operando
+`ADD [R1], R2, R3		==		Mem[R1] + R2 -> R3`
 
-
-OPERAZIONI CON UN REGISTRO CHE CONTIENE L'INDIRIZZO DELL'OPERANDO
-ADD [R1], R2, R3		==		Mem[R1] + R2 -> R3
-
+```
 [Fetch]
 [R1out]
 [MARin]
 [MARout]
-### [RD]
+[RD]
 [Wait MFC]
-### [SEL=0]
+[SEL=0]
 [MDRin]
 [MDR2out]
 [Yin]
@@ -1867,11 +1867,12 @@ ADD [R1], R2, R3		==		Mem[R1] + R2 -> R3
 [Zin]
 [Zout]
 [R3in]
+```
 
+### Scrittura in memoria
+`AND R4, R5, [R2]		==		R4&R5->MEM[R2]`
 
-### ESEMPIO CON SCRITTURA IN MEMORIA
-AND R4, R5, [R2]		==		R4&R5->MEM[R2]
-
+```
 [Fetch]
 [R4out]
 [Yin]
@@ -1879,7 +1880,7 @@ AND R4, R5, [R2]		==		R4&R5->MEM[R2]
 [And]
 [Zin]
 [Zout]
-### [SEL=1]
+[SEL=1]
 [MDRin]
 [MDR1out]	--A questo punto abbiamo il risultato della ALU nel Dbus, che e' esattamente dove ci serve per scrivere in memoria
 [R2out]
@@ -1887,32 +1888,34 @@ AND R4, R5, [R2]		==		R4&R5->MEM[R2]
 [MARout]	-- Qui e' pronto anche l'Abus e possiamo fare l'operazione di scrittura che prende il Dbus e ne salva il contenuto nell'indirizzo contenuto nell'Abus
 [Write (WR)]
 [Wait MFC]
+```
 
 
 
+### Istruzioni di Salto
 
-### ISTRUZIONI DI SALTO
+#### Salto incondizionato
+`JMP lab     ---    Formato da [Codice Operativo] [Indirizzo a cui saltare]`
 
-SALTO INCONDIZIONATO
-JMP lab			--		Formato da [Codice Operativo] [Indirizzo a cui saltare]
-
+```
 [Fetch]
 [IRout]		(Il pezzo dell'IR che contiene l'operando (indirizzo) viene messo sul bus)
 [PCin]
+```
 
+#### Salto condizionato
+Viene prima eseguito il test su un flag e se la condizione e' verificata salta, altrimenti niente
+`JX lab		--		Se il flag X e' uguale a 1, allora salta all'istruzione lab`
 
-SALTO CONDIZIONATO (Viene prima eseguito il testo su un flag e se la condizione e' verificata salta, altrimenti niente)
-JX lab		--		Se il flag X e' uguale a 1, allora salta all'istruzione lab
-
+```
 [Fetch]
 if (x == 1)
 	PC <- addr
 
-
 [IRout]
-- -[Add] Nel caso nella variabile dell'IR ci sia l'offset dal PC invece che l'indirizzo globale si somma al valore di PC il valore contenuto nell'IR
+[Add] Nel caso nella variabile dell'IR ci sia l'offset dal PC invece che l'indirizzo globale si somma al valore di PC il valore contenuto nell'IR
 [PCin]
-
+```
 
 
 
