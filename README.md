@@ -1816,16 +1816,18 @@ AGGIORNAMENTO DEL PC NELLA FASE DI FETCH (PC -> PC + k) (Facciamo avanzare PC al
 #### Fetch parallelizzato
 ==> Ottimizzando il tutto otteniamo: (facciamo eseguire piu operazioni contemporaneamente per ottimizzare i tempi di esecuzione)
 
+```
 1.  ***[PCout]***
-2.  ***[MARin]***.....|.....***[Yin]***
-3.  ***[MARout]***....|.....***[k -> bus]***
-4.  ***[RD]***........|.....***[Add]***
-5.  ***[Wait MFC]***..|.....***[Zin]***
-6.  ***[Wait MFC]***..|.....***[Zout]***
-7.  ***[SEL=0]***.....|.....***[PCin]***
+2.  ***[MARin]***       |   ***[Yin]***
+3.  ***[MARout]***      |   ***[k -> bus]***
+4.  ***[RD]***          |	***[Add]***
+5.  ***[Wait MFC]***    |   ***[Zin]***
+6.  ***[Wait MFC]***    |   ***[Zout]***
+7.  ***[SEL=0]***	    |   ***[PCin]***
 8.  ***[MDRin]***
 9.  ***[MDR2out]***
 10. ***[IRin]***
+```
 
 (Supponendo che MFC impieghi 2 colpi di clock, passiamo da 17 cc a 10cc)
 
