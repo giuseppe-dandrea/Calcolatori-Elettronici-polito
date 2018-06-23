@@ -1770,56 +1770,61 @@ NB. Ogni registro ha due segnali *Rxin* e *Rxout* che determinano rispettivament
 
 
 
-### FETCH
-La fase di fetch richiede di prendere l'indirizzo nel PC (program counter), andare a prendere il codice dell'istruzione a quell'indirizzo e salvarlo nell'IR.
+### Fetch
+La fase di fetch richiede di prendere l'indirizzo nel **PC** (*Program Counter*), andare a prendere il codice dell'istruzione a quell'indirizzo e salvarlo nell'**IR** (*Instruction Register*).
 
 
 
-MAR (Memory Address Register) (puo solo leggere dal bus interno e scrivere sul bus esterno)
-Collegato tra il bus interno e il bus esterno (address bus) e anche lui comunica tra i due bus come un normale registro (MARin e MARout che quando vengono attivati legge in ingresso o manda in uscita)
+**MAR** (*Memory Address Register*) (puo solo *leggere dal bus interno* e *scrivere sul bus esterno*)
+
+Collegato tra il bus interno e il bus esterno (address bus) e anche lui comunica tra i due bus come un normale registro (*MARin* e *MARout* che quando vengono attivati legge in ingresso o manda in uscita)
 
 
-MDR (Memory Data Register) (puo leggere sia dal bus interno che dal bus esterno e puo scrivere su entrambi)
-Collegato mediante un multiplexer per decidere da quale bus leggere e collegato a due buffer tri-state collegati rispettivamente a un segnale MDRout e a seconda di quale viene attivato decide su quale bus scrivere.
-Quindi decide da chi leggere grazie al multiplexer mediante un segnale SEL.
+**MDR** (*Memory Data Register*) (puo *leggere sia dal bus interno che dal bus esterno* e puo *scrivere su entrambi*)
+
+Collegato mediante un *multiplexer* per decidere da quale bus leggere e collegato a due buffer tri-state collegati rispettivamente a un segnale *MDRout* e a seconda di quale viene attivato decide su quale bus scrivere.
+Quindi decide da chi leggere grazie al multiplexer mediante un segnale ***SEL***.
 Decide su chi scrivere invece con due segnali distinti collegati a due buffer tri-state distinti, e a seconda del segnale attivato, scrive su un solo bus.
 
 
 
-FETCH: [segnali]
-PC -> bus [Attivo PCout]
-bus -> MAR [Attivo MARin]
-MAR -> Abus [Attivo MARout]
-RD (attivo il segnale read: legge dalla memoria all'indirizzo contenuto nell'Abus e lo mette nel Dbus) [RD] (C'e' un segnale MFC Memory Function Completed che manda la memoria quando ha finito l'operazione richiesta)
-/\*Il processore aspetta che MFC venga attivato\*/
-Dbus -> MDR [Forzo SEL al valore che imposta il multiplexer verso il Dbus] -> [Attivo MDRin]
-MDR -> bus [Attivo MDR2out (2 perche sappiamo che sono due i bus su cui possiamo scrivere]
-bus -> IR [Attivo IRin]
+**FETCH: [*segnali*]**
+
+1. **PC -> bus [*Attivo PCout*]**
+2. **bus -> MAR [*Attivo MARin*]**
+3. **MAR -> Abus [*Attivo MARout*]**
+4. **RD** (attivo il segnale read: legge dalla memoria all'indirizzo contenuto nell'Abus e lo mette nel Dbus) [RD] (C'e' un segnale MFC Memory Function Completed che manda la memoria quando ha finito l'operazione richiesta)
+5. **[Wait *MFC*]**
+6. **Dbus -> MDR [Forzo SEL al valore che imposta il multiplexer verso il Dbus] -> [*Attivo MDRin*]**
+7. **MDR -> bus [*Attivo MDR2out* (2 perche sappiamo che sono due i bus su cui possiamo scrivere]**
+8. **bus -> IR [*Attivo IRin*]**
 
 
-AGGIORNAMENTO DEL PC NELLA FASE DI FETCH (PC -> PC + k) (Facciamo avanzare PC alla prossima istruzione da eseguire)
-[PCout]
-[Yin]
-[k -> bus]
-[Add]
-[Zin]
-[Zout]
-[PCin]
+**AGGIORNAMENTO DEL PC NELLA FASE DI FETCH (PC -> PC + k)** (Facciamo avanzare PC alla prossima istruzione da eseguire):
+
+1. ***[PCout]***
+2. ***[Yin]***
+3. ***[k -> bus]***
+4. ***[Add]***
+5. ***[Zin]***
+6. ***[Zout]***
+7. ***[PCin]***
 
 
 
-### FETCH DEFINITIVO!!
+#### Fetch parallelizzato
 ==> Ottimizzando il tutto otteniamo: (facciamo eseguire piu operazioni contemporaneamente per ottimizzare i tempi di esecuzione)
-[PCout]
-[MARin]		[Yin]
-[MARout]	[k -> bus]
-[RD]		[Add]
-[Wait MFC]	[Zin]
-[Wait MFC]	[Zout]
-[SEL=0]		[PCin]
-[MDRin]
-[MDR2out]
-[IRin]
+
+1.  ***[PCout]***
+2.  ***[MARin]***       |   ***[Yin]***
+3.  ***[MARout]***      |   ***[k -> bus]***
+4.  ***[RD]***          |	***[Add]***
+5.  ***[Wait MFC]***    |   ***[Zin]***
+6.  ***[Wait MFC]***    |   ***[Zout]***
+7.  ***[SEL=0]***	    |   ***[PCin]***
+8.  ***[MDRin]***
+9.  ***[MDR2out]***
+10. ***[IRin]***
 
 (Supponendo che MFC impieghi 2 colpi di clock, passiamo da 17 cc a 10cc)
 
