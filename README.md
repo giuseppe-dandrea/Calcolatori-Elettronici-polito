@@ -1800,7 +1800,8 @@ Decide su chi scrivere invece con due segnali distinti collegati a due buffer tr
 8. **bus -> IR [*Attivo IRin*]**
 
 
-**AGGIORNAMENTO DEL PC NELLA FASE DI FETCH (PC -> PC + k)** (Facciamo avanzare PC alla prossima istruzione da eseguire):
+#### Aggiornamento Program Counter nella fase di Fetch
+AGGIORNAMENTO DEL PC NELLA FASE DI FETCH (PC -> PC + k) (Facciamo avanzare PC alla prossima istruzione da eseguire):
 
 1. ***[PCout]***
 2. ***[Yin]***
@@ -1816,12 +1817,12 @@ Decide su chi scrivere invece con due segnali distinti collegati a due buffer tr
 ==> Ottimizzando il tutto otteniamo: (facciamo eseguire piu operazioni contemporaneamente per ottimizzare i tempi di esecuzione)
 
 1.  ***[PCout]***
-2.  ***[MARin]***       |   ***[Yin]***
-3.  ***[MARout]***      |   ***[k -> bus]***
-4.  ***[RD]***          |	***[Add]***
-5.  ***[Wait MFC]***    |   ***[Zin]***
-6.  ***[Wait MFC]***    |   ***[Zout]***
-7.  ***[SEL=0]***	    |   ***[PCin]***
+2.  ***[MARin]***.....|.....***[Yin]***
+3.  ***[MARout]***....|.....***[k -> bus]***
+4.  ***[RD]***........|.....***[Add]***
+5.  ***[Wait MFC]***..|.....***[Zin]***
+6.  ***[Wait MFC]***..|.....***[Zout]***
+7.  ***[SEL=0]***.....|.....***[PCin]***
 8.  ***[MDRin]***
 9.  ***[MDR2out]***
 10. ***[IRin]***
