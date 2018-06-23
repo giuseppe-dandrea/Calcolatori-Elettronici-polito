@@ -2021,30 +2021,30 @@ In ordine decrescente di velocita' e costo:
 ## Classificazione delle Tecnologie di Memoria
 - **COSTO**: costo in dollari/bit o dollari/MB
 - **VELOCITA**:
-    - *Tempo di accesso (latenza)*: E' il tempo che intercorre tra la richiesta di un'azione e la sua esecuzione (inversamente proporzionale al costo)
-    - *Tempo di ciclo*: E' il tempo che intercorre tra una richiesta e il momento in cui la memoria e' pronta per accettare una nuova richiesta. (Tra l'operazione e una nuova richiesta una memoria potrebbe dover gestire operazioni interne) Puo' essere superiore al tempo di accesso, in altri casi puo' coincidere.
-    - *Tempo di trasferimento*: Se dobbiamo accedere a un blocco di memoria, dobbiamo attendere il tempo di accesso per ottenere la prima parte del blocco, mentre dovremo aspettare il tempo di trasferimento per accedere alle altre porzioni del blocco, che e' minore del tempo di accesso.
+    - ***Tempo di accesso (latenza)***: E' il tempo che intercorre tra la richiesta di un'azione e la sua esecuzione (inversamente proporzionale al costo)
+    - ***Tempo di ciclo***: E' il tempo che intercorre tra una richiesta e il momento in cui la memoria e' pronta per accettare una nuova richiesta. (Tra l'operazione e una nuova richiesta una memoria potrebbe dover gestire operazioni interne) Puo' essere superiore al tempo di accesso, in altri casi puo' coincidere.
+    - ***Tempo di trasferimento***: Se dobbiamo accedere a un blocco di memoria, dobbiamo attendere il tempo di accesso per ottenere la prima parte del blocco, mentre dovremo aspettare il tempo di trasferimento per accedere alle altre porzioni del blocco, che e' minore del tempo di accesso.
 - **MODI DI ACCESSO**:
-    - *SEQUENZIALE*: Le informazioni possono essere lette/scritte solo in un ordine prefissato. E' il caso dei nastri o dei dischi magnetici. Il tempo di accesso dipende dalla posizione dell'informazione nel nastro.
-    - *DIRETTO*: E' il caso dei dischi magnetici che vedremo quando faremo i dischi magnetici.
-    - *CASUALE*: Quello della memoria RAM, ogni parola e' associata ad un indirizzo e per accedere alla memoria bisogna specificare un indirizzo e la memoria ci accede utilizzando una ricerca sequenziale. Il tempo di accesso e' uguale per tutte le locazioni di memoria.
-    - *ASSOCIATIVO*: Ci sono alcune memorie ("varianti delle RAM") che sono composte da parole come le RAM, ma la ricerca non avviene tramite l'indirizzo ma tramite la ricerca di un valore (la memoria e' divisa in una prima parte e una seconda parte collegate) nella prima parte che corrisponde a un'informazione nella seconda parte che sara' quella di cui avevamo bisogno. **CAM (*Content Addressable Memory*)** (Tipo dizionario in python)
+    - ***SEQUENZIALE***: Le informazioni possono essere lette/scritte solo in un ordine prefissato. E' il caso dei nastri o dei dischi magnetici. Il tempo di accesso dipende dalla posizione dell'informazione nel nastro.
+    - ***DIRETTO***: E' il caso dei dischi magnetici che vedremo quando faremo i dischi magnetici.
+    - ***CASUALE***: Quello della memoria RAM, ogni parola e' associata ad un indirizzo e per accedere alla memoria bisogna specificare un indirizzo e la memoria ci accede utilizzando una ricerca sequenziale. Il tempo di accesso e' uguale per tutte le locazioni di memoria.
+    - ***ASSOCIATIVO***: Ci sono alcune memorie ("varianti delle RAM") che sono composte da parole come le RAM, ma la ricerca non avviene tramite l'indirizzo ma tramite la ricerca di un valore (la memoria e' divisa in una prima parte e una seconda parte collegate) nella prima parte che corrisponde a un'informazione nella seconda parte che sara' quella di cui avevamo bisogno. **CAM (*Content Addressable Memory*)** (Tipo dizionario in python)
 - **ALTERABILITA'**:
-    - *ROM*: Read Only Memory, puo' essere soltanto letta. Il contenuto viene deciso nella fase di progetto.
-    - *PROM*: Non l'ha nominato
+    - ***ROM***: Read Only Memory, puo' essere soltanto letta. Il contenuto viene deciso nella fase di progetto.
+    - ***PROM***: Non l'ha nominato
 - **DUREVOLEZZA DEL CONTENUTO**:
-    - *Destructive Readout*: alcune memorie (es. le ram dinamiche) nelle operazioni di lettura cancellano il valore. In questi casi e' necessario che il dato venga riscritto subito dopo la lettura. Questo causa un tempo di ciclo maggiore del tempo di accesso
-    - *Rinfresco (REFRESHING)*: Passato un certo tempo, se una parola non viene acceduta, perde il suo contenuto. Viene quindi eseguito un ciclo di rinfresco che rilegge tutta la memoria per evitare che perda il suo contenuto. (Prime ram dinamiche) Per queste memorie il tempo di accesso non e' fisso perche potrebbe accedere ai dati nel momento in cui viene eseguito il refreshing.
-    - *VOLATILE*: Perde il suo contenuto quando perde l'alimentazione.
+    - ***Destructive Readout***: alcune memorie (es. le ram dinamiche) nelle operazioni di lettura cancellano il valore. In questi casi e' necessario che il dato venga riscritto subito dopo la lettura. Questo causa un tempo di ciclo maggiore del tempo di accesso
+    - ***Rinfresco (REFRESHING)***: Passato un certo tempo, se una parola non viene acceduta, perde il suo contenuto. Viene quindi eseguito un ciclo di rinfresco che rilegge tutta la memoria per evitare che perda il suo contenuto. (Prime ram dinamiche) Per queste memorie il tempo di accesso non e' fisso perche potrebbe accedere ai dati nel momento in cui viene eseguito il refreshing.
+    - ***VOLATILE***: Perde il suo contenuto quando perde l'alimentazione.
 - **AFFIDABILITA'**: 
     - Possono capitare tre tipi di guasti:
-        - *GUASTI DI PROGETTO*: Dovuti a bug del software o hardware.
-        - *GUASTI TRANSITORI*: Uno o piu bit cambiano valore ad un certo istante, ma la memoria continua a funzionare correttamente. Es. a causa di radiazioni, particelle alfa e co
-        - *GUASTI PERMAMENTI*: Qualcosa nella memoria smette definitivamente di funzionare. 
+        - ***GUASTI DI PROGETTO***: Dovuti a bug del software o hardware.
+        - ***GUASTI TRANSITORI***: Uno o piu bit cambiano valore ad un certo istante, ma la memoria continua a funzionare correttamente. Es. a causa di radiazioni, particelle alfa e co
+        - ***GUASTI PERMAMENTI***: Qualcosa nella memoria smette definitivamente di funzionare. 
     - Misurata attraverso tre parametri:
-        - *PARTI PER MILIONE*: Numero di pezzi fallati ogni milione. (o anche miliardo)
-        - *MEAN TIME TO FAILURE (**MTTF**)*: Tempo medio prima di avere un guasto.
-        - *FAILURE RATE (o Mean Time Between Failures, **MTBF**)*: frequenza media di occorrenza dei guasti.
+        - ***PARTI PER MILIONE***: Numero di pezzi fallati ogni milione. (o anche miliardo)
+        - ***MEAN TIME TO FAILURE (*MTTF*)***: Tempo medio prima di avere un guasto.
+        - ***FAILURE RATE (o Mean Time Between Failures, *MTBF*)**: frequenza media di occorrenza dei guasti.
 - **TIPO DI MEMORIA**: 
     - elettronica
     - magnetica
