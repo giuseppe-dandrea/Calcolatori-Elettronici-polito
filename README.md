@@ -1745,13 +1745,13 @@ Es slide n.6: (ci fa vedere le operazioni necessarie ad eseguire questa add inte
     ADD R1, R2, R3	     ==  		R1+R2->R3
 
 Operazione [segnale]:
-1. *R1 -> BUS [R1out]*
-2. *BUS -> Y [Yin]*
-3. *R2 -> BUS [R2out]*
-4. *ADD* (tra y e il bus) (mando alla alu i segnali che le indicano di eseguire la somma)
-5. *ALU -> Z [Zin]*
-6. *Z -> BUS [Zout]*
-7. *BUS -> R3 [R3in]*
+1. **R1 -> BUS [*R1out*]**
+2. **BUS -> Y [*Yin*]**
+3. **R2 -> BUS [*R2out*]**
+4. **ADD** (tra y e il bus) (mando alla alu i segnali che le indicano di eseguire la somma)
+5. **ALU -> Z [*Zin*]**
+6. **Z -> BUS [*Zout*]**
+7. **BUS -> R3 [*R3in*]**
 
 Queste sopra sono dette ***microistruzioni*** (*istruzioni elementari*) e ad ogni colpo di clock viene eseguita una microistruzione (quindi per una istruzione serviranno piu colpi di clock)
 
