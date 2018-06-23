@@ -2043,8 +2043,8 @@ In ordine decrescente di velocita' e costo:
         - ***GUASTI PERMAMENTI***: Qualcosa nella memoria smette definitivamente di funzionare. 
     - Misurata attraverso tre parametri:
         - ***PARTI PER MILIONE***: Numero di pezzi fallati ogni milione. (o anche miliardo)
-        - ***MEAN TIME TO FAILURE (*MTTF*)***: Tempo medio prima di avere un guasto.
-        - ***FAILURE RATE (o Mean Time Between Failures, *MTBF*)**: frequenza media di occorrenza dei guasti.
+        - ***MEAN TIME TO FAILURE (MTTF)***: Tempo medio prima di avere un guasto.
+        - ***FAILURE RATE (o Mean Time Between Failures, MTBF)***: frequenza media di occorrenza dei guasti.
 - **TIPO DI MEMORIA**: 
     - elettronica
     - magnetica
