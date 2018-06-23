@@ -2461,126 +2461,144 @@ Sono diffuse sotto forma di dischi ottici e hanno le seguenti caratteristiche:
 
 
 
-# 27-Gestione-Dispositivi-Input-Output
-
-DISPOSITIVI DI INPUT/OUTPUT
+# Gestione dispositivi Input Output
 Moduli in grado di fornire/ricevere informazioni dal sistema (anche bidirezionali).
+
 Prevedono quindi un flusso di bit o byte in entrata o in uscita e possono essere flussi molto diversi a seconda del dispositivo.
 
-I dispositivi vengono collegati al bus mediante un interfaccia che prevede sempre uno o piu' registri accessibili dal processore su cui puo' scrivere o leggere come farebbe su una cella di memoria.
+I dispositivi vengono collegati al bus mediante un'**interfaccia** che prevede sempre uno o piu' registri accessibili dal processore su cui puo' scrivere o leggere come farebbe su una cella di memoria.
+
 L'interfaccia e' quindi una struttura hardware caratterizzata da questi registri che hanno un indirizzo e che si comportano da tramite tra il processore e la periferica.
 
-### Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:
+Il numero totale di registri di I/O e' di qualche decina, quindi quando il processore emette un indirizzo puo' riferirsi sia a una cella di memoria che a un registro periferico; Questo puo essere gestito in due modi:
+- **Isolated I/O**
+- **Memory Mapped I/O**
 
+## Configurazioni
+### Isolated I/O
+Il processore ha sempre *n* bit di indirizzo ma ha anche un segnale che dice se si riferisce alla memoria o all'I/O (chiamato ***IO/M*** 0 se si riferisce alla memoria, altrimenti 1).
 
-### ISOLATED I/O
-Il processore ha sempre n bit di indirizzo ma ha anche un segnale che dice se si riferisce alla memoria o all'I/O (chiamato IO/M 0 se si riferisce alla memoria, altrimenti 1).
 Se IO/M e' attivo il segnale arriva all'IO-Controller che riconosce a quale registro vuole accedere il processore e lo gestisce.
-Questo permette di avere con n bit di indirizzo: 2^n celle di memoria e 2^n periferiche.
+
+Questo permette di avere con *n* bit di indirizzo: *2<sup>n</sup>* celle di memoria e *2<sup>n</sup>* periferiche.
+
 Con questo modo per accedere alle periferiche in 8086 dobbiamo utilizzare le istruzioni IN e OUT
+
 Es.
-IN AL, KKK	-	E' come una mov AL, KKK accedendo all'indirizzo kkk che e' un registro periferico.
+`IN AL, KKK	-	E' come una mov AL, KKK accedendo all'indirizzo kkk che e' un registro periferico.`
 
 
-### MEMORY MAPPED I/O
+### Memory Mapped I/O
 I registri di I/O sono connessi come le normali celle di memoria.
-In questo modo un indirizzo di n bit permette di controllare 2^n tra celle di memoria e periferici. E a seconda dell indirizzo il relativo controller decide cosa attivare.
+
+In questo modo un indirizzo di *n* bit permette di controllare *2<sup>n</sup>* tra celle di memoria e periferici; e a seconda dell indirizzo il relativo controller decide cosa attivare.
+
 Con questo modo in programmazione 8086 basta dire l'indirizzo del registro e non c'e' bisogno di specificare altro.
 
 
 
-### REGISTRI DI INTERFACCIA
--  Registro di dato
--  Registro di stato
--  Registro di controllo
+## Registri di Interfaccia
+-  Registro di **dato**
+-  Registro di **stato**
+-  Registro di **controllo**
 
-In tutto cio' c'e' un problema di sincronizzazione dei dati tra la cpu e i periferici. 
-Per risolvere si introduce un nuovo registro detto di STATO che include dei bit che dicono alla CPU se ad esempio e' disponibile un nuovo dato o se il registro della periferica e' pronto per la scrittura o cose del genere.
+In tutto cio' c'e' un problema di sincronizzazione dei dati tra la cpu e i periferici.
+
+Per risolvere, nel registro di **STATO** si includono dei bit che dicono alla CPU se ad esempio e' disponibile un nuovo dato o se il registro della periferica e' pronto per la scrittura o cose del genere.
 
 In alcuni casi ci puo' essere un terzo registro detto di CONTROLLO in cui la cpu va a scrivere alcuni bit che danno informazioni alla periferica. (Esempio della stampante e bit che dicono alla stampante in che qualita' stampare o se stampare in bianco e nero o a colori).
 
 
+## Sincronizzazione
 
-
-
-### PER GESTIRE LA SINCRONIZZAZIONE:
-
-
-\*I/O PROGRAMMATO
+### I/O Programmato
 Ogni volta che la periferica scrive un dato nel registro, un bit di stato viene messo a 1, quando la cpu legge il dato, quel bit viene messo a 0. Quindi la cpu quando ha bisogno di input controlla sempre quel bit di stato  e appena viene messo a 1, la cpu legge il dato dal registro di dato.
 
-Quindi per ogni parola: (POLLING)
+Quindi per ogni parola: (***POLLING***)
  1 - Verifica il bit di stato se e' a 1
  2 - Se e' a 1 allora scrive una parola sul registro di dato
  3 - Se non e' pronta, torna al punto 1.
 
-Caratteristiche: Poco costoso in termini di hardware ma e' poco efficiente perche se abbiamo molte periferiche la cpu rimane bloccata nel punto 1 per molta parte del tempo. Va bene solo quando la cpu e' dedicata completamente ad eseguire qualche operazione semplice di input output e va bene che la cpu non faccia niente mentre aspetta il risultato.
+Caratteristiche: Poco costoso in termini di hardware ma e' **poco efficiente** perche se abbiamo molte periferiche la cpu rimane bloccata nel punto 1 per molta parte del tempo. 
+
+Va bene solo quando la cpu e' dedicata completamente ad eseguire qualche operazione semplice di input output e va bene che la cpu non faccia niente mentre aspetta il risultato.
 
 
 
-
-### \*INTERRUPT
+### Interrupt
 E' basato su un segnale asincrono che il dispositivo invia alla CPU quando ha bisogno di un servizio.
 Dal lato CPU questo corrisponde a un qualcosa che gestisce questo segnale e quando lo riceve deve interrompersi e rispondere alla periferica, dopo questo dovra' tornare a quello che stava facendo.
+
 In questo caso la CPU viene quindi occupata solo per il tempo che ci mette a eseguire l'operazione richiesta dalla periferica.
+
 Se questo metodo dal lato della periferica e' abbastanza semplice da implementare (un solo segnale) dal lato della CPU e' piu' complesso perche deve ricevere questo segnale asincrono e bloccarsi per poi ritornarci dopo aver eseguito l'operazione, anche perche' sono presenti piu' periferiche e deve quindi anche capire chi gli ha inviato il segnale di interrupt.
 
-(Vedere schema slide 18)
-La cpu riceve quindi un segnale di interrupt (detto INT) ricevuto da un nuovo dispotivo detto Controllore dell'Interrupt. 
-### Questo segnale viene gestito in diversi modi:
--  Polling
--  Interrupt Vettorizzato
+![alt-text](imgs/io-int.png)
+
+La cpu riceve quindi un segnale di interrupt (detto INT) ricevuto da un nuovo dispotivo detto ***Controllore dell'Interrupt***. 
+
+Questo segnale viene gestito in diversi modi:
+- **Polling**
+- **Interrupt Vettorizzato**
 
 
-### POLLING
+#### Polling
 Esiste un solo segnale per le richieste di interrupt e quando la cpu lo riceve scandisce il bit di stato di tutte le periferiche e agisce su quella che ha il bit di stato ad 1.
 
 
-### INTERRUPT VETTORIZZATO
-L'Interrupt Controller manda alla CPU il segnale di Interrupt, la cpu risponde con un segnale detto di Interrupt Acknowledge all'interrupt controller che quando lo riceve mette sul bus un codice corrispondente alla periferica che ha mandato il segnale di Interrupt. La cpu legge quel codice dal bus ed esegue l'operazione che doveva eseguire sul registro di quella periferica.
+#### Interrupt Vettorizzato
+L'**Interrupt Controller** manda alla CPU il segnale di *Interrupt*, la cpu risponde con un segnale detto di ***Interrupt Acknowledge*** all'interrupt controller che quando lo riceve mette sul bus un codice corrispondente alla periferica che ha mandato il segnale di Interrupt. La cpu legge quel codice dal bus ed esegue l'operazione che doveva eseguire sul registro di quella periferica.
 
-	### ISR (Interrupt Service Routine)
-	Possiamo vederli come i driver che installiamo per le periferiche: sono i pezzi di codice che la cpu esegue per comunicare con quella periferica.
-	A differenza delle normali procedure usa IRET per terminare perche oltre a ripristinare il PC (program counter) come la ret, ripristina anche il registro dei flag (PSW)
+##### ISR (Interrupt Service Routine)
+Possiamo vederli come i driver che installiamo per le periferiche: sono i pezzi di codice che la cpu esegue per comunicare con quella periferica.
 
-	### IVT (Interrupt Vector Table)
-	E' una tabella in cui ad ogni periferica viene associata l'ISR corrispondente. Il codice che l'interrupt controller mette sul bus e' l'indice della periferica nell'IVT. (Spesso e' messa all'inizio della memoria) 
+A differenza delle normali procedure usa **IRET** per terminare perche oltre a ripristinare il **PC (*program counter*)** come la **RET**, ripristina anche il **registro dei flag (*PSW*)**
+
+##### IVT (Interrupt Vector Table)
+E' una tabella in cui ad ogni periferica viene associata l'ISR corrispondente. Il codice che l'interrupt controller mette sul bus e' l'indice della periferica nell'IVT. (Spesso e' messa all'inizio della memoria (indirizzo 0000h)) 
+
 
 Questo meccanismo e' molto flessibile, infatti per aggiungere una nuova periferica basta aggiungere una nuova ISR e aggiungere un indice all'IVT.
 
 
 
-### GESTIONE DI RICHIESTE DI INTERRUPT CONTEMPORANEE
+#### Gestione di richieste di interrupt contemporanee
 L'interrupt controller deve essere in grado di ricevere piu' richieste di interrupt contemporanemente e decidere qual'e' quella con maggiore priorita' da inoltrare per prima alla CPU e quali possono aspettare. 
-Puo' gestire le priorita' delle periferiche in maniera STATICA o DINAMICA. 
 
-### STATICA
-Se l'IC associa la priorita' alla determinata periferica a prescindere dal tipo di richiesta. Es. abbiamo un IC che puo' gestire 3 periferiche, la 0 e' quella a priorita' massima e seguono la 1 e la 2; e quest'ordine non potra' essere modificato in run-time.
+Puo' gestire le priorita' delle periferiche in maniera **STATICA** o **DINAMICA**. 
+
+##### Statica
+L'**IC** associa la priorita' alla determinata periferica a prescindere dal tipo di richiesta. 
+
+Es. abbiamo un IC che puo' gestire 3 periferiche, la 0 e' quella a priorita' massima e seguono la 1 e la 2; e quest'ordine non potra' essere modificato in run-time.
+
 Con questo modo l'ultima periferica potrebbe finire per aspettare molto a lungo.
 
-### DINAMICA
-L'ordine di priorita' puo' essere modificato in run-time, puo' essere ad esempio un meccanismo a coda, o puo' anche essere programmabile dalla CPU (Es. e' la CPU a dire quale periferica va servita prima e quale per ultima).
+##### Dinamica
+L'ordine di priorita' puo' essere modificato in run-time, puo' essere ad esempio un meccanismo a coda, o puo' anche essere programmabile dalla CPU 
+
+Es. e' la CPU a dire quale periferica va servita prima e quale per ultima
 
 
 
-### GESTIONE DELLE INTERRUZIONE DELLE INTERRUPT SERVICE ROUTINE
+#### Gestione dell'interruzione delle ISR (Interrupt Service Routine)
 Es. Se mentre si sta servendo una periferica, un'altra periferica manda il segnale di interrupt.
-### Due strade:
--  Le ISR non sono interrompibili, e quindi la seconda periferica dovra' aspettare. Se pero' e' sfortunata potrebbe aspettare molto tempo, e questo molte volte non e' possibile (Es. ricordare esempio braccio meccanico fiat).
--  Le ISR sono interrompibili solo da periferiche a priorita' piu' alta. Qusto metodo e' migliore ma ovviamente piu' complicato da implementare e da gestire.
 
-Questo problema e' misurato da un parametro LATENZA DI INTERRUPT, che e' il tempo massimo tra la richiesta di interrupt e la partenza della relativa procedura di servizio.
+Due strade:
+- Le **ISR non sono interrompibili**, e quindi la seconda periferica dovra' aspettare. Se pero' e' sfortunata potrebbe aspettare molto tempo, e questo molte volte non e' possibile (Es. ricordare esempio braccio meccanico fiat).
+-  Le **ISR sono interrompibili solo da periferiche a priorita' piu' alta**. Qusto metodo e' migliore ma ovviamente piu' complicato da implementare e da gestire.
+
+Questo problema e' misurato da un parametro **LATENZA DI INTERRUPT**, che *e' il tempo massimo tra la richiesta di interrupt e la partenza della relativa procedura di servizio*.
 
 
-
-### INTERRUZIONE DEGLI INTERRUPT
+##### Ambiente 8086
 Nell'8086, come in molti altri processori, nel PSW insieme agli altri flag c'e' l'Interrupt Flag (IF) che se messo a 0 dice alla CPU di ignorare QUALSIASI richiesta di interrupt.
 
-### Istruzioni 8086:
-STI - Mette IF a 1
-CLI - Mette IF a 0
+Istruzioni 8086:
+- **STI** - Mette IF a 1
+- **CLI** - Mette IF a 0
 
-NB. Di default quando l'8086 fa partire una procedura di servizio (ISR) mette automaticamente l'IF a 0. Se dobbiamo evitare che questo succeda basta mettere una STI tra le istruzione della ISR.
+**NB.** Di default quando l'8086 fa partire una procedura di servizio (ISR) mette automaticamente l'IF a 0. Se dobbiamo evitare che questo succeda basta mettere una STI tra le istruzione della ISR.
 
 
 # 28-8255-Interfaccia-parallela-programmabile
