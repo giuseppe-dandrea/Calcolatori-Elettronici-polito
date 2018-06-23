@@ -1744,7 +1744,8 @@ Es slide n.6: (ci fa vedere le operazioni necessarie ad eseguire questa add inte
 
     ADD R1, R2, R3	     ==  		R1+R2->R3
 
-Operazione [segnale]:
+**Operazione [*segnale*]:**
+
 1. **R1 -> BUS [*R1out*]**
 2. **BUS -> Y [*Yin*]**
 3. **R2 -> BUS [*R2out*]**
@@ -1757,12 +1758,15 @@ Queste sopra sono dette ***microistruzioni*** (*istruzioni elementari*) e ad ogn
 
 
 
-TRASFERIMENTO Ri -> Rj (tra registri)
-Attivare Riout
-Attivare Rjin
-### 
-### IMPORTANTE:
-NB. Ogni registro ha due segnali Rxin e Rxout che determinano rispettivamente il trasferimento dal bus al registro e dal registro al bus.
+### Trasferimento tra registri Ri -> Rj (tra registri)
+    
+    MOV Rj, Ri
+
+1. **Riout**
+2. **Rjin**
+
+IMPORTANTE:
+NB. Ogni registro ha due segnali *Rxin* e *Rxout* che determinano rispettivamente il trasferimento dal bus al registro e dal registro al bus.
 
 
 
