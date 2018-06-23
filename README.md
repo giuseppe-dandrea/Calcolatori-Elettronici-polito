@@ -2034,7 +2034,7 @@ In ordine decrescente di velocita' e costo:
     - ***PROM***: Non l'ha nominato
 - **DUREVOLEZZA DEL CONTENUTO**:
     - ***Destructive Readout***: alcune memorie (es. le ram dinamiche) nelle operazioni di lettura cancellano il valore. In questi casi e' necessario che il dato venga riscritto subito dopo la lettura. Questo causa un tempo di ciclo maggiore del tempo di accesso
-    - ***Rinfresco (REFRESHING)***: Passato un certo tempo, se una parola non viene acceduta, perde il suo contenuto. Viene quindi eseguito un ciclo di rinfresco che rilegge tutta la memoria per evitare che perda il suo contenuto. (Prime ram dinamiche) Per queste memorie il tempo di accesso non e' fisso perche potrebbe accedere ai dati nel momento in cui viene eseguito il refreshing.
+    - ***Rinfresco*** **(*REFRESHING*)**: Passato un certo tempo, se una parola non viene acceduta, perde il suo contenuto. Viene quindi eseguito un ciclo di rinfresco che rilegge tutta la memoria per evitare che perda il suo contenuto. (Prime ram dinamiche) Per queste memorie il tempo di accesso non e' fisso perche potrebbe accedere ai dati nel momento in cui viene eseguito il refreshing.
     - ***VOLATILE***: Perde il suo contenuto quando perde l'alimentazione.
 - **AFFIDABILITA'**: 
     - Possono capitare tre tipi di guasti:
@@ -2043,8 +2043,8 @@ In ordine decrescente di velocita' e costo:
         - ***GUASTI PERMAMENTI***: Qualcosa nella memoria smette definitivamente di funzionare. 
     - Misurata attraverso tre parametri:
         - ***PARTI PER MILIONE***: Numero di pezzi fallati ogni milione. (o anche miliardo)
-        - ***MEAN TIME TO FAILURE (MTTF)***: Tempo medio prima di avere un guasto.
-        - ***FAILURE RATE (o Mean Time Between Failures, MTBF)***: frequenza media di occorrenza dei guasti.
+        - ***MEAN TIME TO FAILURE*** **(*MTTF*)**: Tempo medio prima di avere un guasto.
+        - ***FAILURE RATE*** **(o Mean Time Between Failures, *MTBF*)**: frequenza media di occorrenza dei guasti.
 - **TIPO DI MEMORIA**: 
     - elettronica
     - magnetica
