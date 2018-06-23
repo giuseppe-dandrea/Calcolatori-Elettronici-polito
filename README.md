@@ -1435,7 +1435,7 @@ A differenza del livello delle porte logiche, l'unita' elementare di dato non e'
 
 I componenti che possiamo utilizzare a livello register sono: (equivalente delle porte and or ecc)
 - COMPONENTI COMBINATORI
-    - Porte logiche operanti su parole
+    - *Porte logiche operanti su parole*
     - *Multiplexer*
     - *Decodificatori* e *codificatori*
     - *Moduli aritmetici* (*ALU*, *sommatori*, ecc..)
@@ -1464,16 +1464,16 @@ Il multiplexer e' un componente combinatorio composto solo da porte logiche, inf
 
 NB. Possiamo collegare multiplexer in cascata per ottenere un multiplexer con le caratteristiche che ci occorrono, ricordare modello torneo di calcetto, in cui abbiamo diversi livelli di multiplexer in cascata, in cui abbiamo una selezione dei segnali in ingresso tramite i segnali S. (Esempio videolezione 25 23:00)
 
-NBB. Attraverso un multiplexer possiamo implementare qualsiasi tipo di circuito combinatorio... Infatti se ad esempio dobbiamo implementare un circuito che restituisca 1 quando l'ingresso e' compreso tra 8 e 13, possiamo prendere un multiplexer con 16 entrate, assegnare 1 agli ingressi compresi tra 8 e 13 e 0 agli altri, e quindi quando il segnale S (i 4 bit di segnale che mappano i 16 ingressi) e' compreso tra 8 e 13 restituisce 1 (l'ingresso associato a quel numero) altrimenti restituisce 0.
+**NBB. Attraverso un multiplexer possiamo implementare qualsiasi tipo di circuito combinatorio.** Infatti se ad esempio dobbiamo implementare un circuito che restituisca 1 quando l'ingresso e' compreso tra 8 e 13, possiamo prendere un multiplexer con 16 entrate, assegnare 1 agli ingressi compresi tra 8 e 13 e 0 agli altri, e quindi quando il segnale S (i 4 bit di segnale che mappano i 16 ingressi) e' compreso tra 8 e 13 restituisce 1 (l'ingresso associato a quel numero) altrimenti restituisce 0.
 
 In genere implementando un circuito combinatorio con i multiplexer non si ottiene il circuito minimo, ne quello piu veloce, ma sara' sicuramente il circuito che riusciamo a progettare in meno tempo (abbattendo i costi di progettazione) ( non viene tanto utilizzato)
 
 
 
 ### Decoder
-E' un modulo con *n* ingressi e *k* uscite con n e k legati da: ***k=2^n***
+E' un modulo con *n* ingressi e *k* uscite con *n* e *k* legati da: ***k=2^n***
 Questo prende i bit in ingresso e li vede come un numero e attiva la linea di uscita corrispondente a quel numero. 
-In alcuni casi esiste un segnale di ENABLE che serve per abilitare il decodificatore... Cioe' se il segnale di enable e' 0, in uscita non c'e' alcun segnale, se invece enable e' 1, il decoder opera come dovrebbe.
+In alcuni casi esiste un segnale di **ENABLE** che serve per abilitare il decodificatore... Cioe' se il segnale di enable e' 0, in uscita non c'e' alcun segnale, se invece enable e' 1, il decoder opera come dovrebbe.
 
 NB. Come sopra possiamo collegare diversi decoder in cascata (VL 25 43:00, lucido n. 17)
 (Possiamo collegarne due semplicemente collegando un segnale di enable ad entrambi e negarlo solo ad uno, in questo modo e' come se questo segnale di enable rappresenti il bit piu' significativo dell'ingresso, cioe' sceglie se abilitare uno o l'altro decoder che poi ricevera' in ingresso il resto dei bit che andranno a far funzionare il decoder come al solito.
@@ -1481,14 +1481,14 @@ NB. Come sopra possiamo collegare diversi decoder in cascata (VL 25 43:00, lucid
 
 
 ### Encoder
-E' un modulo con n ingressi e k uscite, legati da n=2^k.
+E' un modulo con *n* ingressi e *k* uscite, legati da **n=2^k**.
 Presuppone che in ingresso ci sia sempre soltanto una linea attiva, e manda in uscita l'indice della linea attiva.
 
 NB.Il presupposto che in ingresso ci debba essere soltanto una linea attiva e' molto pesante, percio' si introducono i **codificatori prioritari (_priority encoder_)** che assegnano una determinata priorita' agli ingressi, e nel caso sia attivo piu di un ingresso in uscita appare il codice della linea attiva con priorita' maggiore.
 
 Nei priority encoder c'e' pero' ancora un'altra fonte di ambiguita': nel caso in cui non ci sia alcuna linea attiva l'encoder si ritroverebbe comunque a mandare 00 in uscita che corrisponde all'ingresso 0 attivo. Si introduce allora un'altra uscita: **INPUT ACTIVE**, che viene attivato quando c'e' almeno una linea in ingresso attiva.
 
-Ps. Possiamo trovare anche un segnale di ENABLE che svolge la stessa funzione dell'enable nel decoder.
+Ps. Possiamo trovare anche un segnale di **ENABLE** che svolge la stessa funzione dell'enable nel decoder.
 
 
 
@@ -1515,14 +1515,14 @@ Puo' essere implementato mediante una porta XOR per l'uscita (XOR in aritmetica 
 
 
 ##### Sommatore Seriale
-Implementato tramite un modulo per la somma bit a bit (2 ingressi da sommare, carry in, carry out e uscita) e un flip flop che memorizza il carry di un bit e lo riporta sul bit successivo durante il successivo periodo di clock.
+Implementato tramite **un modulo per la somma bit a bit** (2 ingressi da sommare, carry in, carry out e uscita) e **un flip flop** che memorizza il carry di un bit e lo riporta sul bit successivo durante il successivo periodo di clock.
 
 Questa soluzione e' quella che richiede il minimo costo in termini di porte logiche che sono indipendenti dal numero di cifre, ma rappresenta la soluzione con il massimo tempo di risposta (n periodi di clock)
 
 
 
 ##### Sommatore Combinatorio - Ripple Carry Adder
-Implementato tramite n sommatori bit a bit, con n numero massimo di bit degli addendi. (I sommatori vengono collegati in serie mediante il carry out... Il carry out del bit meno significativo e' collegato al carry in del bit successivo)
+Implementato tramite ***n* sommatori bit a bit**, con *n* numero massimo di bit degli addendi. (I sommatori vengono collegati in serie mediante il carry out... Il carry out del bit meno significativo e' collegato al carry in del bit successivo)
 
 Costa di piu in termini di materiali rispetto al sommatore seriale, ma e' molto piu veloce nell'eseguire l'operazione. Ha anche un altro svantaggio, infatti ogni sommatore deve aspettare il risultato del carry del precedente per poter eseguire l'operazione, percio' chiamando *∆* il ritardo associato ad un singolo sommatore, per sommare due numeri ad *n* bit otterremo un ritardo di *n∆*, che per *n* alti potrebbe diventare elevato, e questo ne limita l'applicabilita'.
 
@@ -1531,12 +1531,12 @@ Costa di piu in termini di materiali rispetto al sommatore seriale, ma e' molto 
 ##### Sommatore Combinatorio Ad Hoc
 Implementato ad-hoc tramite circuito combinatorio costruendone la tavola di verita', utilizzando 2 ingressi a parallelismo *n*, un carry in, un carry out e un uscita sempre a parallelismo *n*. 
 
-Questo tipo di circuito avra' un costo e soprattutto un ritardo sicuramente minore del ripple carry adder. Deve essere pero' progettato con porte logiche, aumentando quindi i tempi/costi di progettazione rispetto all' RCA.
+Questo tipo di circuito avra' un costo e soprattutto un ritardo sicuramente minore del *ripple carry adder*. Deve essere pero' progettato con porte logiche, aumentando quindi i tempi/costi di progettazione rispetto al *RCA*.
 
 
 
 ##### Carry-Lookahead (VEDERE SLIDE 32)
-Aggiunge una logica al Ripple Carry Adder per calcolare a priori tutti i carry dell'operazione ed evitare la propagazione dei carry che richiede tempo. 
+Aggiunge una logica al Ripple Carry Adder per calcolare a priori tutti i ***carry*** dell'operazione ed evitare la propagazione dei carry che richiede tempo. 
 
 Questa logica calcola secondo le formule nella slide 32-33 i carry per tutti i bit della somma utilizzando soltanto il carry in ingresso e *g* e *p*, che sono semplicemente l'*and* e l'*or* tra due addendi corrispondenti.
 
@@ -1548,7 +1548,7 @@ Utilizza questa formula ripetuta per tutti i bit dell'operazione:
 
 Il fattore positivo e' che sono molto efficienti e hanno un ritardo minimo e soprattutto che non dipende dal numero di bit degli addendi; il rovescio della medaglia e' che al crescere dei bit degli addendi la logica diventa molto grande. (VEDERE ULTIMI 10 MIN DELLA VL 26)
 
-NB. Detto *d* il ritardo introdotto da un circuito a 2 livelli, il ritardo di un sommatore carry lookahead e' *3d*.
+NB. Detto *d* il ritardo introdotto da un circuito a 2 livelli, il ritardo di un *sommatore carry lookahead* e' *3d*.
 
 
 ##### Soluzioni Miste
@@ -1557,9 +1557,13 @@ Sono molto utilizzate.
 
 
 #### ALU
-Unita' aritmetico logiche combinatorie che integrano in un unico blocco che integra le principali soluzioni aritmetiche e logiche (in genere *somma, sottrazione, negazione, and, or, not, xor*). 
+Unita' aritmetico logiche combinatorie che integrano in un unico blocco le principali soluzioni aritmetiche e logiche (in genere *somma, sottrazione, negazione, and, or, not, xor*). 
 
-Hanno due operandi in ingresso, un ingresso di controllo che indica alla alu quale operazione eseguire, un uscita per il risultato e in genere anche un carry in e un carry out.
+Hanno:
+- *Due operandi in ingresso*
+- *Un ingresso di controllo* che indica alla alu quale operazione eseguire
+- *Un uscita per il risultato* 
+- *Carry in* e *Carry out*
 
 
 #### Comparatore
