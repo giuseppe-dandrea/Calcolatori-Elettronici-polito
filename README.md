@@ -1918,53 +1918,79 @@ if (x == 1)
 ```
 
 
+## Unita' di Controllo
 
+Le specifiche dell'unita' di controllo includono l'**instruction set** che devono essere implementate dai progettisti in termini di microistruzioni da mandare all'unita di elaborazione.
 
-# 22-Processore-Unita-di-Controllo
+Puo essere progettata in 2 modi:
+- **HARDWIRED**: Progetto e costruisco un circuito sequenziale che implementa le specifiche.
+- **MICROPROGRAMMATA**: I segnali in uscita dell'UC sono tutti salvati in una memoria ROM, non abbiamo bisogno quindi di una logica combinatoria che calcoli volta per volta i segnali, ma ci basta sapere lo stato in cui ci troviamo per accedere alla memoria a quell'indirizzo per conoscere i segnali in uscita di quello stato.
 
-Le specifiche dell''unita' di controllo includono l'instruction set che devono essere implementate dai progettisti in termini di microistruzioni da mandare all'unita di elaborazione.
+### HardWired
+Si basa sul trattare il progetto dell'unita di controllo come il progetto di un "normale" circuito sequenziale.
 
-Puo essere progettata in 2 modi:-  HARDWIRED: Progetto e costruisco un circuito sequenziale che implementa le specifiche.-  MICROPROGRAMMATA: I segnali in uscita dell'UC sono tutti salvati in una memoria ROM, non abbiamo bisogno quindi di una logica combinatoria che calcoli volta per volta i segnali, ma ci basta sapere lo stato in cui ci troviamo per accedere alla memoria a quell'indirizzo per conoscere i segnali in uscita di quello stato.
-
-HARDWIRED
-Si basa sul trattare il progetto dell'unita di controllo come il progetto di un "normale" circuito sequenziale. 
 Ci sono casi in cui (ad esempio troppe istruzioni) non si riesce ad elaborare una rete combinatoria che implementi le funzioni del processore. 
-Il primo limite e' quindi la difficolta di progettazione, poi anche se si riesce a progettare l'unita' di controllo, se ci dovesse essere uno stato sbagliato nelle specifiche, bisogna ricomniciare da capo per sistemarlo.
-Poi ogni processore nasce in famiglie (tipo uno a basso consumo, un altro con meno istruzioni ecc), quindi costruire 4 processori molto simili e' lo stesso che costruire 4 processori completamente diversi, percio' questa soluzione del progetto cablato e' molto poco flessibile, pero' la dimensione dell'unita' di controllo sara' prossima a quella minima, ottimizzandone quindi quantita' di hardware richiesta, costi e soprattutto velocita' di clock (probabilmente la rete combinatoria sara' a 2 livelli, quindi molto efficiente e veloce)
+
+Il primo limite e' quindi la **difficolta di progettazione**, poi anche se si riesce a progettare l'unita' di controllo, se ci dovesse essere uno stato sbagliato nelle specifiche, bisogna ricomniciare da capo per sistemarlo.
+
+Poi ogni processore nasce in famiglie (tipo uno a basso consumo, un altro con meno istruzioni ecc), quindi costruire 4 processori molto simili e' lo stesso che costruire 4 processori completamente diversi, percio' questa soluzione del progetto cablato e' molto **poco flessibile**, pero' la **dimensione** dell'unita' di controllo sara' prossima a quella **minima**, ottimizzandone quindi quantita' di hardware richiesta, **costi** e soprattutto **velocita' di clock** (probabilmente la rete combinatoria sara' a 2 livelli, quindi molto efficiente e veloce)
 
 
-### MICROPROGRAMMATA
-Idea di M.V. Wilkes che nel 51 pubblico' un articolo in cui parlava di come si sarebbero potute progettare le unita' di controllo in maniera piu' furba. L'articolo pero' non ebbe alcun impatto pero' poi e' stato usato (mi so perso na frase).
+### Microprogrammata
+Idea di M.V. Wilkes che nel 51 pubblico' un articolo in cui parlava di come si sarebbero potute progettare le unita' di controllo in maniera piu' furba. L'articolo pero' non ebbe alcun impatto pero' poi e' stato usato (mi sono perso una frase).
+
 Una UC deve mandare ad ogni segnale di clock dei segnali all'UE oppure verso l'esterno (es. memoria).
-Una UC microprogrammata utilizza una memoria ROM (memoria di microcodice) che contiene tutte le configurazioni dei valori che l'UC deve mandare all'UE. 
-Nella memoria di microcodice ogni parola ha la dimensione del numero di segnali di controllo, e sono quindi tante parole quanti sono gli stati del processore. (in genere la dimensione della parola e' dell ordine di qualche migliaio, il numero di parole e' invece qualche centinaia)
-Avremo poi un MPC (Micro Program Counter) (un contatore?) che mandera' dei valori all'esterno a seconda dello stato in cui ci troviamo. La dimensione dell'MPC e' log2 del numero di parole presenti in memoria.
-C'e' anche un MIR (Micro Instruction Register) (un registro) che sara' collegato alla rom in entrata e in uscita ha i segnali che vanno verso l'esterno.
 
-Quindi:- Prima l'MPC punta ai segnali di controllo da mandare all'esterno - Questi vengono caricati nell'MIR e mandati in uscita verso l'esterno. (L'MIR avra' parallelismo N detto N il numero dei possibili segnali in uscita).
+Una UC microprogrammata utilizza una memoria **ROM (*memoria di microcodice*)** che contiene tutte le configurazioni dei valori che l'UC deve mandare all'UE. 
 
-Abbiamo bisogno anche di una logica che determina qual'e' il valore da caricare nell' MPC ad ogni colpo di clock.
-Questa logica a seconda dello stato corrente calcola l'indirizzo di memoria del successivo stato. E' molto frequente che dato uno stato sia fisso quello successivo, mentre ci sono altri casi in cui a seconda di un certo segnale di controllo si passa a segnali diversi, ma sono casi rari (es. quando si accede alla memoria per aspettare che effettui l'operazione). 
-La logica si occupa quindi di mandare un segnale di incremento all'MPC a seconda dello stato successivo.
-Riceve in ingresso il valore dell'MPC per sapere lo stato corrente ed anche i segnali di controllo che servono a decidere lo stato futuro (es. MFC o i vari flag).
-E' quindi una logica combinatoria moooolto piu' semplice della logica dell'UC HARDWIRED composta verosimilmente da qualche centinaio di gate.
+Nella memoria di microcodice ***ogni parola ha la dimensione del numero di segnali di controllo***, e sono quindi ***tante parole quanti sono gli stati del processore.*** (in genere la dimensione della parola e' dell ordine di qualche migliaio, il numero di parole e' invece qualche centinaia)
+Avremo poi un **MPC (*Micro Program Counter*)** che mandera' dei valori all'esterno a seconda dello stato in cui ci troviamo. La dimensione dell'MPC e' *log2 del numero di parole presenti in memoria*.
+C'e' anche un **MIR (*Micro Instruction Register*)** (un registro) che sara' collegato alla rom in entrata e in uscita ha i segnali che vanno verso l'esterno e avra' quindi *parallelismo pari alla dimensione delle parole presenti in memoria.*
+
+Quindi:
+- Prima l'**MPC** punta ai segnali di controllo da mandare all'esterno 
+- Questi vengono caricati nel **MIR** e mandati in uscita verso l'esterno. (Il MIR avra' parallelismo N detto N il numero dei possibili segnali in uscita).
+
+Abbiamo bisogno anche di una logica che determina qual'e' il valore da caricare nel **MPC** ad ogni colpo di clock.
+
+Questa logica a seconda dello stato corrente calcola l'indirizzo di memoria del successivo stato. E' molto frequente che dato uno stato sia fisso quello successivo, mentre ci sono altri casi in cui a seconda di un certo segnale di controllo si passa a segnali diversi, ma sono casi rari (es. quando si accede alla memoria per aspettare che effettui l'operazione).
+
+La logica si occupa quindi di mandare *un segnale di incremento* al **MPC** a seconda dello stato successivo.
+Riceve in ingresso il valore del **MPC** per sapere lo stato corrente ed anche i segnali di controllo che servono a decidere lo stato futuro (es. MFC o i vari flag).
+E' quindi una logica combinatoria moooolto piu' semplice della logica dell'*UC HARDWIRED* composta verosimilmente da qualche centinaio di gate.
 
 In alcuni casi ci sono dei segnali che vanno dalla memoria alla logica di controllo e che influenzano il valore dello stato successivo. (Non c'e' sempre)
 
-NB. Nella memoria possiamo individuare gruppi di segnali "compatibili", cioe' che possono essere attivati soltanto uno per volta, quindi possiamo codificare n bit con log2(n) bit, e avremo poi bisogno di un decoder dopo il MIR per decodificare questi bit e inviarli all'esterno.
+Il rovescio della medaglia e' che l'UC e' **piu' grande e piu' lenta di quella HARDWIRED**, anche se **molto piu' flessibile e molto piu' semplice da progettare** (solo una memoria, un paio di registri e una logica combinatoria "semplice")
 
-Il rovescio della medaglia e' che l'UC e' piu' grande e piu' lenta di quella HARDWIRED, anche se molto piu' flessibile e molto piu' semplice da progettare (solo una memoria, un paio di registri e una logica combinatoria "semplice")
-
-MANCANTE Memoria microcodice orizzontale vs verticale (giusto na cosetta che mi so perso)
-
-Es cpu microprogrammate:-  IBM System 360/370-  Intel 80x86-  Motorola 680x0
-
+Es cpu microprogrammate:
+- IBM System 360/370
+- Intel 80x86
+- Motorola 680x0
 
 
-### UNITA DI CONTROLLO DELL'8088
-Caratteristiche:-  Per la maggior parte microprogrammata ma in parte anche cablata-  Microistruzioni di ampiezza 21 bit.-  504 microistruzioni
+#### Segnali Compatibili
+Nella memoria possiamo individuare gruppi di segnali "compatibili", cioe' che possono essere attivati soltanto uno per volta, quindi possiamo codificare *n* bit con *log<sub>2</sub>(n)* bit, e avremo poi bisogno di un *decoder* dopo il **MIR** per decodificare questi bit e inviarli all'esterno.
+
+I segnali compatibili permettono di ridurre il numero di segnali, aggiungendo qualche decoder, abbiamo quindi due tipi di programmazione dell'UC mircroprogrammata:
+- Programmazione orizzontale
+- Programmazione verticale
+
+##### Programmazione orizzontale
+Associa semplicemente ad ogni segnale in uscita, un bit nelle parole del microcodice, in modo che OGNI segnale di uscita abbia il suo bit corrispondente.
+
+##### Programmazione verticale
+Sfrutta i segnali compatibili per ridurre la dimensione delle parole di microcodide. 
+
+Codifica *n* segnali compatibili con *log<sub>2</sub>(n)* bit in uscita, e occorrera' poi un decoder per decodificare il segnale in uscita.
 
 
+
+### Unita' di Controllo dell'8086
+Caratteristiche:
+- Per la maggior parte microprogrammata ma in parte anche cablata
+- Microistruzioni di ampiezza 21 bit.
+- 504 microistruzioni
 
 
 # 23-Memorie-livello-processore
