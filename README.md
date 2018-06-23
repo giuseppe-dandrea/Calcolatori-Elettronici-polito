@@ -2373,85 +2373,91 @@ In caso di **miss** il processore puo' comportarsi in due modi:
 
 
 
-# 26-Memorie-ad-accesso-Seriale
-
-MEMORIE AD ACCESSO SERIALE
+# Memorie ad Accesso Seriale
 Memoria secondaria non volatile, offline, basso costo ed elevato tempo di accesso.
 
 
-### MEMORIE A DISCO MAGNETICO (HARD DISK)
+## Memorie a Disco Magnetico (Hard Disk)
 -  Hard disk di tipo Winchester (disegno slide 16)
-### 
-### TEMPO DI ACCESSO:
-Ta = Ts + Tl +Td
--  Ta Tempo di accesso
--  Ts Tempo per posizionare la testina sulla traccia opportuna (Seek Time)
--  Tl Tempo per posizionare la testina sul settore, all'interno della traccia (Latency Time)
--  //Td Tempo per leggere serialmente i dati (data-transfer time)
+ 
+### Tempo di Accesso
+
+`Ta = Ts + Tl +Td`
+
+-  **Ta** Tempo di accesso
+-  **Ts** Tempo per posizionare la testina sulla traccia opportuna (Seek Time)
+-  **Tl** Tempo per posizionare la testina sul settore, all'interno della traccia (Latency Time)
+-  **Td** Tempo per leggere serialmente i dati (data-transfer time)
 
 
-### CODIFICA DEI DATI
+### Codifica dei Dati
 Per evitare di utilizzare una traccia di clock per la sincronizzazione, si utilizza una codifica.
-Una tecnica di codifica molto semplice e' quella detta codifica di Fase o MANCHESTER in cui ogni bit viene memorizzato come una TRANSIZIONE da alto o basso e viceversa. (Slide 12)
+Una tecnica di codifica molto semplice e' quella detta **codifica di Fase** o ***MANCHESTER*** in cui ogni bit viene memorizzato come una TRANSIZIONE da alto o basso e viceversa. (Slide 12)
+
+![alt-text](imgs/hdd-cod.png)
+
+### Parametri
+-  ***CAPACITA***: dal centinaio di GB ad alcuni TB
+-  ***FATTORE DI FORMA***: 8", 5.25", 3.5", 2.5", 1.8", 1", 0.85" (i primi due sono ormai obsoleti)
+-  ***SEEK TIME***: tra 5 e 15 ms
+-  ***TRANSFER RATE***: da 40 a 130MB/s
+-  ***VELOCITA' DI ROTAZIONE***: da 5400 a 15000 gpm.
 
 
-### PARAMETRI TIPICI
--  CAPACITA: dal centinaio di GB ad alcuni TB
--  FATTORE DI FORMA: 8", 5.25", 3.5", 2.5", 1.8", 1", 0.85" (i primi due sono ormai obsoleti)
--  SEEK TIME: tra 5 e 15 ms
--  TRANSFER RATE: da 40 a 130MB/s
--  VELOCITA' DI ROTAZIONE: da 5400 a 15000 gpm.
+### Disk Driver e Disk Controller
+Il **disk driver** connette un disco con il *disk controller*.
+
+Può includere:
+- Un **data buffer**, composto da una memoria a semiconduttore, che può funzionare da cache del disco 
+- Un'**interfaccia** IDE, SATA, SCSI o altro.
+
+Il **disk controller** si interfaccia con il processore e la memoria.
+
+Il trasferimento dati tra il disk controller e la memoria principale avviene spesso in ***DMA***.
 
 
-### DISK DRIVER E DISK CONTROLLER
-(Slide 18, me lo so perso)
+## Unita' a Stato Solido
+*NON SONO AD ACCESSO SERIALE*
 
-
-
-
-
-### UNITA' A STATO SOLIDO
-NON SONO AD ACCESSO SERIALE
-### Non hanno parti in movimento e rispetto agli HDD tradizionali:
--  Sono piu' resistenti agli shock fisici
--  Minore tempo di accesso (accesso casuale)
--  Minore latenza
--  Minore consumo
--  Piu' costose
+Non hanno parti in movimento e rispetto agli HDD tradizionali:
+-  Sono **piu' resistenti** agli shock fisici
+-  **Minore tempo di accesso** (accesso casuale)
+-  **Minore latenza**
+-  **Minore consumo**
+-  **Piu' costose**
 
 Per realizzarle la tecnologia piu' utilizzata e': Multi-level cell (MLC) NAND Flash
 
 
+## Memorie Offline
+Servono per memorizzare grandi moli di dati digitali (es filmati) e in questi casi il tempo di accesso non e' un problema; In questi casi i parametri importanti sono:
+-  **Il costo** (anche di manutenzione)
+-  **La durata**
+-  **L'ingombro**
 
 
-### MEMORIE OFFLINE
-### Servono per memorizzare grandi moli di dati digitali (es filmati) e in questi casi il tempo di accesso non e' un problema; In questi casi i parametri importanti sono:
--  Il costo (anche di manutenzione)
--  La durata
--  L'ingombro
-### Per queste applicazioni si usano:
--  Nastri magnetici
--  Cartucce
--  Memorie ottiche
+Per queste applicazioni si usano:
+-  ***Nastri magnetici***
+-  ***Cartucce***
+-  ***Memorie ottiche***
 
-NB. LTO (Linear Tape-Open) anche noto come Ultrium e' lo standard dominante nel campo dei super-tape.
+NB. **LTO (*Linear Tape-Open*)** anche noto come ***Ultrium*** e' lo standard dominante nel campo dei super-tape.
 
 
 
 
-### MEMORIE OTTICHE (CD DVD)
-### Sono diffuse sotto forma di dischi ottici e hanno le seguenti caratteristiche:
+### Memorie ottiche
+*CD / DVD*
+
+Sono diffuse sotto forma di dischi ottici e hanno le seguenti caratteristiche:
 -  Capacita' intorno ai Gbyte
 -  Elevati tempi di accesso (1s)
 -  Data transfer rate come negli hdd (decine di MByte)
 -  Elevata affidabilita' (grazie alla mancanza di parti meccaniche vicine o a contatto)
 
-
-
-
-### ORGANIZZAZIONE
--  CAV (Constant angular velocity): Soluzione adottata sui dischi magnetici, il disco e' organizzato in tracce concentriche e le tracce esterne hanno minore densita' lineare di memorizzazione. Ogni settore e' accessibile direttamente specificando traccia e numero di settore
--  CLV (Constant Linear Velocity): Soluzione adottata per le memorie ottiche. Il raggio laser scandisce le fosse/piazzole a velocita' lineare costante (Velocita' angolare variabile) seguendo una traiettoria a spirale.
+### Organizzazione
+-  **CAV (*Constant angular velocity*)**: Soluzione adottata sui dischi magnetici, il disco e' organizzato in tracce concentriche e le tracce esterne hanno minore densita' lineare di memorizzazione. Ogni settore e' accessibile direttamente specificando traccia e numero di settore
+-  **CLV (*Constant Linear Velocity*)**: Soluzione adottata per le memorie ottiche. Il raggio laser scandisce le fosse/piazzole a velocita' lineare costante (Velocita' angolare variabile) seguendo una traiettoria a spirale.
 
 
 
