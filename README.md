@@ -1373,10 +1373,10 @@ Risolve il problema della configurazione vietata utilizzando un solo ingresso D 
 
 ```
 CLOCK=1
-			D
-		0		1
-Y	0 | 0		1		Se il clock e' a 1 quindi viene memorizzato il valore di D
-    1 |	0		1
+	    D
+	0	1
+Y   0 | 0	1		Se il clock e' a 1 quindi viene memorizzato il valore di D
+    1 |	0	1
 ```
 
 ```
